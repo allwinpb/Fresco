@@ -4,5 +4,8 @@
     <string name="app_name">Fresco</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+    <string name="add_category">add</string>
+    <string name="remove_category">remove</string>
+    <string name="search_category">search</string>
 
 </resources>
