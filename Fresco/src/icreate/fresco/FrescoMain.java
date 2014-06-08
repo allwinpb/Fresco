@@ -52,8 +52,8 @@ public class FrescoMain extends Activity {
 			startActivityForResult(i, 1);
 			break;
         case R.id.search_icon:
-        	
-        	return true;
+        	onSearchRequested();
+        	break;
         }
         return super.onOptionsItemSelected(item);
     }
