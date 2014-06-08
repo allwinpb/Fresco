@@ -71,6 +71,10 @@ public class AddEditActivity extends ActionBarActivity {
 		editBtn.setOnClickListener(editHandler);
 		galleryBtn.setOnClickListener(galleryHandler);
 		cameraBtn.setOnClickListener(cameraHandler);
+		
+		if(newEdit == true) {
+			//TODO: populate card's content to the GUI
+		}
 	}
 	
 	View.OnClickListener frontHandler = new View.OnClickListener(){ 
