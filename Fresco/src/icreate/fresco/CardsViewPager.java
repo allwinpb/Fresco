@@ -63,7 +63,5 @@ public class CardsViewPager extends FragmentActivity {
 			}
 			
 		});
-	}
-	
-	
+	}	
 }

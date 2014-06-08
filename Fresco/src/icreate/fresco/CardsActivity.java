@@ -79,7 +79,7 @@ public class CardsActivity extends Fragment {
 		editButton = (Button) view.findViewById(R.id.editButton);
 		reviewButton = (Button) view.findViewById(R.id.reviewButton);
 		
-		deckTextView.setText(deck.getName());
+		//TODO: deckTextView.setText();
 		//TODO: lastupdated
 	}
 	
