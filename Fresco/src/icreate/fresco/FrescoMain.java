@@ -6,34 +6,44 @@ import android.app.Activity;
 import android.app.ListActivity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.view.ViewPager;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
-public class FrescoMain extends Activity {
+public class FrescoMain extends ListActivity {
 	private ArrayList<String> category;
-	private ListView lv;
+	//private ListView lv;
 	private ArrayAdapter<String> adapter;
 	
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_fresco_main);
-        lv = (ListView)findViewById(R.id.list_view);
+        //setContentView(R.layout.activity_fresco_main);
+        //lv = (ListView)findViewById(R.id.list_view);
         category = new ArrayList<String>();
         init();
         adapter = new ArrayAdapter<String>(FrescoMain.this, android.R.layout.simple_list_item_1, category);
-        lv.setAdapter(adapter);
-        //setListAdapter(new ArrayAdapter<String>(FrescoMain.this, android.R.layout.simple_list_item_1, category));
+        //lv.setAdapter(adapter);
+        setListAdapter(adapter);
 
     }
-    
+    @Override
+    protected void onListItemClick(ListView l, View v, int position, long id) {
+    	// TODO Auto-generated method stub
+    	super.onListItemClick(l, v, position, id);
+    	Intent intent = new Intent(this, CardsViewPager.class);
+    	startActivity(intent);
+    }
     public void init(){
     	category.add("Friends");
     	category.add("Words");
     }
     @Override
+    
     public boolean onCreateOptionsMenu(Menu menu) {
         
         // Inflate the menu; this adds items to the action bar if it is present.

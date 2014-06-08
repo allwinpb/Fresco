@@ -7,5 +7,5 @@
     <string name="add_category">add</string>
     <string name="remove_category">remove</string>
     <string name="search_category">search</string>
-
+    <string name="hello_world">Hello</string>
 </resources>
