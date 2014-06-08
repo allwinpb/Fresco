@@ -16,7 +16,7 @@
         android:background="#e74c3c" >
 
         <ImageButton
-            android:id="@+id/backButton"
+            android:id="@+id/returnBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="0.20"
@@ -38,7 +38,7 @@
             android:textSize="25sp" />
 
         <ImageButton
-            android:id="@+id/imageButton2"
+            android:id="@+id/doneBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="0.20"
