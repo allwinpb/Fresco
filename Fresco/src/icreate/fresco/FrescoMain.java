@@ -18,10 +18,12 @@ public class FrescoMain extends ListActivity {
 	private ArrayList<String> category;
 	//private ListView lv;
 	private ArrayAdapter<String> adapter;
+	SqliteHelper helper;
 	
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        helper = new SqliteHelper(this);
         //setContentView(R.layout.activity_fresco_main);
         //lv = (ListView)findViewById(R.id.list_view);
         category = new ArrayList<String>();
