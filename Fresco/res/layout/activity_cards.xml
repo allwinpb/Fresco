@@ -1,0 +1,93 @@
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="20sp"
+        android:layout_marginRight="20sp" >
+
+         <TextView
+              android:id="@+id/deckTextView"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_alignParentLeft="true"
+              android:text="Category 1"
+              android:layout_weight="1"
+              android:gravity="left"
+              android:textSize="25sp" />
+           
+         <TextView
+            android:id="@+id/lastUpdatedTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="last updated"
+            android:layout_weight="1"
+            android:gravity="right"
+            android:textSize="12sp" />
+
+    </TableRow>
+    
+     <TableRow
+    	android:layout_width="match_parent"
+    	android:layout_height="0dp"
+    	android:layout_weight="1"  >
+        
+        <ViewFlipper 
+			android:layout_width="match_parent"
+			android:layout_height="match_parent"
+			android:padding="30dip"
+			android:id="@+id/viewFlipper1"
+			android:gravity="center_vertical"
+			android:clickable="true" />
+        
+    </TableRow>
+
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        android:padding="0dp" 
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="20dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp">
+        
+        <ImageButton
+            android:id="@+id/addButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@android:color/transparent" 
+            android:src="@drawable/ic_input_add" />
+        
+        <ImageButton
+            android:id="@+id/deleteButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@android:color/transparent" 
+            android:src="@drawable/ic_delete" />
+        
+        <ImageButton
+            android:id="@+id/editButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@android:color/transparent" 
+            android:src="@drawable/edit_query" />
+        
+        <ImageButton
+            android:id="@+id/reviewButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@android:color/transparent" 
+            android:src="@drawable/ic_menu_view" />
+        
+    </TableRow>
+    
+  </TableLayout>
+
