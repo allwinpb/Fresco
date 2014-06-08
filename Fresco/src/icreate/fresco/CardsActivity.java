@@ -1,10 +1,10 @@
 package icreate.fresco;
 
 import icreate.fresco.Card.Side;
-
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -22,7 +22,8 @@ public class CardsActivity extends Fragment {
 	
 	Deck deck;
 	Card currentCard;
-	int index;
+	int cardID;
+	int deckID;
 	
 	TextView deckTextView;
 	TextView lastUpdatedTextView;
@@ -46,8 +47,8 @@ public class CardsActivity extends Fragment {
 		super.onCreate(savedInstanceState);
 		
 		deck = new Deck("oh la la"); //TODO: get deck from database by its deck id
-		index = getArguments().getInt(Constant.CARD_ID);
-		currentCard = deck.get(index);
+		cardID = getArguments().getInt(Constant.CARD_ID);
+		currentCard = deck.get(cardID);
 	}
 
 	@Override
@@ -148,7 +149,12 @@ public class CardsActivity extends Fragment {
 		}};
 	
 	private void addCard() {
-		//TODO
+		Intent intent = new Intent(getActivity(), AddEditActivity.class);
+		intent.putExtra(Constant.NEW_EDIT, false);
+		intent.putExtra(Constant.DECK_ID, deckID);
+		intent.putExtra(Constant.CARD_ID, -1);
+		
+		startActivity(intent);
 	}
 	
 	private void deleteCard(Card currentCard) {
@@ -181,7 +187,12 @@ public class CardsActivity extends Fragment {
 	}
 	
 	private void editCard(Card currentCard) {
-		//TODO
+		Intent intent = new Intent(getActivity(), AddEditActivity.class);
+		intent.putExtra(Constant.NEW_EDIT, true);
+		intent.putExtra(Constant.DECK_ID, deckID);
+		intent.putExtra(Constant.CARD_ID, cardID);
+		
+		startActivity(intent);
 	}
 	
 	private void reviewDeck() {
