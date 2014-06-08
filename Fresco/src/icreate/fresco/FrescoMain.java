@@ -36,6 +36,7 @@ public class FrescoMain extends ListActivity {
     	// TODO Auto-generated method stub
     	super.onListItemClick(l, v, position, id);
     	Intent intent = new Intent(this, CardsViewPager.class);
+    	intent.putExtra(Constant.DECK_ID, position);
     	startActivity(intent);
     }
     public void init(){
