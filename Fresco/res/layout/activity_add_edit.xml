@@ -1,0 +1,147 @@
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#d35400"
+    android:paddingBottom="0dp"
+    android:paddingLeft="0dp"
+    android:paddingRight="0dp"
+    android:paddingTop="0dp"
+    tools:context="com.example.editpage.MainActivity$PlaceholderFragment" >
+
+    <LinearLayout
+        android:id="@+id/navigationPanel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="#e74c3c" >
+
+        <ImageButton
+            android:id="@+id/backButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.20"
+            android:background="#e74c3c"
+            android:paddingBottom="10dp"
+            android:paddingTop="10dp"
+            android:src="@drawable/back" />
+
+        <TextView
+            android:id="@+id/textView1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.20"
+            android:gravity="center"
+            android:paddingBottom="10dp"
+            android:paddingTop="10dp"
+            android:text="CATEGORY"
+            android:textColor="#fff"
+            android:textSize="25sp" />
+
+        <ImageButton
+            android:id="@+id/imageButton2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.20"
+            android:background="#e74c3c"
+            android:paddingBottom="10dp"
+            android:paddingTop="10dp"
+            android:src="@drawable/done" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/sidePanel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <Button
+            android:id="@+id/frontBtn"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.60"
+            android:background="#27ae60"
+            android:text="FRONT"
+            android:textColor="#fff"
+            android:textSize="25sp" />
+
+        <Button
+            android:id="@+id/backBtn"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.60"
+            android:background="#d35400"
+            android:text="BACK"
+            android:textColor="#fff"
+            android:textSize="25sp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/contentPanel"
+        android:layout_width="match_parent"
+        android:layout_height="292dp"
+        android:layout_weight="0.19"
+        android:background="#27ae60" >
+
+        <EditText
+            android:id="@+id/editText"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:layout_weight="1"
+            android:ems="10"
+            android:textColor="#fff"
+            android:textSize="25sp" >
+
+            <requestFocus />
+        </EditText>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/optionsPanel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" >
+
+        <ImageButton
+            android:id="@+id/textBtn"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.20"
+            android:background="#27ae60"
+            android:paddingBottom="5dp"
+            android:paddingTop="5dp"
+            android:src="@drawable/text" />
+
+        <ImageButton
+            android:id="@+id/editBtn"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.20"
+            android:background="#d35400"
+            android:paddingBottom="5dp"
+            android:paddingTop="5dp"
+            android:src="@drawable/edit" />
+
+        <ImageButton
+            android:id="@+id/galleryBtn"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.20"
+            android:background="#d35400"
+            android:paddingBottom="5dp"
+            android:paddingTop="5dp"
+            android:src="@drawable/gallery" />
+
+        <ImageButton
+            android:id="@+id/cameraBtn"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.20"
+            android:background="#d35400"
+            android:paddingBottom="5dp"
+            android:paddingTop="5dp"
+            android:src="@drawable/camera" />
+
+    </LinearLayout>
+
+</TableLayout>
