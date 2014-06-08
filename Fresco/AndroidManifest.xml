@@ -30,6 +30,10 @@
             android:name="icreate.fresco.CardsViewPager"
             android:label="@string/app_name" >
         </activity>
+        <activity
+            android:name="com.newthinktank.frescoedit.AddEditActivity"
+            android:label="@string/app_name" >
+         </activity>
     </application>
 
 </manifest>
