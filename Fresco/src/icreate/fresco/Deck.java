@@ -6,10 +6,23 @@ import java.util.List;
 public class Deck {
 	private String _name;
 	List<Card> _cards;
+	int _deckID;
 	
 	public Deck(String name){
 		_name = name;
 		_cards = new ArrayList<Card>();
+	}
+	
+	public int getDeckID() {
+		return _deckID;
+	}
+	
+	public void setDeckID(int id) {
+		_deckID = id;
+	}
+	
+	public String getDeckName() {
+		return _name;
 	}
 	
 	public int getCardCount(){
@@ -26,6 +39,14 @@ public class Deck {
 	
 	public void addCard(Card card){
 		_cards.add(card);
+	}
+	
+	boolean isContain(int cardID) {
+		for(Card card: _cards) {
+			if(card.getCardID() == cardID) 
+				return true;
+		}
+		return false;
 	}
 	
 	@Override
