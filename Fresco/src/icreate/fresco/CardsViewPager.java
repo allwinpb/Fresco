@@ -38,13 +38,8 @@ public class CardsViewPager extends FragmentActivity {
 
 			@Override
 			public Fragment getItem(int position) {
-<<<<<<< HEAD
-				//Card card = deck.get(position);
-				return CardsActivity.createFragment(position);
-=======
 				Card card = deck.get(position);
 				return CardsActivity.createFragment(card.getCardID());
->>>>>>> f53639c41271b9aabefa64f82aceb28cce2d0981
 			}
 
 			@Override
