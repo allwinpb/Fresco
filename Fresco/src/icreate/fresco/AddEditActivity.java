@@ -18,8 +18,10 @@ public class AddEditActivity extends ActionBarActivity {
 	public static final int ORANGE = 0xFFD35400;
 	
 	int deckID;
-	int cardID;
+	Card card;
 	boolean newEdit;
+	
+	private SqliteHelper database;
 	
 	Button frontBtn;
 	Button backBtn;
@@ -36,11 +38,16 @@ public class AddEditActivity extends ActionBarActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_add_edit);
+		database = FrescoMain.getDatabase();
 		
 		Intent receiveIntent = getIntent();
+		newEdit = receiveIntent.getBooleanExtra(Constant.NEW_EDIT, false);
 		deckID  = receiveIntent.getIntExtra(Constant.DECK_ID, 1);
-		cardID  = receiveIntent.getIntExtra(Constant.CARD_ID, 1);
-		newEdit = receiveIntent.getBooleanExtra(Constant.NEW_EDIT, false); 
+		if(newEdit == true) {
+			int cardID = receiveIntent.getIntExtra(Constant.CARD_ID, 1);
+			card = database.getCard(deckID, cardID);
+		}
+		 
 		
 		frontBtn 	= (Button) findViewById(R.id.frontBtn);
 		backBtn  	= (Button) findViewById(R.id.backBtn);

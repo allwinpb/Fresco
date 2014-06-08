@@ -1,5 +1,6 @@
 package icreate.fresco;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -10,19 +11,26 @@ import android.support.v4.view.ViewPager.OnPageChangeListener;
 
 public class CardsViewPager extends FragmentActivity {
 
-	Deck deck;
-	ViewPager viewPager;
+	private static Deck deck;
+	private ViewPager viewPager;
+	private SqliteHelper database;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		database = FrescoMain.getDatabase();
+		
+		
+		Intent intent = getIntent();
+		String deckName = intent.getStringExtra(Constant.DECK_NAME);
+		int deckID = intent.getIntExtra(Constant.DECK_ID, -1);
 		
 		viewPager = new ViewPager(this);
 		viewPager.setId(R.id.viewPager);
 		
 		this.setContentView(viewPager);
 		
-		deck = new Deck("oh la la"); //TODO: get deck from database
+		deck = database.getDeck(deckID, deckName);
 		
 		FragmentManager manager = getSupportFragmentManager();
 		
@@ -30,7 +38,8 @@ public class CardsViewPager extends FragmentActivity {
 
 			@Override
 			public Fragment getItem(int position) {
-				return CardsActivity.createFragment(position);
+				Card card = deck.get(position);
+				return CardsActivity.createFragment(card.getCardID());
 			}
 
 			@Override
@@ -63,4 +72,8 @@ public class CardsViewPager extends FragmentActivity {
 			
 		});
 	}	
+	
+	public static Deck getDeck() {
+		return deck;
+	}
 }

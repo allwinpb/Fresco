@@ -119,6 +119,18 @@ public class SqliteHelper extends SQLiteOpenHelper {
 		return result;
 	}
 	
+	public void deleteDeck(int deckID) {
+		SQLiteDatabase database = this.getWritableDatabase();
+		
+		String deckQuery = "DELETE FROM " + TABLE_DECK + " WHERE " + DECK_ID + " = " + deckID;
+		database.execSQL(deckQuery);
+		
+		String cardQuery = "DELETE FROM " + TABLE_CARD + " WHERE " + CARD_DECK_ID + " = " + deckID;
+		database.execSQL(cardQuery);
+		
+		database.close();
+	}
+	
 	public Deck getDeck(int deckID, String deckName) {
 		SQLiteDatabase database = this.getReadableDatabase();
 		Cursor cursor = database.rawQuery(TABLE_CARD_LOAD, null);
@@ -182,6 +194,15 @@ public class SqliteHelper extends SQLiteOpenHelper {
 		database.close();
 		
 		return result;
+	}
+	
+	public void deleteCard(int cardID) {
+		SQLiteDatabase database = this.getWritableDatabase();
+		String query = "DELETE FROM " + TABLE_CARD + " WHERE " + CARD_ID + " = " + cardID;
+		
+		database.execSQL(query);
+		
+		database.close();
 	}
 	
 	public Card getCard(int deckID, int cardID) {

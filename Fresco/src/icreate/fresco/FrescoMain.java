@@ -18,7 +18,7 @@ public class FrescoMain extends ListActivity {
 	private ArrayList<String> category;
 	//private ListView lv;
 	private ArrayAdapter<String> adapter;
-	SqliteHelper helper;
+	static SqliteHelper helper;
 	
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +33,11 @@ public class FrescoMain extends ListActivity {
         setListAdapter(adapter);
 
     }
+    
+    public static SqliteHelper getDatabase() {
+    	return helper;
+    }
+    
     @Override
     protected void onListItemClick(ListView l, View v, int position, long id) {
     	// TODO Auto-generated method stub

@@ -33,6 +33,14 @@ public class Deck {
 		return _cards.get(index);
 	}
 	
+	public Card getCard(int cardID) {
+		for(Card card:_cards) {
+			if(card.getCardID() == cardID)
+				return card;
+		}
+		return null;
+	}
+	
 	public List<Card> getAll(){
 		return _cards;
 	}
