@@ -1,6 +1,7 @@
 package icreate.fresco;
 
 public class Card {
+	int _cardID;
 	Type _frontType;
 	String _frontContent;
 	Type _backType;
@@ -22,6 +23,14 @@ public class Card {
 		_frontContent = "";
 		_backType = Type.TEXT;
 		_backContent = "";
+	}
+	
+	public int getCardID() {
+		return _cardID;
+	}
+	
+	public void setCardID(int id) {
+		_cardID = id;
 	}
 	
 	public Type getType(Side side){

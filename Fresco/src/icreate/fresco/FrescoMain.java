@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.ListView;
 
 public class FrescoMain extends ListActivity {
+<<<<<<< HEAD
 	private ArrayList<Deck> listDeck = new ArrayList<Deck>();
 	//private ArrayAdapter<String> adapter;
 	//private static ArrayList<Deck> listDeck;
@@ -86,6 +87,51 @@ public class FrescoMain extends ListActivity {
 	@Override
 
 	public boolean onCreateOptionsMenu(Menu menu) {
+=======
+	private ArrayList<String> category;
+	//private ListView lv;
+	private ArrayAdapter<String> adapter;
+	static SqliteHelper helper;
+	
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        helper = new SqliteHelper(this);
+        //setContentView(R.layout.activity_fresco_main);
+        //lv = (ListView)findViewById(R.id.list_view);
+        category = new ArrayList<String>();
+        init();
+        adapter = new ArrayAdapter<String>(FrescoMain.this, android.R.layout.simple_list_item_1, category);
+        //lv.setAdapter(adapter);
+        setListAdapter(adapter);
+
+    }
+    
+    public static SqliteHelper getDatabase() {
+    	return helper;
+    }
+    
+    @Override
+    protected void onListItemClick(ListView l, View v, int position, long id) {
+    	// TODO Auto-generated method stub
+    	super.onListItemClick(l, v, position, id);
+    	Intent intent = new Intent(this, CardsViewPager.class);
+    	intent.putExtra(Constant.DECK_ID, position);
+    	startActivity(intent);
+    }
+    public void init(){
+    	category.add("Friends");
+    	category.add("Words");
+    }
+    @Override
+    
+    public boolean onCreateOptionsMenu(Menu menu) {
+        
+        // Inflate the menu; this adds items to the action bar if it is present.
+    	getMenuInflater().inflate(R.menu.main, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+>>>>>>> f53639c41271b9aabefa64f82aceb28cce2d0981
 
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.main, menu);

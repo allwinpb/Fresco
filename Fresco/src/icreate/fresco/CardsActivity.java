@@ -23,7 +23,8 @@ public class CardsActivity extends Fragment {
 	Deck deck;
 	Card currentCard;
 	int cardID;
-	int deckID;
+	
+	private SqliteHelper database;
 	
 	TextView deckTextView;
 	TextView lastUpdatedTextView;
@@ -45,10 +46,11 @@ public class CardsActivity extends Fragment {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		database = FrescoMain.getDatabase();
 		
-		deck = new Deck("oh la la"); //TODO: get deck from database by its deck id
+		deck = CardsViewPager.getDeck();
 		cardID = getArguments().getInt(Constant.CARD_ID);
-		currentCard = deck.get(cardID);
+		currentCard = deck.getCard(cardID);
 	}
 
 	@Override
@@ -80,7 +82,7 @@ public class CardsActivity extends Fragment {
 		editButton = (Button) view.findViewById(R.id.editButton);
 		reviewButton = (Button) view.findViewById(R.id.reviewButton);
 		
-		//TODO: deckTextView.setText();
+		deckTextView.setText(deck.getDeckName());
 		//TODO: lastupdated
 	}
 	
@@ -151,7 +153,7 @@ public class CardsActivity extends Fragment {
 	private void addCard() {
 		Intent intent = new Intent(getActivity(), AddEditActivity.class);
 		intent.putExtra(Constant.NEW_EDIT, false);
-		intent.putExtra(Constant.DECK_ID, deckID);
+		intent.putExtra(Constant.DECK_ID, deck.getDeckID());
 		intent.putExtra(Constant.CARD_ID, -1);
 		
 		startActivity(intent);
@@ -166,7 +168,7 @@ public class CardsActivity extends Fragment {
 			public void onClick(DialogInterface dialog, int which) {
 				switch(which) {
 					case Dialog.BUTTON_POSITIVE:
-						//TODO: delete that shit
+						database.deleteCard(cardID);
 						dialog.cancel();
 						break;
 					case Dialog.BUTTON_NEGATIVE:
@@ -189,7 +191,7 @@ public class CardsActivity extends Fragment {
 	private void editCard(Card currentCard) {
 		Intent intent = new Intent(getActivity(), AddEditActivity.class);
 		intent.putExtra(Constant.NEW_EDIT, true);
-		intent.putExtra(Constant.DECK_ID, deckID);
+		intent.putExtra(Constant.DECK_ID, deck.getDeckID());
 		intent.putExtra(Constant.CARD_ID, cardID);
 		
 		startActivity(intent);
