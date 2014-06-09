@@ -105,6 +105,7 @@ public class FrescoMain extends ListActivity {
 		// TODO Auto-generated method stub
 		super.onActivityResult(requestCode, resultCode, data);
 		Deck tmp = new Deck(data.getStringExtra("category"));
+		database.insertDeck(data.getStringExtra("category"));
 		listDeck.add(tmp);
 		m_adapter.notifyDataSetChanged();
 
