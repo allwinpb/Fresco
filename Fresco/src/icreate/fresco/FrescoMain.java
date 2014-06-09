@@ -20,17 +20,8 @@ public class FrescoMain extends ListActivity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		//setContentView(R.layout.activity_fresco_main);
+		super.onCreate(savedInstanceState);;
 		database = new SqliteHelper(this);
-		//lv = (ListView)findViewById(R.id.list_view);
-		//category = new ArrayList<String>();
-		//listDeck = new ArrayList<Deck>();
-		//createDeckList();
-		//adapter = new ArrayAdapter<String>(FrescoMain.this, android.R.layout.simple_list_item_1, category);
-		//listDeck = getfromdatabase
-		//lv.setAdapter(adapter);
-		//setListAdapter(adapter);
 		m_adapter = new ItemAdapter(this, R.layout.list_deck, listDeck);
 		setListAdapter(m_adapter);
 		viewParts = new Runnable(){
@@ -55,11 +46,6 @@ public class FrescoMain extends ListActivity {
 	        setListAdapter(m_adapter);
 		}
 	};
-
-	//public static ArrayList<Deck> getAllDecks() {
-	//	return listDeck;
-	//}
-
 	private void createDeckList() {
 		// TODO Auto-generated method stub
 		Card card = new Card();
