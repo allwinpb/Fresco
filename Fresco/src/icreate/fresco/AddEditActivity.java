@@ -1,15 +1,18 @@
 package icreate.fresco;
 
-import android.support.v7.app.ActionBarActivity;
-import android.support.v4.app.Fragment;
+import java.util.ArrayList;
+
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 
 public class AddEditActivity extends ActionBarActivity {
@@ -17,11 +20,22 @@ public class AddEditActivity extends ActionBarActivity {
 	public static final int GREEN  = 0xFF27AE60;
 	public static final int ORANGE = 0xFFD35400;
 	
+	public static final int textIndex 	 = 0;
+	public static final int editIndex 	 = 1;
+	public static final int galleryIndex = 2;
+	public static final int cameraIndex  = 3;
+	
+	int[] buttonOptionsArrayFront = {0 ,0 ,0 ,0};
+	int[] buttonOptionsArrayBack  = {0 ,0 ,0 ,0};
+	
 	int deckID;
 	Card card;
 	boolean newEdit;
 	
 	private SqliteHelper database;
+	
+	String cardFrontString = "";
+	String cardBackString  = "";
 	
 	Button frontBtn;
 	Button backBtn;
@@ -34,6 +48,8 @@ public class AddEditActivity extends ActionBarActivity {
 	ImageButton galleryBtn;
 	ImageButton cameraBtn;
 	
+	EditText cardEditText;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -43,9 +59,33 @@ public class AddEditActivity extends ActionBarActivity {
 		Intent receiveIntent = getIntent();
 		newEdit = receiveIntent.getBooleanExtra(Constant.NEW_EDIT, false);
 		deckID  = receiveIntent.getIntExtra(Constant.DECK_ID, 1);
-		if(newEdit == true) {
+		if( newEdit == true ) {
 			int cardID = receiveIntent.getIntExtra(Constant.CARD_ID, 1);
 			card = database.getCard(deckID, cardID);
+		}
+		
+		switch(card._frontType){
+		
+			case TEXT	: {
+				buttonOptionsArrayFront[textIndex] 	= 1; 
+				cardFrontString = card._frontContent;
+				break;
+			}
+			
+			case IMAGE	: buttonOptionsArrayFront[editIndex]    = 1; break;
+			case DOODLE	: buttonOptionsArrayFront[galleryIndex] = 1; break;
+		}
+		
+		switch(card._backType){
+		
+			case TEXT	: {
+				buttonOptionsArrayBack[textIndex] 	= 1; 
+				cardBackString = card._backContent;
+				break;
+			}
+			
+			case IMAGE	: buttonOptionsArrayBack[editIndex]    	= 1; break;
+			case DOODLE	: buttonOptionsArrayBack[galleryIndex] 	= 1; break;
 		}
 		 
 		
@@ -59,6 +99,8 @@ public class AddEditActivity extends ActionBarActivity {
 		editBtn  	= (ImageButton) findViewById(R.id.editBtn);
 		galleryBtn	= (ImageButton) findViewById(R.id.galleryBtn);
 		cameraBtn  	= (ImageButton) findViewById(R.id.cameraBtn);
+		
+		cardEditText = (EditText) findViewById(R.id.cardEditText);
 		
 				
 		frontBtn.setOnClickListener(frontHandler);
@@ -74,6 +116,7 @@ public class AddEditActivity extends ActionBarActivity {
 		
 		if(newEdit == true) {
 			//TODO: populate card's content to the GUI
+			
 		}
 	}
 	
