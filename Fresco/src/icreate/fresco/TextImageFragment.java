@@ -48,6 +48,11 @@ public class TextImageFragment extends Fragment {
 			Bundle savedInstanceState) {
 		
 		View view = setUpTextImageView(content, type);
+		if(view == null){
+			TextView text = new TextView(getActivity());
+			text.setText("Oh la la");
+			view = text;
+		}
 		
 		if(container == null) {
 			LinearLayout linearLayout = new LinearLayout(getActivity());

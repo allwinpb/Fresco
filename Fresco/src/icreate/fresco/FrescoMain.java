@@ -21,7 +21,7 @@ public class FrescoMain extends ListActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_fresco_main);
+		//setContentView(R.layout.activity_fresco_main);
 		database = new SqliteHelper(this);
 		//lv = (ListView)findViewById(R.id.list_view);
 		//category = new ArrayList<String>();
@@ -75,13 +75,15 @@ public class FrescoMain extends ListActivity {
 		Deck deck1 = new Deck("two");
 		deck1._cards.add(card1);
 		listDeck.add(deck1);
+		
 	}
 	@Override
 	protected void onListItemClick(ListView l, View v, int position, long id) {
 		// TODO Auto-generated method stub
 		super.onListItemClick(l, v, position, id);
 		Intent intent = new Intent(this, CardsViewPager.class);
-		intent.putExtra(Constant.DECK_ID, position);
+		Deck deck = listDeck.get(position);
+		intent.putExtra(Constant.DECK_ID, deck.getDeckID());
 		startActivity(intent);
 	}
     public static SqliteHelper getDatabase() {

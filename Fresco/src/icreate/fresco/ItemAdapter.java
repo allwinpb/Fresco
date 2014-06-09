@@ -11,10 +11,13 @@ import android.widget.TextView;
 
 public class ItemAdapter extends ArrayAdapter<Deck> {
 	private ArrayList<Deck> objects;
+	
 	public ItemAdapter(Context context, int textViewResourceId, ArrayList<Deck> objects) {
 		super(context, textViewResourceId, objects);
 		this.objects = objects;
 	}
+	
+	
 	public View getView(int position, View convertView, ViewGroup parent){
 
 		// assign the view we are converting to a local variable

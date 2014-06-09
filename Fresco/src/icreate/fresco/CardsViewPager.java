@@ -20,7 +20,6 @@ public class CardsViewPager extends FragmentActivity {
 		super.onCreate(savedInstanceState);
 		database = FrescoMain.getDatabase();
 		
-		
 		Intent intent = getIntent();
 		String deckName = intent.getStringExtra(Constant.DECK_NAME);
 		int deckID = intent.getIntExtra(Constant.DECK_ID, -1);
@@ -32,45 +31,64 @@ public class CardsViewPager extends FragmentActivity {
 		
 		deck = database.getDeck(deckID, deckName);
 		
-		FragmentManager manager = getSupportFragmentManager();
+		if(deck.getCardCount() == 0){
+			
+			Intent goIntent = new Intent(CardsViewPager.this, AddEditActivity.class);
+			goIntent.putExtra(Constant.NEW_EDIT, false);
+			goIntent.putExtra(Constant.DECK_ID, deck.getDeckID());
+			goIntent.putExtra(Constant.CARD_ID, -1);
+			
+			startActivity(goIntent);
+			
+		} else {
 		
-		viewPager.setAdapter(new FragmentStatePagerAdapter(manager){
-
-			@Override
-			public Fragment getItem(int position) {
-				Card card = deck.get(position);
-				return CardsActivity.createFragment(card.getCardID());
-			}
-
-			@Override
-			public int getCount() {
-				return deck.getCardCount();
-			}
-		});
-		
-		viewPager.setCurrentItem(0);
-		setTitle("Card #1");
-		
-		viewPager.setOnPageChangeListener(new OnPageChangeListener(){
-
-			@Override
-			public void onPageScrollStateChanged(int arg0) {
-				setTitle("Card #" + (arg0+1));
-			}
-
-			@Override
-			public void onPageScrolled(int arg0, float arg1, int arg2) {
-				
-				
-			}
-
-			@Override
-			public void onPageSelected(int arg0) {
-				
-				
+			FragmentManager manager = getSupportFragmentManager();
+			
+			viewPager.setAdapter(new FragmentStatePagerAdapter(manager){
+	
+				@Override
+				public Fragment getItem(int position) {
+					Card card = deck.get(position);
+					return CardsActivity.createFragment(card.getCardID());
+				}
+	
+				@Override
+				public int getCount() {
+					return deck.getCardCount();
+				}
+			});
+			
+			int cardId = getIntent().getIntExtra(Constant.CARD_ID, 0);
+			
+			for(int i=0; i<deck.getCardCount(); i++) {
+				if(deck.get(i).getCardID() == cardId) {
+					viewPager.setCurrentItem(i);
+					setTitle("Note #" + i);
+					break;
+				}
 			}
 			
-		});
+			viewPager.setOnPageChangeListener(new OnPageChangeListener(){
+	
+				@Override
+				public void onPageScrollStateChanged(int arg0) {
+					setTitle("Card #" + (arg0+1));
+				}
+	
+				@Override
+				public void onPageScrolled(int arg0, float arg1, int arg2) {
+					
+					
+				}
+	
+				@Override
+				public void onPageSelected(int arg0) {
+					
+					
+				}
+				
+			});
+		}
 	}	
 	
 	public static Deck getDeck() {
