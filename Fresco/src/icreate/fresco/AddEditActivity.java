@@ -63,6 +63,8 @@ public class AddEditActivity extends ActionBarActivity {
 		if( newEdit == true ) {
 			int cardID = receiveIntent.getIntExtra(Constant.CARD_ID, 1);
 			card = database.getCard(deckID, cardID);
+		} else {
+			card = new Card();
 		}
 		
 		switch(card._frontType){
