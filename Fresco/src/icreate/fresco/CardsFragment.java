@@ -18,7 +18,7 @@ import android.widget.ViewAnimator;
 import com.tekle.oss.android.animation.AnimationFactory;
 import com.tekle.oss.android.animation.AnimationFactory.FlipDirection;
 
-public class CardsActivity extends Fragment {
+public class CardsFragment extends Fragment {
 	
 	Deck deck;
 	Card currentCard;
@@ -33,11 +33,11 @@ public class CardsActivity extends Fragment {
 	Button editButton;
 	Button reviewButton;
 	
-	public static CardsActivity createFragment(int index) {
+	public static CardsFragment createFragment(int index) {
 		Bundle bundle = new Bundle();
 		bundle.putInt(Constant.CARD_ID, index);
 		
-		CardsActivity fragment = new CardsActivity();
+		CardsFragment fragment = new CardsFragment();
 		fragment.setArguments(bundle);
 		
 		return fragment;
@@ -102,7 +102,6 @@ public class CardsActivity extends Fragment {
             
             getActivity().getSupportFragmentManager().beginTransaction()
             	.add(R.id.viewFlipper1, backFragment).commit();
-	        
 	    }
 		
 		viewAnimator1.setOnClickListener(new OnClickListener(){
