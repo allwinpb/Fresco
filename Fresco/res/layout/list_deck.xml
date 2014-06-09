@@ -2,15 +2,44 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+<<<<<<< HEAD
     android:orientation="vertical"
     android:padding="5dp" >
+=======
+     android:background="#11FF88"
+    android:orientation="horizontal" >
+	<ImageView 
+	    android:id="@+id/category"
+	    android:layout_width="50dp"
+	    android:layout_height="50dp"
+	    android:layout_margin="5dp"
+	    android:padding="5dp"
+	    android:layout_gravity="center_vertical"
+	    android:background="@drawable/category"/>
+>>>>>>> 40a712a7307cbe318b1c6fdce5a1df9d67f0dedd
 
     <TextView
         android:id="@+id/deck"
-        android:layout_width="fill_parent"
+        android:layout_width="190dp"
         android:layout_height="wrap_content"
+<<<<<<< HEAD
         android:text="TextView"
         android:textSize = "20sp"
         android:layout_marginTop="15dp" />
 
+=======
+        android:gravity="center_horizontal"
+        android:layout_gravity="center_vertical"
+        android:padding="10dp"
+        android:text="TextView"  
+        android:textSize="20dp" />
+    <ImageView 
+	    android:id="@+id/category"
+	    android:layout_width="50dp"
+	    android:layout_height="50dp"
+	    android:layout_margin="5dp"
+	    android:padding="5dp"
+	    android:layout_gravity="center_vertical"
+	    android:background="@drawable/ic_action_next_item"/>
+>>>>>>> 40a712a7307cbe318b1c6fdce5a1df9d67f0dedd
 </LinearLayout>

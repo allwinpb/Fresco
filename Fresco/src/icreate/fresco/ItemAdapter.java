@@ -16,8 +16,6 @@ public class ItemAdapter extends ArrayAdapter<Deck> {
 		super(context, textViewResourceId, objects);
 		this.objects = objects;
 	}
-	
-	
 	public View getView(int position, View convertView, ViewGroup parent){
 
 		// assign the view we are converting to a local variable
@@ -28,13 +26,6 @@ public class ItemAdapter extends ArrayAdapter<Deck> {
 			LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 			v = inflater.inflate(R.layout.list_deck, null);
 		}
-		/*
-		 * Recall that the variable position is sent in as an argument to this method.
-		 * The variable simply refers to the position of the current object in the list. (The ArrayAdapter
-		 * iterates through the list we sent it)
-		 * 
-		 * Therefore, i refers to the current Item object.
-		 */
 		Deck i = objects.get(position);
 
 		if (i != null) {
@@ -44,10 +35,7 @@ public class ItemAdapter extends ArrayAdapter<Deck> {
 				deck.setText(i.toString());
 			}
 		}
-
 		// the view must be returned to our activity
 		return v;
-
 	}
-
 }

@@ -84,12 +84,12 @@
         android:background="#27ae60" >
 
         <EditText
-            android:id="@+id/editText"
+            android:id="@+id/cardEditText"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:gravity="center"
             android:layout_weight="1"
             android:ems="10"
+            android:gravity="center"
             android:textColor="#fff"
             android:textSize="25sp" >
 
