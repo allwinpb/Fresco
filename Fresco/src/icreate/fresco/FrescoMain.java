@@ -22,6 +22,7 @@ public class FrescoMain extends ListActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);;
 		database = new SqliteHelper(this);
+		listDeck = database.getDecks();
 		m_adapter = new ItemAdapter(this, R.layout.list_deck, listDeck);
 		setListAdapter(m_adapter);
 		viewParts = new Runnable(){
@@ -39,7 +40,7 @@ public class FrescoMain extends ListActivity {
 			// create some objects
 			// here is where you could also request data from a server
 			// and then create objects from that data.
-			createDeckList();
+			//createDeckList();
 			m_adapter = new ItemAdapter(FrescoMain.this, R.layout.list_deck, listDeck);
 
 			// display the list.
@@ -72,6 +73,7 @@ public class FrescoMain extends ListActivity {
 		intent.putExtra(Constant.DECK_ID, deck.getDeckID());
 		startActivity(intent);
 	}
+	
     public static SqliteHelper getDatabase() {
     	return database;
     }
