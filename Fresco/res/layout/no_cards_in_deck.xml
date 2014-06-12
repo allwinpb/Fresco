@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>  
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <TableRow
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginRight="20dp" >
+        
+        <ImageButton
+            android:id="@+id/returnButton"
+            android:layout_width="0dp"
+            android:layout_marginLeft="10dp"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            android:layout_weight="0.2"
+            android:src="@drawable/back"/>
+
+         <TextView
+              android:id="@+id/deckTextView"
+              android:layout_width="0dp"
+              android:layout_height="wrap_content"
+              android:layout_gravity="center"
+              android:gravity="center"
+              android:layout_weight="0.8"
+              android:text="Category 1"
+              android:textSize="25sp" /> 
+
+    </TableRow>
+    
+     <TableRow
+    	android:layout_width="wrap_content"
+    	android:layout_height="wrap_content"
+    	android:gravity="center_vertical"
+    	android:layout_marginTop="40dp" 
+    	android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp">
+        
+        
+        <TextView
+            android:layout_width="wrap_content"
+    		android:layout_height="wrap_content"
+            android:id="@+id/deckNameTextView"
+            android:gravity="left"
+            android:text="Category 1 is currently empty. Press add button to add a card."
+            android:textSize="15sp"
+            android:padding="0dp"
+        />      
+         
+    </TableRow>
+    
+    <TableRow
+    	android:layout_width="match_parent"
+    	android:layout_height="wrap_content"
+    	android:gravity="center_horizontal"
+    	android:layout_marginTop="30dp" 
+    	android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp" >
+     
+     	<ImageButton
+            android:layout_width="wrap_content"
+    		android:layout_height="wrap_content"
+    		android:id="@+id/addButton"
+        	android:src="@drawable/add_button"
+        	android:background="@android:color/transparent" />
+     
+     </TableRow>
+    
+  </TableLayout>

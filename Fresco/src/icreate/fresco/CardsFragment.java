@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.ViewAnimator;
 
@@ -27,11 +28,11 @@ public class CardsFragment extends Fragment {
 	private SqliteHelper database;
 	
 	TextView deckTextView;
-	TextView lastUpdatedTextView;
-	Button addButton;
-	Button deleteButton;
-	Button editButton;
-	Button reviewButton;
+	ImageButton addButton;
+	ImageButton deleteButton;
+	ImageButton editButton;
+	ImageButton reviewButton;
+	ImageButton returnButton;
 	
 	public static CardsFragment createFragment(int index) {
 		Bundle bundle = new Bundle();
@@ -57,7 +58,7 @@ public class CardsFragment extends Fragment {
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		
-		View view = inflater.inflate(R.layout.activity_cards, container, false);
+		View view = inflater.inflate(R.layout.fragment_cards, container, false);
 		
 		initializeWidgets(view);
 		setUpListener();
@@ -71,19 +72,19 @@ public class CardsFragment extends Fragment {
 		deleteButton.setOnClickListener(listener);
 		editButton.setOnClickListener(listener);
 		reviewButton.setOnClickListener(listener);
+		returnButton.setOnClickListener(listener);
 	}
 
 	private void initializeWidgets(View view) {
 		
 		deckTextView = (TextView) view.findViewById(R.id.deckTextView);
-		lastUpdatedTextView = (TextView) view.findViewById(R.id.lastUpdatedTextView);
-		addButton = (Button) view.findViewById(R.id.addButton);
-		deleteButton = (Button) view.findViewById(R.id.deleteButton);
-		editButton = (Button) view.findViewById(R.id.editButton);
-		reviewButton = (Button) view.findViewById(R.id.reviewButton);
+		addButton = (ImageButton) view.findViewById(R.id.addButton);
+		deleteButton = (ImageButton) view.findViewById(R.id.deleteButton);
+		editButton = (ImageButton) view.findViewById(R.id.editButton);
+		reviewButton = (ImageButton) view.findViewById(R.id.reviewButton);
+		returnButton = (ImageButton) view.findViewById(R.id.returnButton);
 		
 		deckTextView.setText(deck.getDeckName());
-		//TODO: lastupdated
 	}
 	
 	private void setUpFlippingAnimation() {
@@ -145,6 +146,9 @@ public class CardsFragment extends Fragment {
 				case R.id.reviewButton:
 					reviewDeck();
 					break;
+					
+				case R.id.returnButton:
+					returnToFrescoMain();
 			
 			}
 		}};
@@ -198,6 +202,11 @@ public class CardsFragment extends Fragment {
 	
 	private void reviewDeck() {
 		//TODO
+	}
+	
+	private void returnToFrescoMain() {
+		Intent backIntent = new Intent(getActivity(), FrescoMain.class);
+		startActivity(backIntent);
 	}
 
 }

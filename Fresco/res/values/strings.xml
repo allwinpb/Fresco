@@ -8,4 +8,5 @@
     <string name="remove_category">remove</string>
     <string name="search_category">search</string>
     <string name="hello_world">Hello</string>
+    <string name="no_cards"> is currently empty. Press add button to add a card.</string>
 </resources>

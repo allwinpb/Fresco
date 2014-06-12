@@ -71,6 +71,7 @@ public class FrescoMain extends ListActivity {
 		Intent intent = new Intent(this, CardsViewPager.class);
 		Deck deck = listDeck.get(position);
 		intent.putExtra(Constant.DECK_ID, deck.getDeckID());
+		intent.putExtra(Constant.DECK_NAME, deck.getDeckName());
 		startActivity(intent);
 	}
 	
