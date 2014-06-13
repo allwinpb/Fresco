@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#33FF11"
+    android:orientation="vertical" >
+
+    <TextView
+        android:id="@+id/tvCategory"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:background="#11FF66"
+        android:gravity="center"
+        android:padding="20dp"
+        android:text="@string/NewDeck"
+        android:textSize="30sp" />
+
+    <EditText
+        android:id="@+id/category"
+        android:layout_below="@+id/tvCategory"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_marginTop="100dp"
+        android:ems="10"
+        android:gravity="center_vertical"
+        android:hint="@string/hint"
+        android:padding="20dp" >
+    </EditText>
+
+    <Button
+        android:id="@+id/bMakeCategory"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:onClick="start"
+        android:padding="20dp"
+        android:text="@string/done"
+        android:layout_alignParentBottom="true" />
+
+</RelativeLayout>

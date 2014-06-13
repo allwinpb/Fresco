@@ -9,7 +9,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ListView;
-
+import android.widget.SearchView;
 public class FrescoMain extends ListActivity {
 	private ArrayList<Deck> listDeck = new ArrayList<Deck>();
 	//private ArrayAdapter<String> adapter;
@@ -17,6 +17,7 @@ public class FrescoMain extends ListActivity {
 	private Runnable viewParts;
 	private ItemAdapter m_adapter;
 	private static SqliteHelper database;
+	MenuItem searchItem;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -84,6 +85,7 @@ public class FrescoMain extends ListActivity {
         
         // Inflate the menu; this adds items to the action bar if it is present.
     	getMenuInflater().inflate(R.menu.main, menu);
+    	searchItem = menu.findItem(R.id.search_icon);
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -94,11 +96,11 @@ public class FrescoMain extends ListActivity {
 		// as you specify a parent activity in AndroidManifest.xml.
 		switch(item.getItemId()){
 		case R.id.add_icon:
-			Intent i = new Intent(this, AddCategory.class);
+			Intent i = new Intent(this, AddDeck.class);
 			startActivityForResult(i, 1);
 			break;
 		case R.id.search_icon:
-			onSearchRequested();
+			searchItem.getActionView();
 			break;
 		}
 		return super.onOptionsItemSelected(item);

@@ -9,4 +9,7 @@
     <string name="search_category">search</string>
     <string name="hello_world">Hello</string>
     <string name="no_cards"> is currently empty. Press add button to add a card.</string>
+    <string name="done">Finish</string>
+    <string name="NewDeck">New Deck</string>
+    <string name="hint">Name of the new Deck</string>
 </resources>
