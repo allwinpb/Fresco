@@ -12,4 +12,9 @@
     <string name="done">Finish</string>
     <string name="NewDeck">New Deck</string>
     <string name="hint">Name of the new Deck</string>
+    <string name="cancel">Cancel</string>
+    <string name="dialogTitle">Name your new deck :)</string>
+    <string name="dialogButton">Okay</string>
+    <string name="deckName">Name of the Deck</string>
+
 </resources>

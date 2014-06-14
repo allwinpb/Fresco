@@ -1,15 +1,22 @@
 package icreate.fresco;
 import java.util.ArrayList;
+
 import android.os.Handler;
 import android.os.Message;
 import android.app.ListActivity;
+import android.content.DialogInterface;
+import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.ShareCompat.IntentBuilder;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ListView;
 import android.widget.SearchView;
+import android.app.AlertDialog;
 public class FrescoMain extends ListActivity {
 	private ArrayList<Deck> listDeck = new ArrayList<Deck>();
 	//private ArrayAdapter<String> adapter;
@@ -26,16 +33,55 @@ public class FrescoMain extends ListActivity {
 		listDeck = database.getDecks();
 		m_adapter = new ItemAdapter(this, R.layout.list_deck, listDeck);
 		setListAdapter(m_adapter);
+
+
+		this.getListView().setLongClickable(true);
+		this.getListView().setOnItemLongClickListener(new OnItemLongClickListener() {
+			public boolean onItemLongClick(AdapterView<?> parent, View v, final int position, long id) {
+				AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(FrescoMain.this);
+				dialogBuilder.setTitle("Delete");
+				dialogBuilder.setMessage("Do you want to delete this deck?");
+				
+				
+				dialogBuilder.setNegativeButton("No", new OnClickListener() {
+
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						// TODO Auto-generated method stub
+
+					}
+				});
+				
+				
+				dialogBuilder.setPositiveButton("Yes", new OnClickListener() {
+					@Override
+					public void onClick(DialogInterface arg0, int arg1) {
+						// TODO Auto-generated method stub
+						Deck deck = listDeck.get(position);
+						database.deleteDeck(deck.getDeckID());
+						listDeck.remove(position);
+						m_adapter.notifyDataSetChanged();
+						
+					}
+				});
+
+				dialogBuilder.create().show();
+				return true;
+			}
+		});
+
+
+
 		viewParts = new Runnable(){
 			public void run(){
 				handler.sendEmptyMessage(0);
 			}
 		};
 		Thread thread =  new Thread(null, viewParts, "MagentoBackground");
-        thread.start();
+		thread.start();
 	}
-	 private Handler handler = new Handler()
-	 {
+	private Handler handler = new Handler()
+	{
 		public void handleMessage(Message msg)
 		{
 			// create some objects
@@ -45,7 +91,7 @@ public class FrescoMain extends ListActivity {
 			m_adapter = new ItemAdapter(FrescoMain.this, R.layout.list_deck, listDeck);
 
 			// display the list.
-	        setListAdapter(m_adapter);
+			setListAdapter(m_adapter);
 		}
 	};
 	private void createDeckList() {
@@ -63,7 +109,7 @@ public class FrescoMain extends ListActivity {
 		Deck deck1 = new Deck("two");
 		deck1._cards.add(card1);
 		listDeck.add(deck1);
-		
+
 	}
 	@Override
 	protected void onListItemClick(ListView l, View v, int position, long id) {
@@ -73,21 +119,20 @@ public class FrescoMain extends ListActivity {
 		Deck deck = listDeck.get(position);
 		intent.putExtra(Constant.DECK_ID, deck.getDeckID());
 		intent.putExtra(Constant.DECK_NAME, deck.getDeckName());
-		startActivity(intent);
+		startActivityForResult(intent, 1);
 	}
-	
-    public static SqliteHelper getDatabase() {
-    	return database;
-    }
-    
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        
-        // Inflate the menu; this adds items to the action bar if it is present.
-    	getMenuInflater().inflate(R.menu.main, menu);
-    	searchItem = menu.findItem(R.id.search_icon);
-        return super.onCreateOptionsMenu(menu);
-    }
+	public static SqliteHelper getDatabase() {
+		return database;
+	}
+
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+
+		// Inflate the menu; this adds items to the action bar if it is present.
+		getMenuInflater().inflate(R.menu.main, menu);
+		searchItem = menu.findItem(R.id.search_icon);
+		return super.onCreateOptionsMenu(menu);
+	}
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
@@ -109,12 +154,20 @@ public class FrescoMain extends ListActivity {
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		// TODO Auto-generated method stub
 		super.onActivityResult(requestCode, resultCode, data);
-		Deck tmp = new Deck(data.getStringExtra("category"));
-		database.insertDeck(data.getStringExtra("category"));
-		listDeck.add(tmp);
-		m_adapter.notifyDataSetChanged();
+		if(requestCode == 1){
+			if(resultCode == RESULT_OK){
+				Deck tmp = new Deck(data.getStringExtra("deck"));
+				database.insertDeck(data.getStringExtra("deck"));
+				listDeck.add(tmp);
+				m_adapter.notifyDataSetChanged();
+			}
+			else{
+
+			}
+		}
 
 	}
+
 	/**
 	 * A placeholder fragment containing a simple view.
 
