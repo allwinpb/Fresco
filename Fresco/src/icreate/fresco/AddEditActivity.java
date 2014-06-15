@@ -1,7 +1,6 @@
 package icreate.fresco;
 
-import java.util.ArrayList;
-
+import icreate.fresco.Card.Type;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -25,17 +24,17 @@ public class AddEditActivity extends ActionBarActivity {
 	public static final int galleryIndex = 2;
 	public static final int cameraIndex  = 3;
 	
-	int[] buttonOptionsArrayFront = {0 ,0 ,0 ,0};
-	int[] buttonOptionsArrayBack  = {0 ,0 ,0 ,0};
-	
 	int deckID;
 	Card card;
 	boolean newEdit;
 	
 	private SqliteHelper database;
 	
+	Type cardFrontType = Type.TEXT;
 	String cardFrontString = "";
+	Type cardBackType = Type.TEXT;
 	String cardBackString  = "";
+	
 	
 	Button frontBtn;
 	Button backBtn;
@@ -65,32 +64,7 @@ public class AddEditActivity extends ActionBarActivity {
 			card = database.getCard(deckID, cardID);
 		} else {
 			card = new Card();
-		}
-		
-		switch(card._frontType){
-		
-			case TEXT	: {
-				buttonOptionsArrayFront[textIndex] 	= 1; 
-				cardFrontString = card._frontContent;
-				break;
-			}
-			
-			case IMAGE	: buttonOptionsArrayFront[editIndex]    = 1; break;
-			case DOODLE	: buttonOptionsArrayFront[galleryIndex] = 1; break;
-		}
-		
-		switch(card._backType){
-		
-			case TEXT	: {
-				buttonOptionsArrayBack[textIndex] 	= 1; 
-				cardBackString = card._backContent;
-				break;
-			}
-			
-			case IMAGE	: buttonOptionsArrayBack[editIndex]    	= 1; break;
-			case DOODLE	: buttonOptionsArrayBack[galleryIndex] 	= 1; break;
-		}
-		 
+		} 
 		
 		frontBtn 	= (Button) findViewById(R.id.frontBtn);
 		backBtn  	= (Button) findViewById(R.id.backBtn);
