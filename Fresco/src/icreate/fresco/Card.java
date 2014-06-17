@@ -10,6 +10,7 @@ public class Card {
 	public enum Type {
 		TEXT,
 		IMAGE,
+		CAMERA,
 		DOODLE
 	}
 	

@@ -49,99 +49,37 @@
 
     </LinearLayout>
 
-    <LinearLayout
-        android:id="@+id/sidePanel"
+    <TabHost
+        android:id="@android:id/tabhost"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" >
 
-        <Button
-            android:id="@+id/frontBtn"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.60"
-            android:background="#27ae60"
-            android:text="FRONT"
-            android:textColor="#fff"
-            android:textSize="25sp" />
+        <TabWidget
+        	android:id="@android:id/tabs"
+        	android:orientation="horizontal"
+        	android:layout_width="match_parent"
+        	android:layout_height="wrap_content"
+        	android:layout_weight="0" />
+        
+         <FrameLayout
+        	android:id="@android:id/tabcontent"
+        	android:layout_width="0dp"
+        	android:layout_height="0dp"
+        	android:layout_weight="0" >
+        	
+            <FrameLayout
+					android:id="@+id/tab_front"
+					android:layout_width="match_parent"
+					android:layout_height="match_parent" />
 
-        <Button
-            android:id="@+id/backBtn"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.60"
-            android:background="#d35400"
-            android:text="BACK"
-            android:textColor="#fff"
-            android:textSize="25sp" />
+			<FrameLayout
+				android:id="@+id/tab_back"
+				android:layout_width="match_parent"
+				android:layout_height="match_parent" />
+             
+         </FrameLayout>
+     
 
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/contentPanel"
-        android:layout_width="match_parent"
-        android:layout_height="292dp"
-        android:layout_weight="0.19"
-        android:background="#27ae60" >
-
-        <EditText
-            android:id="@+id/cardEditText"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:ems="10"
-            android:gravity="center"
-            android:textColor="#fff"
-            android:textSize="25sp" >
-
-            <requestFocus />
-        </EditText>
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/optionsPanel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" >
-
-        <ImageButton
-            android:id="@+id/textBtn"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.20"
-            android:background="#27ae60"
-            android:paddingBottom="5dp"
-            android:paddingTop="5dp"
-            android:src="@drawable/text" />
-
-        <ImageButton
-            android:id="@+id/editBtn"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.20"
-            android:background="#d35400"
-            android:paddingBottom="5dp"
-            android:paddingTop="5dp"
-            android:src="@drawable/edit" />
-
-        <ImageButton
-            android:id="@+id/galleryBtn"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.20"
-            android:background="#d35400"
-            android:paddingBottom="5dp"
-            android:paddingTop="5dp"
-            android:src="@drawable/gallery" />
-
-        <ImageButton
-            android:id="@+id/cameraBtn"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.20"
-            android:background="#d35400"
-            android:paddingBottom="5dp"
-            android:paddingTop="5dp"
-            android:src="@drawable/camera" />
-
-    </LinearLayout>
-
+    </TabHost>
+        
 </TableLayout>
