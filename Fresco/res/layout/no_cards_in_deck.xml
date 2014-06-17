@@ -32,7 +32,7 @@
     </TableRow>
     
      <TableRow
-    	android:layout_width="wrap_content"
+    	android:layout_width="match_parent"
     	android:layout_height="wrap_content"
     	android:gravity="center_vertical"
     	android:layout_marginTop="40dp" 
@@ -44,11 +44,13 @@
             android:layout_width="wrap_content"
     		android:layout_height="wrap_content"
             android:id="@+id/deckNameTextView"
-            android:gravity="left"
+            android:gravity="center_horizontal"
             android:text="Category 1 is currently empty. Press add button to add a card."
             android:textSize="15sp"
-            android:padding="0dp"
-        />      
+            android:padding="0dp" >   
+        
+        	<requestFocus />
+        </TextView>
          
     </TableRow>
     

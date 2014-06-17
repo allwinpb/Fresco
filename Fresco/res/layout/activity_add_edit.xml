@@ -49,11 +49,12 @@
 
     </LinearLayout>
 
-    <LinearLayout
-        android:id="@+id/sidePanel"
+    <TabHost
+        android:id="@android:id/tabhost"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" >
 
+<<<<<<< HEAD
         <Button
             android:id="@+id/frontBtn"
             android:layout_width="0dp"
@@ -144,4 +145,34 @@
 
     </LinearLayout>
 
+=======
+        <TabWidget
+        	android:id="@android:id/tabs"
+        	android:orientation="horizontal"
+        	android:layout_width="match_parent"
+        	android:layout_height="wrap_content"
+        	android:layout_weight="0" />
+        
+         <FrameLayout
+        	android:id="@android:id/tabcontent"
+        	android:layout_width="0dp"
+        	android:layout_height="0dp"
+        	android:layout_weight="0" >
+        	
+            <FrameLayout
+					android:id="@+id/tab_front"
+					android:layout_width="match_parent"
+					android:layout_height="match_parent" />
+
+			<FrameLayout
+				android:id="@+id/tab_back"
+				android:layout_width="match_parent"
+				android:layout_height="match_parent" />
+             
+         </FrameLayout>
+     
+
+    </TabHost>
+        
+>>>>>>> origin/master
 </TableLayout>

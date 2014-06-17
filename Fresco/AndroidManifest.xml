@@ -14,7 +14,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name=".FrescoMain"
+            android:name="icreate.fresco.FrescoMain"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -24,24 +24,44 @@
 
             <meta-data
                 android:name="android.app.default_searchable"
-                android:value="@xml/searchable"/>
+                android:value="@xml/searchable" />
         </activity>
         <activity
-            android:name=".AddDeck"
+            android:name="icreate.fresco.AddDeck"
             android:label="@string/app_name" >
         </activity>
         <activity
-            android:name=".CardsViewPager"
+            android:name="icreate.fresco.CardsViewPager"
             android:label="@string/app_name"
             android:theme="@android:style/Theme.Black" >
         </activity>
         <activity
-            android:name=".AddEditActivity"
+            android:name="icreate.fresco.AddEditActivity"
             android:label="@string/app_name" >
+<<<<<<< HEAD
          </activity>
          <activity 
              android:name=".PlayCards"
              android:label="@string/app_name"></activity>
+=======
+        </activity>
+        <activity
+            android:name="icreate.fresco.ActivityText"
+            android:label="@string/title_activity_activity_text" >
+        </activity>
+        <activity
+            android:name="icreate.fresco.ActivityDoodle"
+            android:label="@string/title_activity_activity_doodle" >
+        </activity>
+        <activity
+            android:name="icreate.fresco.ActivityGallery"
+            android:label="@string/title_activity_activity_gallery" >
+        </activity>
+        <activity
+            android:name="icreate.fresco.ActivityCamera"
+            android:label="@string/title_activity_activity_camera" >
+        </activity>
+>>>>>>> origin/master
     </application>
 
 </manifest>

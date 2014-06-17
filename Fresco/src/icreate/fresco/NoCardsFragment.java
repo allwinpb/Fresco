@@ -1,5 +1,7 @@
 package icreate.fresco;
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -18,9 +20,12 @@ public class NoCardsFragment extends Fragment{
 	ImageButton addButton;
 	ImageButton returnButton;
 	
+	String deckName;
+	
 	public static NoCardsFragment createFragment(int deckID) {
 		Bundle bundle = new Bundle();
 		bundle.putInt(Constant.DECK_ID, deckID);
+		bundle.putString(Constant.DECK_NAME, CardsViewPager.getDeck().getDeckName());
 		
 		NoCardsFragment fragment = new NoCardsFragment();
 		fragment.setArguments(bundle);
@@ -33,6 +38,7 @@ public class NoCardsFragment extends Fragment{
 		super.onCreate(savedInstanceState);
 		
 		deckID = this.getArguments().getInt(Constant.DECK_ID);
+		deckName = this.getArguments().getString(Constant.DECK_NAME);
 	}
 	
 	@Override
@@ -60,8 +66,9 @@ public class NoCardsFragment extends Fragment{
 					
 					case R.id.returnButton:
 						
-						Intent backIntent = new Intent(getActivity(), FrescoMain.class);
-						startActivity(backIntent);
+						Intent i = getActivity().getIntent();
+						getActivity().setResult(Activity.RESULT_CANCELED, i);
+						getActivity().finish();
 						
 						break;
 						

@@ -1,23 +1,30 @@
 package icreate.fresco;
 
 import icreate.fresco.Card.Side;
+import icreate.fresco.Card.Type;
+
+import java.io.File;
+
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Base64;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.LinearLayout.LayoutParams;
 import android.widget.TextView;
-import android.widget.ViewAnimator;
-
-import com.tekle.oss.android.animation.AnimationFactory;
-import com.tekle.oss.android.animation.AnimationFactory.FlipDirection;
 
 public class CardsFragment extends Fragment {
 	
@@ -33,6 +40,10 @@ public class CardsFragment extends Fragment {
 	ImageButton editButton;
 	ImageButton reviewButton;
 	ImageButton returnButton;
+	
+	View rootLayout;
+	ViewGroup cardFace;
+	ViewGroup cardBack;
 	
 	public static CardsFragment createFragment(int index) {
 		Bundle bundle = new Bundle();
@@ -62,7 +73,13 @@ public class CardsFragment extends Fragment {
 		
 		initializeWidgets(view);
 		setUpListener();
-		setUpFlippingAnimation();
+		setCardsView(view);
+		
+		View front = (View) view.findViewById(R.id.card_face);
+		View back = (View) view.findViewById(R.id.card_back);
+		
+		front.setOnClickListener(cardListener);
+		back.setOnClickListener(cardListener);
 		
 		return view;
 	}
@@ -87,30 +104,98 @@ public class CardsFragment extends Fragment {
 		deckTextView.setText(deck.getDeckName());
 	}
 	
-	private void setUpFlippingAnimation() {
-		final ViewAnimator viewAnimator1 = (ViewAnimator)getActivity().findViewById(R.id.viewFlipper1);
-		
-		 if (getActivity().findViewById(R.id.viewFlipper1) != null) {
-
-			String frontContent = currentCard.getContent(Side.FRONT);
-            Fragment frontFragment = TextImageFragment.createFragment(frontContent, getType(currentCard, Side.FRONT));
-            
-            getActivity().getSupportFragmentManager().beginTransaction()
-                    .add(R.id.viewFlipper1, frontFragment).commit();
-            
-            String backContent = currentCard.getContent(Side.BACK);
-            Fragment backFragment = TextImageFragment.createFragment(backContent, getType(currentCard, Side.BACK));
-            
-            getActivity().getSupportFragmentManager().beginTransaction()
-            	.add(R.id.viewFlipper1, backFragment).commit();
+	private void setCardsView(View view) {
+		rootLayout = (View) view.findViewById(R.id.main_activity_root);
+		cardFace = (ViewGroup) view.findViewById(R.id.card_face);
+	    cardBack = (ViewGroup) view.findViewById(R.id.card_back);
+	    
+	    View front = setUpTextImageView(currentCard.getContent(Side.FRONT), currentCard.getType(Side.FRONT));
+	    View back = setUpTextImageView(currentCard.getContent(Side.FRONT), currentCard.getType(Side.FRONT));
+	    
+	    cardFace.addView(front, LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
+	    cardBack.addView(back, LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
+	}
+	
+	public void flipCard() {	 
+	    FlippingAnimation flipAnimation = new FlippingAnimation(cardFace, cardBack);
+	 
+	    if (cardFace.getVisibility() == View.GONE)
+	    {
+	        flipAnimation.reverse();
 	    }
+	    rootLayout.startAnimation(flipAnimation);
+	}
+	
+	private View setUpTextImageView(String content, Type type) {
 		
-		viewAnimator1.setOnClickListener(new OnClickListener(){
-			@Override
-			public void onClick(View v){
-				AnimationFactory.flipTransition(viewAnimator1, FlipDirection.LEFT_RIGHT);
-			}
-		});
+		View view = null;
+		
+		switch(type) {
+			case TEXT:
+				view = addText(content);
+				break;
+				
+			case IMAGE:
+				view = addImage(content);
+				break;
+				
+			case DOODLE:
+				view = addDoodle(content);
+				break;
+		}
+		
+		LayoutParams lp = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.MATCH_PARENT);
+		view.setLayoutParams(lp);
+		view.setBackgroundResource(R.drawable.background);
+		return view;
+	}
+	
+	private View addText(String text) {
+		TextView textView = new TextView(this.getActivity());
+		textView.setText(text);
+		textView.setTextSize(25);
+		textView.setTextColor(Color.BLACK);
+		textView.setGravity(Gravity.CENTER);
+		
+		return textView;
+	}
+	
+	private View addImage(String path) {
+		ImageView image = new ImageView(this.getActivity());
+		
+		File imgFile = new  File(path);
+		if(imgFile.exists()) {
+			Bitmap bitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
+			image.setImageBitmap(bitmap);
+			return image;
+		}
+		
+		return null; 
+	}
+	
+	private View addDoodle(String jsonString) {
+		
+		ImageView doodle = new ImageView(this.getActivity()); 
+		Bitmap bitmap = convertFromJSONToImage(jsonString);
+		
+		if(bitmap != null) {
+			doodle.setImageBitmap(bitmap);
+			return doodle;
+		}
+		
+		return null;
+	}
+	
+	private Bitmap convertFromJSONToImage(String jsonString) {
+		try {
+	        byte[] encodeByte = Base64.decode(jsonString, Base64.DEFAULT);
+	        Bitmap bitmap = BitmapFactory.decodeByteArray(encodeByte, 0,
+	                encodeByte.length);
+	        return bitmap;
+		} catch (Exception e) {
+	        e.getMessage(); //TODO: send to log
+	        return null;
+		}
 	}
 	
 	private int getType(Card currentCard, Side side) {
@@ -125,6 +210,15 @@ public class CardsFragment extends Fragment {
 		
 		return 0;
 	}
+	
+	private OnClickListener cardListener = new OnClickListener() {
+
+		@Override
+		public void onClick(View v) {
+			flipCard();
+		}
+		
+	};
 	
 	private OnClickListener listener = new OnClickListener() {
 
@@ -156,6 +250,7 @@ public class CardsFragment extends Fragment {
 	private void addCard() {
 		Intent intent = new Intent(getActivity(), AddEditActivity.class);
 		intent.putExtra(Constant.NEW_EDIT, false);
+		intent.putExtra(Constant.DECK_NAME, deck.getDeckName());
 		intent.putExtra(Constant.DECK_ID, deck.getDeckID());
 		intent.putExtra(Constant.CARD_ID, -1);
 		
@@ -175,7 +270,10 @@ public class CardsFragment extends Fragment {
 						dialog.cancel();
 						break;
 					case Dialog.BUTTON_NEGATIVE:
-						dialog.cancel();
+						Intent i = new Intent(getActivity(), CardsViewPager.class);
+						i.putExtra(Constant.DECK_ID, deck.getDeckID());
+						i.putExtra(Constant.DECK_NAME, deck.getDeckName());
+						startActivity(i);
 						break;
 				}
 			}
@@ -205,8 +303,9 @@ public class CardsFragment extends Fragment {
 	}
 	
 	private void returnToFrescoMain() {
-		Intent backIntent = new Intent(getActivity(), FrescoMain.class);
-		startActivity(backIntent);
+		Intent i = getActivity().getIntent();
+		getActivity().setResult(Activity.RESULT_CANCELED, i);
+		getActivity().finish();
 	}
 
 }
