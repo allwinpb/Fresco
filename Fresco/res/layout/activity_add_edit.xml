@@ -33,7 +33,7 @@
             android:gravity="center"
             android:paddingBottom="10dp"
             android:paddingTop="10dp"
-            android:text="CATEGORY"
+            android:text="@string/card"
             android:textColor="#fff"
             android:textSize="25sp" />
 
@@ -60,7 +60,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="0.60"
             android:background="#27ae60"
-            android:text="FRONT"
+            android:text="@string/front"
             android:textColor="#fff"
             android:textSize="25sp" />
 
@@ -70,7 +70,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="0.60"
             android:background="#d35400"
-            android:text="BACK"
+            android:text="@string/back"
             android:textColor="#fff"
             android:textSize="25sp" />
 

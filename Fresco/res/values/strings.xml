@@ -16,5 +16,11 @@
     <string name="dialogTitle">Name your new deck :)</string>
     <string name="dialogButton">Okay</string>
     <string name="deckName">Name of the Deck</string>
+    <string name="defaultTerm">HelloWorld</string>
+    <string name="defaultDefinition">The world is fair</string>
+    <string name="submit">Submit</string>
+    <string name="card">Card</string>
+    <string name="front">FRONT</string>
+    <string name="back">BACK</string>
 
 </resources>
