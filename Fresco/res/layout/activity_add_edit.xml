@@ -46,7 +46,6 @@
             android:paddingBottom="10dp"
             android:paddingTop="10dp"
             android:src="@drawable/done" />
-
     </LinearLayout>
 
     <TabHost
@@ -54,7 +53,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content" >
 
-<<<<<<< HEAD
         <Button
             android:id="@+id/frontBtn"
             android:layout_width="0dp"
@@ -75,104 +73,97 @@
             android:textColor="#fff"
             android:textSize="25sp" />
 
-    </LinearLayout>
+        <LinearLayout>
+        </LinearLayout>
 
-    <LinearLayout
-        android:id="@+id/contentPanel"
-        android:layout_width="match_parent"
-        android:layout_height="292dp"
-        android:layout_weight="0.19"
-        android:background="#27ae60" >
-
-        <EditText
-            android:id="@+id/cardEditText"
+        <LinearLayout
+            android:id="@+id/contentPanel"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:ems="10"
-            android:gravity="center"
-            android:textColor="#fff"
-            android:textSize="25sp" >
+            android:layout_height="292dp"
+            android:layout_weight="0.19"
+            android:background="#27ae60" >
 
-            <requestFocus />
-        </EditText>
-    </LinearLayout>
+            <EditText
+                android:id="@+id/cardEditText"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:ems="10"
+                android:gravity="center"
+                android:textColor="#fff"
+                android:textSize="25sp" >
 
-    <LinearLayout
-        android:id="@+id/optionsPanel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" >
+                <requestFocus />
+            </EditText>
+        </LinearLayout>
 
-        <ImageButton
-            android:id="@+id/textBtn"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.20"
-            android:background="#27ae60"
-            android:paddingBottom="5dp"
-            android:paddingTop="5dp"
-            android:src="@drawable/text" />
+        <LinearLayout
+            android:id="@+id/optionsPanel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" >
 
-        <ImageButton
-            android:id="@+id/editBtn"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.20"
-            android:background="#d35400"
-            android:paddingBottom="5dp"
-            android:paddingTop="5dp"
-            android:src="@drawable/edit" />
+            <ImageButton
+                android:id="@+id/textBtn"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.20"
+                android:background="#27ae60"
+                android:paddingBottom="5dp"
+                android:paddingTop="5dp"
+                android:src="@drawable/text" />
 
-        <ImageButton
-            android:id="@+id/galleryBtn"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.20"
-            android:background="#d35400"
-            android:paddingBottom="5dp"
-            android:paddingTop="5dp"
-            android:src="@drawable/gallery" />
+            <ImageButton
+                android:id="@+id/editBtn"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.20"
+                android:background="#d35400"
+                android:paddingBottom="5dp"
+                android:paddingTop="5dp"
+                android:src="@drawable/edit" />
 
-        <ImageButton
-            android:id="@+id/cameraBtn"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.20"
-            android:background="#d35400"
-            android:paddingBottom="5dp"
-            android:paddingTop="5dp"
-            android:src="@drawable/camera" />
+            <ImageButton
+                android:id="@+id/galleryBtn"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.20"
+                android:background="#d35400"
+                android:paddingBottom="5dp"
+                android:paddingTop="5dp"
+                android:src="@drawable/gallery" />
 
-    </LinearLayout>
-
-=======
+            <ImageButton
+                android:id="@+id/cameraBtn"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.20"
+                android:background="#d35400"
+                android:paddingBottom="5dp"
+                android:paddingTop="5dp"
+                android:src="@drawable/camera" />
+        </LinearLayout>
         <TabWidget
-        	android:id="@android:id/tabs"
-        	android:orientation="horizontal"
-        	android:layout_width="match_parent"
-        	android:layout_height="wrap_content"
-        	android:layout_weight="0" />
-        
-         <FrameLayout
-        	android:id="@android:id/tabcontent"
-        	android:layout_width="0dp"
-        	android:layout_height="0dp"
-        	android:layout_weight="0" >
-        	
+            android:id="@android:id/tabs"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0"
+            android:orientation="horizontal" />
+
+        <FrameLayout
+            android:id="@android:id/tabcontent"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="0" >
+
             <FrameLayout
-					android:id="@+id/tab_front"
-					android:layout_width="match_parent"
-					android:layout_height="match_parent" />
+                android:id="@+id/tab_front"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
 
-			<FrameLayout
-				android:id="@+id/tab_back"
-				android:layout_width="match_parent"
-				android:layout_height="match_parent" />
-             
-         </FrameLayout>
-     
-
+            <FrameLayout
+                android:id="@+id/tab_back"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </FrameLayout>
     </TabHost>
-        
->>>>>>> origin/master
 </TableLayout>
