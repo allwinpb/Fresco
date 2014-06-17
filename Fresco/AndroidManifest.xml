@@ -38,29 +38,11 @@
         <activity
             android:name="icreate.fresco.AddEditActivity"
             android:label="@string/app_name" >
-<<<<<<< HEAD
-=======
          </activity>
          <activity 
              android:name=".PlayCards"
-             android:label="@string/app_name"></activity>
-        <activity
-            android:name="icreate.fresco.ActivityText"
-            android:label="@string/title_activity_activity_text" >
-        </activity>
-        <activity
-            android:name="icreate.fresco.ActivityDoodle"
-            android:label="@string/title_activity_activity_doodle" >
-        </activity>
-        <activity
-            android:name="icreate.fresco.ActivityGallery"
-            android:label="@string/title_activity_activity_gallery" >
-        </activity>
-        <activity
-            android:name="icreate.fresco.ActivityCamera"
-            android:label="@string/title_activity_activity_camera" >
->>>>>>> origin/master
-        </activity>
+             android:label="@string/app_name">
+         </activity>
     </application>
 
 </manifest>

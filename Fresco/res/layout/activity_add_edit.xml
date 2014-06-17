@@ -51,7 +51,6 @@
     <TabHost
         android:id="@android:id/tabhost"
         android:layout_width="match_parent"
-<<<<<<< HEAD
         android:layout_height="match_parent" >
         
          <LinearLayout
