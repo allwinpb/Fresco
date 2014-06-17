@@ -32,7 +32,7 @@ public class ItemAdapter extends ArrayAdapter<Deck> {
 
 			TextView deck = (TextView) v.findViewById(R.id.deck);
 			if (deck != null){
-				deck.setText(i.toString());
+				deck.setText(i.getDeckName());
 			}
 		}
 		// the view must be returned to our activity

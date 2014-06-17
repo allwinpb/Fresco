@@ -75,10 +75,10 @@ public class FrontBackCardFragment extends Fragment implements TabHost.OnTabChan
 		tabHost = (TabHost) view.findViewById(android.R.id.tabhost);
 		tabHost.setup();
 		
-		tabHost.addTab(newTab(TEXT, "", R.id.tab_text));
-		tabHost.addTab(newTab(DOODLE, "", R.id.tab_doodle));
-		tabHost.addTab(newTab(GALLERY, "", R.id.tab_gallery));
-		tabHost.addTab(newTab(CAMERA, "", R.id.tab_camera));
+		tabHost.addTab(newTab(TEXT, R.drawable.text, R.id.tab_text));
+		tabHost.addTab(newTab(DOODLE, R.drawable.edit, R.id.tab_doodle));
+		tabHost.addTab(newTab(GALLERY, R.drawable.gallery, R.id.tab_gallery));
+		tabHost.addTab(newTab(CAMERA, R.drawable.camera, R.id.tab_camera));
 		
 		switch(type) {
 			case TEXT:
@@ -98,11 +98,6 @@ public class FrontBackCardFragment extends Fragment implements TabHost.OnTabChan
 				changeTabColor(CAMERA);
 				break;
 		}
-		
-		tabHost.getTabWidget().getChildAt(0).setBackgroundResource(R.drawable.text);
-		tabHost.getTabWidget().getChildAt(1).setBackgroundResource(R.drawable.edit);
-		tabHost.getTabWidget().getChildAt(2).setBackgroundResource(R.drawable.gallery);
-		tabHost.getTabWidget().getChildAt(3).setBackgroundResource(R.drawable.camera);
 		
 		tabHost.setOnTabChangedListener(this);
 	}
@@ -142,9 +137,9 @@ public class FrontBackCardFragment extends Fragment implements TabHost.OnTabChan
 		}
 	}
 
-	private TabSpec newTab(String tag, String tagLabel, int contentId) {
+	private TabSpec newTab(String tag, int id, int contentId) {
 		TabSpec tabSpec = tabHost.newTabSpec(tag);
-		tabSpec.setIndicator(tagLabel);
+		tabSpec.setIndicator("", getResources().getDrawable(id));
 		tabSpec.setContent(contentId);
 		return tabSpec;
 	}
@@ -189,11 +184,6 @@ public class FrontBackCardFragment extends Fragment implements TabHost.OnTabChan
 				updateTab(CAMERA);
 				break;
 		}
-		
-		tabHost.getTabWidget().getChildAt(0).setBackgroundResource(R.drawable.text);
-		tabHost.getTabWidget().getChildAt(1).setBackgroundResource(R.drawable.edit);
-		tabHost.getTabWidget().getChildAt(2).setBackgroundResource(R.drawable.gallery);
-		tabHost.getTabWidget().getChildAt(3).setBackgroundResource(R.drawable.camera);
 	}
 	
 	private void changeTabColor(String tag) {

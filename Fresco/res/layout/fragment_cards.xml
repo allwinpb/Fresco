@@ -37,23 +37,29 @@
     	android:gravity="center"    	
     	android:id="@+id/main_activity_root"  >
         
-        <RelativeLayout
+        <LinearLayout
 			android:id="@+id/card_face"
-			android:layout_width="match_parent"
+			android:layout_width="0dip"
 			android:layout_height="match_parent"
+			android:layout_weight="1"
+			android:orientation="vertical"
 			android:gravity="center"
 			android:clickable="true"
+			android:background="@drawable/background"
 			android:padding="5dp" >
-		</RelativeLayout>
+		</LinearLayout>
 		
-        <RelativeLayout
+        <LinearLayout
 			android:id="@+id/card_back"
-			android:layout_width="match_parent"
+			android:layout_width="0dip"
 			android:layout_height="match_parent"
+			android:layout_weight="1"
+			android:orientation="vertical"
 			android:gravity="center"
 			android:clickable="true"
+			android:background="@drawable/background"
 			android:visibility="gone" >
-		</RelativeLayout>
+		</LinearLayout>
         
     </TableRow>
 

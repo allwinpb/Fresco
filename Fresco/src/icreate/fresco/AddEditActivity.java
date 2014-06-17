@@ -169,6 +169,7 @@ public class AddEditActivity extends FragmentActivity implements OnTabChangeList
 				public void onClick(DialogInterface dialog, int which) {
 						
 						Intent sendIntent = new Intent(AddEditActivity.this, CardsViewPager.class);
+						sendIntent.putExtra(Constant.DECK_NAME, deckName);
 						sendIntent.getIntExtra(Constant.DECK_ID, deckID);
 						startActivity(sendIntent);
 						

@@ -5,7 +5,6 @@ import icreate.fresco.Card.Type;
 
 import java.io.File;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
@@ -23,6 +22,7 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
 import android.widget.TextView;
 
@@ -42,8 +42,8 @@ public class CardsFragment extends Fragment {
 	ImageButton returnButton;
 	
 	View rootLayout;
-	ViewGroup cardFace;
-	ViewGroup cardBack;
+	LinearLayout cardFace;
+	LinearLayout cardBack;
 	
 	public static CardsFragment createFragment(int index) {
 		Bundle bundle = new Bundle();
@@ -106,14 +106,15 @@ public class CardsFragment extends Fragment {
 	
 	private void setCardsView(View view) {
 		rootLayout = (View) view.findViewById(R.id.main_activity_root);
-		cardFace = (ViewGroup) view.findViewById(R.id.card_face);
-	    cardBack = (ViewGroup) view.findViewById(R.id.card_back);
+		cardFace = (LinearLayout) view.findViewById(R.id.card_face);
+	    cardBack = (LinearLayout) view.findViewById(R.id.card_back);
 	    
 	    View front = setUpTextImageView(currentCard.getContent(Side.FRONT), currentCard.getType(Side.FRONT));
 	    View back = setUpTextImageView(currentCard.getContent(Side.BACK), currentCard.getType(Side.BACK));
 	    
-	    cardFace.addView(front, LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
-	    cardBack.addView(back, LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
+	    LayoutParams lp = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT, 1);
+	    cardFace.addView(front, lp);
+	    cardBack.addView(back, lp);
 	}
 	
 	public void flipCard() {	 
@@ -144,9 +145,6 @@ public class CardsFragment extends Fragment {
 				break;
 		}
 		
-		LayoutParams lp = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
-		view.setLayoutParams(lp);
-		view.setBackgroundResource(R.drawable.background);
 		return view;
 	}
 	
