@@ -251,8 +251,8 @@ public class CardsFragment extends Fragment {
 		intent.putExtra(Constant.DECK_NAME, deck.getDeckName());
 		intent.putExtra(Constant.DECK_ID, deck.getDeckID());
 		intent.putExtra(Constant.CARD_ID, -1);
-		
 		startActivity(intent);
+		getActivity().finish();
 	}
 	
 	private void deleteCard(Card currentCard) {
@@ -295,6 +295,7 @@ public class CardsFragment extends Fragment {
 		intent.putExtra(Constant.CARD_ID, cardID);
 		
 		startActivity(intent);
+		getActivity().finish();
 	}
 	
 	private void reviewDeck() {
@@ -304,6 +305,7 @@ public class CardsFragment extends Fragment {
 	private void returnToFrescoMain() {
 		Intent i = new Intent(getActivity(), FrescoMain.class);
 		startActivity(i);
+		getActivity().finish();
 	}
 
 }

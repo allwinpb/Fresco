@@ -67,8 +67,7 @@ public class NoCardsFragment extends Fragment{
 					
 					case R.id.returnButton:
 						
-						Intent i = new Intent(getActivity(), FrescoMain.class);
-						startActivity(i);
+						getActivity().finish();
 						
 						break;
 						

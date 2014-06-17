@@ -16,79 +16,79 @@ import android.widget.TabHost.TabSpec;
 import android.widget.TextView;
 
 public class AddEditActivity extends FragmentActivity implements OnTabChangeListener {
-	
+
 	public static final String FRONT = "Front";
 	public static final String BACK = "Back";
-	
+
 	private TextView deckTextView;
-	
+
 	private int deckID;
 	private Card card;
 	private boolean newEdit;
 	private String deckName;
-	
+
 	private SqliteHelper database;
-	
+
 	private Type cardFrontType = Type.TEXT;
 	private String cardFrontString = "";
 	private Type cardBackType = Type.TEXT;
 	private String cardBackString  = "";
-	
+
 	private ImageButton returnBtn;
 	private ImageButton doneBtn;
-	
+
 	private Side side = Side.FRONT;
 	private TabHost tabHost;
-	
+
 	public void setContent(String content) {
 		switch(side) {
-			case FRONT:
-				cardFrontString = content;
-				break;
-			case BACK:
-				cardBackString = content;
-				break;
+		case FRONT:
+			cardFrontString = content;
+			break;
+		case BACK:
+			cardBackString = content;
+			break;
 		}
 	}
-	
+
 	public String getContent(Side side) {
 		switch(side) {
-			case FRONT:
-				return cardFrontString;
-			case BACK:
-				return cardBackString;
+		case FRONT:
+			return cardFrontString;
+		case BACK:
+			return cardBackString;
 		}
 		return cardFrontString;
 	}
-	
+
 	public void setType(Type type) {
 		switch(side) {
-			case FRONT:
-				cardFrontType = type;
-				break;
-			case BACK:
-				cardBackType = type;
-				break;
+		case FRONT:
+			cardFrontType = type;
+			break;
+		case BACK:
+			cardBackType = type;
+			break;
 		}
 	}
-	
+
 	public Type getType(Side side) {
 		switch(side) {
-			case FRONT:
-				return cardFrontType;
-			case BACK:
-				return cardBackType;
+		case FRONT:
+			return cardFrontType;
+		case BACK:
+			return cardBackType;
 		}
 		return cardFrontType;
 	}
-	
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_add_edit);
-		
+
 		database = FrescoMain.getDatabase();
-		
+
 		Intent receiveIntent = getIntent();
 		newEdit = receiveIntent.getBooleanExtra(Constant.NEW_EDIT, false);
 		deckName = receiveIntent.getStringExtra(Constant.DECK_NAME);
@@ -99,54 +99,54 @@ public class AddEditActivity extends FragmentActivity implements OnTabChangeList
 		} else {
 			card = new Card();
 		} 
-		
+
 		initializeContent();
 		initializeTabHost();
-		
+
 		deckTextView = (TextView) findViewById(R.id.deckTextView);
 		deckTextView.setText(deckName);
-		
+
 		returnBtn  	= (ImageButton) findViewById(R.id.returnBtn);
 		doneBtn 	= (ImageButton) findViewById(R.id.doneBtn);
-		
+
 		returnBtn.setOnClickListener(returnHandler);
 		doneBtn.setOnClickListener(doneHandler);
 	}
-	
+
 	private void initializeContent() {
 		cardFrontType = card.getType(Side.FRONT);
 		cardFrontString = card.getContent(Side.FRONT);
 		cardBackType = card.getType(Side.BACK);
 		cardBackString  = card.getContent(Side.BACK);
 	}
-	
+
 	private void initializeTabHost() {
 		tabHost = (TabHost) findViewById(android.R.id.tabhost);
 		tabHost.setup();
-		
+
 		tabHost.addTab(newTab(FRONT, FRONT, R.id.tab_front));
 		tabHost.addTab(newTab(BACK, BACK, R.id.tab_back));
-		
+
 		updateTabs(FRONT);
 		tabHost.setCurrentTab(0);
 		tabHost.setOnTabChangedListener(this);
 	}
-	
+
 	private void updateTabs(String tag) {
 		FragmentManager fm = getSupportFragmentManager();
 		switch(tag) {
-			case FRONT:
-				FrontBackCardFragment frontFragment = FrontBackCardFragment.createFragment(cardFrontString, getIntType(cardFrontType));
-				fm.beginTransaction()
-					.replace(R.id.tab_front, frontFragment, FRONT)
-					.commit();
-				break;
-			case BACK:
-				FrontBackCardFragment backFragment = FrontBackCardFragment.createFragment(cardBackString, getIntType(cardBackType));
-				fm.beginTransaction()
-					.replace(R.id.tab_back, backFragment, BACK)
-					.commit();
-				break;
+		case FRONT:
+			FrontBackCardFragment frontFragment = FrontBackCardFragment.createFragment(cardFrontString, getIntType(cardFrontType));
+			fm.beginTransaction()
+			.replace(R.id.tab_front, frontFragment, FRONT)
+			.commit();
+			break;
+		case BACK:
+			FrontBackCardFragment backFragment = FrontBackCardFragment.createFragment(cardBackString, getIntType(cardBackType));
+			fm.beginTransaction()
+			.replace(R.id.tab_back, backFragment, BACK)
+			.commit();
+			break;
 		}
 	}
 
@@ -156,106 +156,106 @@ public class AddEditActivity extends FragmentActivity implements OnTabChangeList
 		tabSpec.setContent(contentId);
 		return tabSpec;
 	}
-	
+
 	View.OnClickListener returnHandler = new View.OnClickListener() {
 		public void onClick(View v) {
 			AlertDialog.Builder exitDialog = new AlertDialog.Builder(AddEditActivity.this);
-			
+
 			exitDialog
-				.setTitle("Exit Confirmation")
-				.setCancelable(true)
-				.setMessage("Changes not saved will be discarded")
-				.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+			.setTitle("Exit Confirmation")
+			.setCancelable(true)
+			.setMessage("Changes not saved will be discarded")
+			.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
 				public void onClick(DialogInterface dialog, int which) {
-						
-						Intent sendIntent = new Intent(AddEditActivity.this, CardsViewPager.class);
-						sendIntent.putExtra(Constant.DECK_NAME, deckName);
-						sendIntent.getIntExtra(Constant.DECK_ID, deckID);
-						startActivity(sendIntent);
-						
-					}
-				});
+					
+					Intent sendIntent = new Intent(AddEditActivity.this, CardsViewPager.class);
+					sendIntent.putExtra(Constant.DECK_NAME, deckName);
+					sendIntent.putExtra(Constant.DECK_ID, deckID);
+					startActivity(sendIntent);
+					finish();
+				}
+			});
 			exitDialog
-				.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+			.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
 				public void onClick(DialogInterface dialog, int which) {
-						
-						dialog.cancel();
-					}
-				})
-				.setIcon(android.R.drawable.ic_dialog_alert);
-			
+					dialog.cancel();
+				}
+			})
+			.setIcon(android.R.drawable.ic_dialog_alert);
+
 			AlertDialog dialog = exitDialog.create();
 			dialog.show();
 		}
 	};
-	
+
 	View.OnClickListener doneHandler = new View.OnClickListener() {
 		public void onClick(View v) {
 			AlertDialog.Builder saveDialog = new AlertDialog.Builder(AddEditActivity.this);
-			
+
 			saveDialog
-				.setTitle("Save confirmation")
-				.setMessage("Changes not saved will be discarded")
-				.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+			.setTitle("Save confirmation")
+			.setMessage("Changes not saved will be discarded")
+			.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
 				public void onClick(DialogInterface dialog, int which) {
 					card.setType(Side.FRONT, cardFrontType);
 					card.setType(Side.BACK, cardBackType);
 					card.setContent(Side.FRONT, cardFrontString);
 					card.setContent(Side.BACK, cardBackString);
-					
+
 					database = FrescoMain.getDatabase();
 					if(newEdit == false) {
 						database.insertCard(deckID, card);
 					} else {
 						database.updateCard(deckID, card);
 					}
-					
+
 					Intent sendIntent = new Intent(AddEditActivity.this, CardsViewPager.class);
 					sendIntent.putExtra(Constant.DECK_NAME, deckName);
 					sendIntent.putExtra(Constant.DECK_ID, deckID);
 					startActivity(sendIntent);
+					finish();
 				}
 			});
-			
+
 			saveDialog
-				.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+			.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
 				public void onClick(DialogInterface dialog, int which) {
 					dialog.cancel();
 				}
 			})
 			.setIcon(android.R.drawable.ic_dialog_info);
-			
+
 			AlertDialog dialog = saveDialog.create();
 			dialog.show();
 		}
 	};
-	
+
 	private int getIntType(Type type) {
 		switch(type) {
-			case TEXT:
-				return 0;
-			case DOODLE:
-				return 1;
-			case IMAGE:
-				return 2;
-			case CAMERA:
-				return 3;
+		case TEXT:
+			return 0;
+		case DOODLE:
+			return 1;
+		case IMAGE:
+			return 2;
+		case CAMERA:
+			return 3;
 		}
-		
+
 		return 0;
 	}
 
 	@Override
 	public void onTabChanged(String tabId) {
 		switch(tabId) {
-			case FRONT:
-				side = Side.FRONT;
-				updateTabs(FRONT);
-				break;
-			case BACK:
-				side = Side.BACK;
-				updateTabs(BACK);
-				break;
+		case FRONT:
+			side = Side.FRONT;
+			updateTabs(FRONT);
+			break;
+		case BACK:
+			side = Side.BACK;
+			updateTabs(BACK);
+			break;
 		}
 	}
 }
