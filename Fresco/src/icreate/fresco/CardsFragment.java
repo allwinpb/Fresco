@@ -110,7 +110,7 @@ public class CardsFragment extends Fragment {
 	    cardBack = (ViewGroup) view.findViewById(R.id.card_back);
 	    
 	    View front = setUpTextImageView(currentCard.getContent(Side.FRONT), currentCard.getType(Side.FRONT));
-	    View back = setUpTextImageView(currentCard.getContent(Side.FRONT), currentCard.getType(Side.FRONT));
+	    View back = setUpTextImageView(currentCard.getContent(Side.BACK), currentCard.getType(Side.BACK));
 	    
 	    cardFace.addView(front, LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
 	    cardBack.addView(back, LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
@@ -144,7 +144,7 @@ public class CardsFragment extends Fragment {
 				break;
 		}
 		
-		LayoutParams lp = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.MATCH_PARENT);
+		LayoutParams lp = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
 		view.setLayoutParams(lp);
 		view.setBackgroundResource(R.drawable.background);
 		return view;
@@ -267,13 +267,13 @@ public class CardsFragment extends Fragment {
 				switch(which) {
 					case Dialog.BUTTON_POSITIVE:
 						database.deleteCard(cardID);
-						dialog.cancel();
-						break;
-					case Dialog.BUTTON_NEGATIVE:
 						Intent i = new Intent(getActivity(), CardsViewPager.class);
 						i.putExtra(Constant.DECK_ID, deck.getDeckID());
 						i.putExtra(Constant.DECK_NAME, deck.getDeckName());
 						startActivity(i);
+						break;
+					case Dialog.BUTTON_NEGATIVE:
+						dialog.cancel();
 						break;
 				}
 			}
@@ -292,6 +292,7 @@ public class CardsFragment extends Fragment {
 	private void editCard(Card currentCard) {
 		Intent intent = new Intent(getActivity(), AddEditActivity.class);
 		intent.putExtra(Constant.NEW_EDIT, true);
+		intent.putExtra(Constant.DECK_NAME, deck.getDeckName());
 		intent.putExtra(Constant.DECK_ID, deck.getDeckID());
 		intent.putExtra(Constant.CARD_ID, cardID);
 		
@@ -303,9 +304,8 @@ public class CardsFragment extends Fragment {
 	}
 	
 	private void returnToFrescoMain() {
-		Intent i = getActivity().getIntent();
-		getActivity().setResult(Activity.RESULT_CANCELED, i);
-		getActivity().finish();
+		Intent i = new Intent(getActivity(), FrescoMain.class);
+		startActivity(i);
 	}
 
 }

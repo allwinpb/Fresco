@@ -11,6 +11,17 @@ import android.widget.EditText;
 
 public class FragmentCamera extends Fragment {
 	EditText editText;
+	
+	public static FragmentCamera createFragment(String content) {
+		Bundle bundle = new Bundle();
+		bundle.putString(Constant.CONTENT, content);
+		
+		FragmentCamera fragment = new FragmentCamera();
+		fragment.setArguments(bundle);
+		
+		return fragment;
+	}
+
 
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {

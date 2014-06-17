@@ -26,7 +26,7 @@
             android:src="@drawable/back" />
 
         <TextView
-            android:id="@+id/textView1"
+            android:id="@+id/deckTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="0.20"
@@ -48,38 +48,41 @@
             android:src="@drawable/done" />
 
     </LinearLayout>
-
+        
     <TabHost
         android:id="@android:id/tabhost"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
-
-        <TabWidget
-        	android:id="@android:id/tabs"
-        	android:orientation="horizontal"
-        	android:layout_width="match_parent"
-        	android:layout_height="wrap_content"
-        	android:layout_weight="0" />
+        android:layout_height="match_parent" >
         
-         <FrameLayout
-        	android:id="@android:id/tabcontent"
-        	android:layout_width="0dp"
-        	android:layout_height="0dp"
-        	android:layout_weight="0" >
-        	
-            <FrameLayout
+         <LinearLayout
+			android:orientation="vertical"
+			android:layout_width="match_parent"
+			android:layout_height="match_parent">
+
+			<TabWidget
+				android:id="@android:id/tabs"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content" />
+	
+			<FrameLayout
+				android:id="@android:id/tabcontent"
+				android:layout_width="match_parent"
+				android:layout_height="match_parent">
+
+				<FrameLayout
 					android:id="@+id/tab_front"
 					android:layout_width="match_parent"
 					android:layout_height="match_parent" />
 
-			<FrameLayout
-				android:id="@+id/tab_back"
-				android:layout_width="match_parent"
-				android:layout_height="match_parent" />
-             
-         </FrameLayout>
-     
+				<FrameLayout
+					android:id="@+id/tab_back"
+					android:layout_width="match_parent"
+					android:layout_height="match_parent" />
 
+			</FrameLayout>
+			
+		</LinearLayout>
+     
     </TabHost>
         
 </TableLayout>

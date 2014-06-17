@@ -1,5 +1,7 @@
 package icreate.fresco;
 
+import com.actionbarsherlock.app.SherlockFragment;
+
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
@@ -12,6 +14,16 @@ import android.widget.EditText;
 public class FragmentText extends Fragment {
 	
 	EditText editText;
+	
+	public static FragmentText createFragment(String content) {
+		Bundle bundle = new Bundle();
+		bundle.putString(Constant.CONTENT, content);
+		
+		FragmentText fragment = new FragmentText();
+		fragment.setArguments(bundle);
+		
+		return fragment;
+	}
 
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {

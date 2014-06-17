@@ -187,7 +187,7 @@ public class SqliteHelper extends SQLiteOpenHelper {
 		values.put(CARD_BACK_CONTENT, card.getContent(Side.BACK));
 		values.put(CARD_DECK_ID, String.valueOf(deckID));
 		
-		int result = database.update(TABLE_CARD, values, "noteId = ?", new String[]{
+		int result = database.update(TABLE_CARD, values, CARD_ID + " = ?", new String[]{
 				String.valueOf(card.getCardID())
 		});
 		

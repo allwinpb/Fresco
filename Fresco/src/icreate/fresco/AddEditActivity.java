@@ -13,11 +13,14 @@ import android.widget.ImageButton;
 import android.widget.TabHost;
 import android.widget.TabHost.OnTabChangeListener;
 import android.widget.TabHost.TabSpec;
+import android.widget.TextView;
 
 public class AddEditActivity extends FragmentActivity implements OnTabChangeListener {
 	
 	public static final String FRONT = "Front";
 	public static final String BACK = "Back";
+	
+	private TextView deckTextView;
 	
 	private int deckID;
 	private Card card;
@@ -100,17 +103,14 @@ public class AddEditActivity extends FragmentActivity implements OnTabChangeList
 		initializeContent();
 		initializeTabHost();
 		
+		deckTextView = (TextView) findViewById(R.id.deckTextView);
+		deckTextView.setText(deckName);
+		
 		returnBtn  	= (ImageButton) findViewById(R.id.returnBtn);
 		doneBtn 	= (ImageButton) findViewById(R.id.doneBtn);
 		
 		returnBtn.setOnClickListener(returnHandler);
 		doneBtn.setOnClickListener(doneHandler);
-		
-		tabHost.setOnTabChangedListener(this);
-		tabHost.setCurrentTab(0);
-		
-		updateTab(FRONT, R.id.tab_front);
-		
 	}
 	
 	private void initializeContent() {
@@ -121,29 +121,39 @@ public class AddEditActivity extends FragmentActivity implements OnTabChangeList
 	}
 	
 	private void initializeTabHost() {
-		tabHost = (TabHost)findViewById(android.R.id.tabhost);
+		tabHost = (TabHost) findViewById(android.R.id.tabhost);
 		tabHost.setup();
 		
 		tabHost.addTab(newTab(FRONT, FRONT, R.id.tab_front));
 		tabHost.addTab(newTab(BACK, BACK, R.id.tab_back));
 		
-		String frontContent = getContent(Side.FRONT);
-		int frontType = getIntType(getType(Side.FRONT));
-		
-		FragmentManager manager = getSupportFragmentManager();
-		
-		FrontBackCardFragment frontFragment = FrontBackCardFragment.createFragment(frontContent, frontType);
-		manager.beginTransaction()
-			.add(R.id.tab_front, frontFragment)
-			.commit();
-		
+		updateTabs(FRONT);
+		tabHost.setCurrentTab(0);
+		tabHost.setOnTabChangedListener(this);
 	}
 	
-	private TabSpec newTab (String tag, String labelTag, int contentId) {
+	private void updateTabs(String tag) {
+		FragmentManager fm = getSupportFragmentManager();
+		switch(tag) {
+			case FRONT:
+				FrontBackCardFragment frontFragment = FrontBackCardFragment.createFragment(cardFrontString, getIntType(cardFrontType));
+				fm.beginTransaction()
+					.replace(R.id.tab_front, frontFragment, FRONT)
+					.commit();
+				break;
+			case BACK:
+				FrontBackCardFragment backFragment = FrontBackCardFragment.createFragment(cardBackString, getIntType(cardBackType));
+				fm.beginTransaction()
+					.replace(R.id.tab_back, backFragment, BACK)
+					.commit();
+				break;
+		}
+	}
+
+	private TabSpec newTab(String tag, String tagLabel, int contentId) {
 		TabSpec tabSpec = tabHost.newTabSpec(tag);
-		tabSpec.setIndicator(labelTag);
+		tabSpec.setIndicator(tagLabel);
 		tabSpec.setContent(contentId);
-		
 		return tabSpec;
 	}
 	
@@ -218,35 +228,6 @@ public class AddEditActivity extends FragmentActivity implements OnTabChangeList
 			dialog.show();
 		}
 	};
-
-
-	@Override
-	public void onTabChanged(String tag) {
-		switch(tag) {
-			case FRONT:
-				side = Side.FRONT;
-				updateTab(tag, R.id.tab_front);
-				break;
-			case BACK:
-				side = Side.BACK;
-				updateTab(tag, R.id.tab_back);
-				break;
-		}
-	}
-
-	private void updateTab(String tag, int contentId) {
-		FragmentManager manager = this.getSupportFragmentManager();
-		FrontBackCardFragment fragment = null;
-		String content = getContent(side);
-		int type = getIntType(getType(side));
-		
-		if(manager.findFragmentByTag(tag) == null) {
-			fragment = FrontBackCardFragment.createFragment(content, type);
-			manager.beginTransaction()
-				.replace(contentId, fragment)
-				.commit();
-		}
-	}
 	
 	private int getIntType(Type type) {
 		switch(type) {
@@ -261,5 +242,19 @@ public class AddEditActivity extends FragmentActivity implements OnTabChangeList
 		}
 		
 		return 0;
+	}
+
+	@Override
+	public void onTabChanged(String tabId) {
+		switch(tabId) {
+			case FRONT:
+				side = Side.FRONT;
+				updateTabs(FRONT);
+				break;
+			case BACK:
+				side = Side.BACK;
+				updateTabs(BACK);
+				break;
+		}
 	}
 }

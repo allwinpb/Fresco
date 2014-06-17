@@ -60,15 +60,15 @@ public class NoCardsFragment extends Fragment{
 						newCardIntent.putExtra(Constant.NEW_EDIT, false);
 						newCardIntent.putExtra(Constant.DECK_ID, deck.getDeckID());
 						newCardIntent.putExtra(Constant.CARD_ID, -1);
+						newCardIntent.putExtra(Constant.DECK_NAME, deck.getDeckName());
 						
 						startActivity(newCardIntent);
 						break;
 					
 					case R.id.returnButton:
 						
-						Intent i = getActivity().getIntent();
-						getActivity().setResult(Activity.RESULT_CANCELED, i);
-						getActivity().finish();
+						Intent i = new Intent(getActivity(), FrescoMain.class);
+						startActivity(i);
 						
 						break;
 						
