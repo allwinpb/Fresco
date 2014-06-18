@@ -1,5 +1,6 @@
 package icreate.fresco;
 
+import android.app.ActionBar;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -27,6 +28,7 @@ public class CardsViewPager extends FragmentActivity {
 		int deckID = intent.getIntExtra(Constant.DECK_ID, 0);
 		
 		deck = database.getDeck(deckID, deckName);
+		
 		
 		FragmentManager manager = getSupportFragmentManager();
 		

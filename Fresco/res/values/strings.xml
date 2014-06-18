@@ -28,4 +28,5 @@
     <string name="title_activity_activity_camera">ActivityCamera</string>
 	<string name="gallery">Go to Gallery</string>
 	<string name="camera">Take a photo</string>
+	<string name="delete_category">Delete</string>
 </resources>
