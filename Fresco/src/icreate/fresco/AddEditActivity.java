@@ -17,6 +17,9 @@ import android.widget.TabHost.OnTabChangeListener;
 import android.widget.TabHost.TabSpec;
 
 public class AddEditActivity extends FragmentActivity implements OnTabChangeListener {
+	
+	public static final int GREEN  = 0xFF27AE60;
+	public static final int ORANGE = 0xFFD35400;
 
 	public static final String FRONT = "Front";
 	public static final String BACK = "Back";
@@ -140,6 +143,7 @@ public class AddEditActivity extends FragmentActivity implements OnTabChangeList
 			.commit();
 			break;
 		}
+		changeTabColor();
 	}
 
 	private TabSpec newTab(String tag, String tagLabel, int contentId) {
@@ -241,6 +245,7 @@ public class AddEditActivity extends FragmentActivity implements OnTabChangeList
 			public void onClick(DialogInterface dialog, int which) {
 				card.setType(Side.FRONT, cardFrontType);
 				card.setType(Side.BACK, cardBackType);
+				//saveCardContent();
 				card.setContent(Side.FRONT, cardFrontString);
 				card.setContent(Side.BACK, cardBackString);
 
@@ -257,6 +262,7 @@ public class AddEditActivity extends FragmentActivity implements OnTabChangeList
 				startActivity(sendIntent);
 				finish();
 			}
+
 		});
 
 		saveDialog
@@ -271,5 +277,14 @@ public class AddEditActivity extends FragmentActivity implements OnTabChangeList
 		dialog.show();
 	}
 	
+	private void changeTabColor() {
+		if(side == Side.FRONT) {
+			tabHost.getTabWidget().getChildAt(0).setBackgroundColor(GREEN);
+			tabHost.getTabWidget().getChildAt(1).setBackgroundColor(ORANGE);
+		} else {
+			tabHost.getTabWidget().getChildAt(1).setBackgroundColor(GREEN);
+			tabHost.getTabWidget().getChildAt(0).setBackgroundColor(ORANGE);
+		}
+	}
 	
 }
