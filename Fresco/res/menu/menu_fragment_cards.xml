@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.example.fresco.CardsFragment" >
+	<item
+        android:id="@+id/add_icon"
+        android:icon="@drawable/ic_action_new"
+        android:showAsAction="always"
+        android:title="Add a card">
+    </item>    
+    
+	<item
+        android:id="@+id/delete_icon"
+        android:icon="@drawable/ic_action_remove"
+        android:showAsAction="always"
+        android:title="Delete this card">
+    </item>
+    
+	<item
+        android:id="@+id/edit_icon"
+        android:icon="@drawable/edit_query"
+        android:showAsAction="always"
+        android:title="Edit this card">
+    </item>
+    
+	<item
+        android:id="@+id/review_icon"
+        android:icon="@drawable/ic_menu_view"
+        android:showAsAction="always"
+        android:title="Review this deck">
+    </item>
+
+</menu>

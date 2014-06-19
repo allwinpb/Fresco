@@ -8,4 +8,7 @@ public class Constant {
 	public final static String NEW_EDIT = "icreate.fresco.new_edit";
 	public final static String DECK_ID = "icreate.fresco.deck_id";
 	public final static String DECK_NAME = "icreate.fresco.deck_name";
+	public final static String FRONT_BACK = "icreate.fresco.front_back";
+	public final static String INDEX = "icreate.fresco.index";
+	public final static String NUMBER_OF_CARDS = "icreate.fresco.number_of_cards";
 }
