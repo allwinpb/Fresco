@@ -12,7 +12,7 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 
 public class FragmentGallery extends Fragment{
-	EditText editText;
+	static EditText editText;
 	
 	public static FragmentGallery createFragment(String content) {
 		Bundle bundle = new Bundle();
@@ -57,5 +57,9 @@ public class FragmentGallery extends Fragment{
         
         return view;
     }
+	
+	public static String saveContent() {
+		return editText.getText().toString();
+	}
 
 }

@@ -8,45 +8,6 @@
     android:paddingRight="0dp"
     android:paddingTop="0dp"
     tools:context="com.example.editpage.MainActivity$PlaceholderFragment" >
-
-    <LinearLayout
-        android:id="@+id/navigationPanel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="#e74c3c" >
-
-        <ImageButton
-            android:id="@+id/returnBtn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.20"
-            android:background="#e74c3c"
-            android:paddingBottom="10dp"
-            android:paddingTop="10dp"
-            android:src="@drawable/back" />
-
-        <TextView
-            android:id="@+id/deckTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.20"
-            android:gravity="center"
-            android:paddingBottom="10dp"
-            android:paddingTop="10dp"
-            android:text="@string/card"
-            android:textColor="#fff"
-            android:textSize="25sp" />
-
-        <ImageButton
-            android:id="@+id/doneBtn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.20"
-            android:background="#e74c3c"
-            android:paddingBottom="10dp"
-            android:paddingTop="10dp"
-            android:src="@drawable/done" />
-    </LinearLayout>
         
     <TabHost
         android:id="@android:id/tabhost"

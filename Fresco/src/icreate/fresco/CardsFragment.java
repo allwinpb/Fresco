@@ -5,6 +5,7 @@ import icreate.fresco.Card.Type;
 
 import java.io.File;
 
+import android.app.ActionBar;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
@@ -17,10 +18,12 @@ import android.support.v4.app.Fragment;
 import android.util.Base64;
 import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
@@ -32,22 +35,25 @@ public class CardsFragment extends Fragment {
 	Card currentCard;
 	int cardID;
 	
+	int index;
+	int cardsCount;
+	
 	private SqliteHelper database;
 	
-	TextView deckTextView;
-	ImageButton addButton;
-	ImageButton deleteButton;
-	ImageButton editButton;
-	ImageButton reviewButton;
-	ImageButton returnButton;
+	private TextView frontBackTextView;
+	private TextView indexTextView;
+	
+	boolean isFrontCard = true;
 	
 	View rootLayout;
 	LinearLayout cardFace;
 	LinearLayout cardBack;
 	
-	public static CardsFragment createFragment(int index) {
+	public static CardsFragment createFragment(int cardId, int index, int cardsCount) {
 		Bundle bundle = new Bundle();
-		bundle.putInt(Constant.CARD_ID, index);
+		bundle.putInt(Constant.CARD_ID, cardId);
+		bundle.putInt(Constant.INDEX, index);
+		bundle.putInt(Constant.NUMBER_OF_CARDS, cardsCount);
 		
 		CardsFragment fragment = new CardsFragment();
 		fragment.setArguments(bundle);
@@ -63,6 +69,10 @@ public class CardsFragment extends Fragment {
 		deck = CardsViewPager.getDeck();
 		cardID = getArguments().getInt(Constant.CARD_ID);
 		currentCard = deck.getCard(cardID);
+		index = getArguments().getInt(Constant.INDEX);
+		cardsCount = getArguments().getInt(Constant.NUMBER_OF_CARDS);
+		
+		setHasOptionsMenu(true);
 	}
 
 	@Override
@@ -71,8 +81,6 @@ public class CardsFragment extends Fragment {
 		
 		View view = inflater.inflate(R.layout.fragment_cards, container, false);
 		
-		initializeWidgets(view);
-		setUpListener();
 		setCardsView(view);
 		
 		View front = (View) view.findViewById(R.id.card_face);
@@ -81,27 +89,17 @@ public class CardsFragment extends Fragment {
 		front.setOnClickListener(cardListener);
 		back.setOnClickListener(cardListener);
 		
+		frontBackTextView = (TextView) view.findViewById(R.id.frontBackTextView);
+		indexTextView = (TextView) view.findViewById(R.id.indexTextView);
+		
+		frontBackTextView.setText("Front Card");
+		indexTextView.setText(String.format("%d of %d", (index+1), cardsCount));
+		
+		ActionBar actionBar = getActivity().getActionBar();
+		actionBar.setTitle(deck.getDeckName());
+		actionBar.setDisplayHomeAsUpEnabled(true);
+		
 		return view;
-	}
-
-	private void setUpListener() {
-		addButton.setOnClickListener(listener);
-		deleteButton.setOnClickListener(listener);
-		editButton.setOnClickListener(listener);
-		reviewButton.setOnClickListener(listener);
-		returnButton.setOnClickListener(listener);
-	}
-
-	private void initializeWidgets(View view) {
-		
-		deckTextView = (TextView) view.findViewById(R.id.deckTextView);
-		addButton = (ImageButton) view.findViewById(R.id.addButton);
-		deleteButton = (ImageButton) view.findViewById(R.id.deleteButton);
-		editButton = (ImageButton) view.findViewById(R.id.editButton);
-		reviewButton = (ImageButton) view.findViewById(R.id.reviewButton);
-		returnButton = (ImageButton) view.findViewById(R.id.returnButton);
-		
-		deckTextView.setText(deck.getDeckName());
 	}
 	
 	private void setCardsView(View view) {
@@ -119,6 +117,13 @@ public class CardsFragment extends Fragment {
 	
 	public void flipCard() {	 
 	    FlippingAnimation flipAnimation = new FlippingAnimation(cardFace, cardBack);
+	    isFrontCard = !isFrontCard;
+	    
+	    if(isFrontCard == true) {
+	    	frontBackTextView.setText("Front Card");
+	    } else {
+	    	frontBackTextView.setText("Back Card");
+	    }
 	 
 	    if (cardFace.getVisibility() == View.GONE)
 	    {
@@ -142,6 +147,9 @@ public class CardsFragment extends Fragment {
 				
 			case DOODLE:
 				view = addDoodle(content);
+				break;
+				
+			default:
 				break;
 		}
 		
@@ -191,22 +199,38 @@ public class CardsFragment extends Fragment {
 	                encodeByte.length);
 	        return bitmap;
 		} catch (Exception e) {
-	        e.getMessage(); //TODO: send to log
+	        e.getMessage(); 
 	        return null;
 		}
-	}
+	}	
 	
-	private int getType(Card currentCard, Side side) {
-		switch(currentCard.getType(side)) {
-			case TEXT:
-				return 0;
-			case IMAGE:
-				return 1;
-			case DOODLE:
-				return 2;
+	@Override
+	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+		inflater.inflate(R.menu.menu_fragment_cards, menu);
+	}
+
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch(item.getItemId()) {
+			case R.id.add_icon:
+				addCard();
+				return true;
+			case R.id.delete_icon:
+				deleteCard(currentCard);
+				return true;
+			case R.id.edit_icon:
+				editCard(currentCard);
+				return true;
+			case R.id.review_icon:
+				reviewDeck();
+				return true;
+			case android.R.id.home:
+				returnBack();
+				return true;
+			default:
+				return super.onOptionsItemSelected(item);
 		}
-		
-		return 0;
 	}
 	
 	private OnClickListener cardListener = new OnClickListener() {
@@ -217,33 +241,6 @@ public class CardsFragment extends Fragment {
 		}
 		
 	};
-	
-	private OnClickListener listener = new OnClickListener() {
-
-		@Override
-		public void onClick(View v) {
-			switch(v.getId()) {
-				case R.id.addButton:
-					addCard();
-					break;
-					
-				case R.id.deleteButton:
-					deleteCard(currentCard);
-					break;
-					
-				case R.id.editButton:
-					editCard(currentCard);
-					break;
-					
-				case R.id.reviewButton:
-					reviewDeck();
-					break;
-					
-				case R.id.returnButton:
-					returnToFrescoMain();
-			
-			}
-		}};
 	
 	private void addCard() {
 		Intent intent = new Intent(getActivity(), AddEditActivity.class);
@@ -302,10 +299,9 @@ public class CardsFragment extends Fragment {
 		//TODO
 	}
 	
-	private void returnToFrescoMain() {
-		Intent i = new Intent(getActivity(), FrescoMain.class);
-		startActivity(i);
-		getActivity().finish();
+	private void returnBack() {
+		Intent intent = new Intent(getActivity(), FrescoMain.class);
+		startActivity(intent);
 	}
 
 }

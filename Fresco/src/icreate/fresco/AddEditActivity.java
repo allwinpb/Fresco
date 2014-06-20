@@ -2,25 +2,27 @@ package icreate.fresco;
 
 import icreate.fresco.Card.Side;
 import icreate.fresco.Card.Type;
+import android.app.ActionBar;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
-import android.view.View;
-import android.widget.ImageButton;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.widget.TabHost;
 import android.widget.TabHost.OnTabChangeListener;
 import android.widget.TabHost.TabSpec;
-import android.widget.TextView;
 
 public class AddEditActivity extends FragmentActivity implements OnTabChangeListener {
+	
+	public static final int GREEN  = 0xFF27AE60;
+	public static final int ORANGE = 0xFFD35400;
 
 	public static final String FRONT = "Front";
 	public static final String BACK = "Back";
-
-	private TextView deckTextView;
 
 	private int deckID;
 	private Card card;
@@ -33,9 +35,6 @@ public class AddEditActivity extends FragmentActivity implements OnTabChangeList
 	private String cardFrontString = "";
 	private Type cardBackType = Type.TEXT;
 	private String cardBackString  = "";
-
-	private ImageButton returnBtn;
-	private ImageButton doneBtn;
 
 	private Side side = Side.FRONT;
 	private TabHost tabHost;
@@ -102,15 +101,11 @@ public class AddEditActivity extends FragmentActivity implements OnTabChangeList
 
 		initializeContent();
 		initializeTabHost();
-
-		deckTextView = (TextView) findViewById(R.id.deckTextView);
-		deckTextView.setText(deckName);
-
-		returnBtn  	= (ImageButton) findViewById(R.id.returnBtn);
-		doneBtn 	= (ImageButton) findViewById(R.id.doneBtn);
-
-		returnBtn.setOnClickListener(returnHandler);
-		doneBtn.setOnClickListener(doneHandler);
+		
+		ActionBar actionBar = getActionBar();
+		actionBar.setTitle(deckName);
+		actionBar.setDisplayHomeAsUpEnabled(true);
+		
 	}
 
 	private void initializeContent() {
@@ -148,6 +143,7 @@ public class AddEditActivity extends FragmentActivity implements OnTabChangeList
 			.commit();
 			break;
 		}
+		changeTabColor();
 	}
 
 	private TabSpec newTab(String tag, String tagLabel, int contentId) {
@@ -155,80 +151,8 @@ public class AddEditActivity extends FragmentActivity implements OnTabChangeList
 		tabSpec.setIndicator(tagLabel);
 		tabSpec.setContent(contentId);
 		return tabSpec;
+	
 	}
-
-	View.OnClickListener returnHandler = new View.OnClickListener() {
-		public void onClick(View v) {
-			AlertDialog.Builder exitDialog = new AlertDialog.Builder(AddEditActivity.this);
-
-			exitDialog
-			.setTitle("Exit Confirmation")
-			.setCancelable(true)
-			.setMessage("Changes not saved will be discarded")
-			.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-				public void onClick(DialogInterface dialog, int which) {
-					
-					Intent sendIntent = new Intent(AddEditActivity.this, CardsViewPager.class);
-					sendIntent.putExtra(Constant.DECK_NAME, deckName);
-					sendIntent.putExtra(Constant.DECK_ID, deckID);
-					startActivity(sendIntent);
-					finish();
-				}
-			});
-			exitDialog
-			.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
-				public void onClick(DialogInterface dialog, int which) {
-					dialog.cancel();
-				}
-			})
-			.setIcon(android.R.drawable.ic_dialog_alert);
-
-			AlertDialog dialog = exitDialog.create();
-			dialog.show();
-		}
-	};
-
-	View.OnClickListener doneHandler = new View.OnClickListener() {
-		public void onClick(View v) {
-			AlertDialog.Builder saveDialog = new AlertDialog.Builder(AddEditActivity.this);
-
-			saveDialog
-			.setTitle("Save confirmation")
-			.setMessage("Changes not saved will be discarded")
-			.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-				public void onClick(DialogInterface dialog, int which) {
-					card.setType(Side.FRONT, cardFrontType);
-					card.setType(Side.BACK, cardBackType);
-					card.setContent(Side.FRONT, cardFrontString);
-					card.setContent(Side.BACK, cardBackString);
-
-					database = FrescoMain.getDatabase();
-					if(newEdit == false) {
-						database.insertCard(deckID, card);
-					} else {
-						database.updateCard(deckID, card);
-					}
-
-					Intent sendIntent = new Intent(AddEditActivity.this, CardsViewPager.class);
-					sendIntent.putExtra(Constant.DECK_NAME, deckName);
-					sendIntent.putExtra(Constant.DECK_ID, deckID);
-					startActivity(sendIntent);
-					finish();
-				}
-			});
-
-			saveDialog
-			.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
-				public void onClick(DialogInterface dialog, int which) {
-					dialog.cancel();
-				}
-			})
-			.setIcon(android.R.drawable.ic_dialog_info);
-
-			AlertDialog dialog = saveDialog.create();
-			dialog.show();
-		}
-	};
 
 	private int getIntType(Type type) {
 		switch(type) {
@@ -258,4 +182,109 @@ public class AddEditActivity extends FragmentActivity implements OnTabChangeList
 			break;
 		}
 	}
+
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		MenuInflater inflater = getMenuInflater();
+		inflater.inflate(R.menu.add_edit_activity, menu);
+		return super.onCreateOptionsMenu(menu);
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch(item.getItemId()) {
+			case R.id.done_icon:
+				confirmSaving();
+				return true;
+			
+			case android.R.id.home:
+				confirmLeaving();
+				return true;
+				
+			default:
+				return super.onOptionsItemSelected(item);
+		}
+	}
+	
+	private void confirmLeaving() {
+		AlertDialog.Builder exitDialog = new AlertDialog.Builder(AddEditActivity.this);
+
+		exitDialog
+		.setTitle("Exit Confirmation")
+		.setCancelable(true)
+		.setMessage("Changes not saved will be discarded")
+		.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+			public void onClick(DialogInterface dialog, int which) {
+				
+				Intent sendIntent = new Intent(AddEditActivity.this, CardsViewPager.class);
+				sendIntent.putExtra(Constant.DECK_NAME, deckName);
+				sendIntent.putExtra(Constant.DECK_ID, deckID);
+				startActivity(sendIntent);
+				finish();
+			}
+		});
+		exitDialog
+		.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+			public void onClick(DialogInterface dialog, int which) {
+				dialog.cancel();
+			}
+		})
+		.setIcon(android.R.drawable.ic_dialog_alert);
+
+		AlertDialog dialog = exitDialog.create();
+		dialog.show();
+	}
+	
+	private void confirmSaving() {
+		AlertDialog.Builder saveDialog = new AlertDialog.Builder(AddEditActivity.this);
+
+		saveDialog
+		.setTitle("Save confirmation")
+		.setMessage("Changes not saved will be discarded")
+		.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+			public void onClick(DialogInterface dialog, int which) {
+				card.setType(Side.FRONT, cardFrontType);
+				card.setType(Side.BACK, cardBackType);
+				//saveCardContent();
+				card.setContent(Side.FRONT, cardFrontString);
+				card.setContent(Side.BACK, cardBackString);
+
+				database = FrescoMain.getDatabase();
+				if(newEdit == false) {
+					database.insertCard(deckID, card);
+				} else {
+					database.updateCard(deckID, card);
+				}
+
+				Intent sendIntent = new Intent(AddEditActivity.this, CardsViewPager.class);
+				sendIntent.putExtra(Constant.DECK_NAME, deckName);
+				sendIntent.putExtra(Constant.DECK_ID, deckID);
+				startActivity(sendIntent);
+				finish();
+			}
+
+		});
+
+		saveDialog
+		.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+			public void onClick(DialogInterface dialog, int which) {
+				dialog.cancel();
+			}
+		})
+		.setIcon(android.R.drawable.ic_dialog_info);
+
+		AlertDialog dialog = saveDialog.create();
+		dialog.show();
+	}
+	
+	private void changeTabColor() {
+		if(side == Side.FRONT) {
+			tabHost.getTabWidget().getChildAt(0).setBackgroundColor(GREEN);
+			tabHost.getTabWidget().getChildAt(1).setBackgroundColor(ORANGE);
+		} else {
+			tabHost.getTabWidget().getChildAt(1).setBackgroundColor(GREEN);
+			tabHost.getTabWidget().getChildAt(0).setBackgroundColor(ORANGE);
+		}
+	}
+	
 }

@@ -1,11 +1,11 @@
 package icreate.fresco;
 
-import android.app.Activity;
-import android.content.Context;
+import android.app.ActionBar;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
@@ -15,10 +15,8 @@ import android.widget.TextView;
 public class NoCardsFragment extends Fragment{
 
 	int deckID;
-	TextView deckTextView;
 	TextView deckNameTextView;
 	ImageButton addButton;
-	ImageButton returnButton;
 	
 	String deckName;
 	
@@ -64,12 +62,6 @@ public class NoCardsFragment extends Fragment{
 						
 						startActivity(newCardIntent);
 						break;
-					
-					case R.id.returnButton:
-						
-						getActivity().finish();
-						
-						break;
 						
 				}
 			}
@@ -79,16 +71,32 @@ public class NoCardsFragment extends Fragment{
 		addButton = (ImageButton) view.findViewById(R.id.addButton);
 		addButton.setOnClickListener(listener);
 		
-		returnButton = (ImageButton) view.findViewById(R.id.returnButton);
-		returnButton.setOnClickListener(listener);
-		
-		deckTextView = (TextView) view.findViewById(R.id.deckTextView);
-		deckTextView.setText(deck.getDeckName());
 		
 		deckNameTextView = (TextView) view.findViewById(R.id.deckNameTextView);
 		String text = deck.getDeckName() + " " +getResources().getString(R.string.no_cards);
 		deckNameTextView.setText(text);
 		
+		ActionBar actionBar = getActivity().getActionBar();
+		actionBar.setTitle(deck.getDeckName());
+		actionBar.setDisplayHomeAsUpEnabled(true);
+		
 		return view;
+	}
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch(item.getItemId()) {
+			
+			case android.R.id.home:
+				returnBack();
+				return true;
+			default:
+				return super.onOptionsItemSelected(item);
+		}
+	}
+	
+	private void returnBack() {
+		Intent intent = new Intent(getActivity(), FrescoMain.class);
+		startActivity(intent);
 	}
 }

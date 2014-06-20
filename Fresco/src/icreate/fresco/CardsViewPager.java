@@ -8,7 +8,6 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
-import android.view.View;
 
 public class CardsViewPager extends FragmentActivity {
 
@@ -49,7 +48,7 @@ public class CardsViewPager extends FragmentActivity {
 				@Override
 				public Fragment getItem(int position) {
 					Card card = deck.get(position);
-					return CardsFragment.createFragment(card.getCardID());
+					return CardsFragment.createFragment(card.getCardID(), position, deck.getCardCount());
 				}
 	
 				@Override
@@ -58,21 +57,11 @@ public class CardsViewPager extends FragmentActivity {
 				}
 			});
 			
-			int cardId = getIntent().getIntExtra(Constant.CARD_ID, 0);
-			
-			for(int i=0; i<deck.getCardCount(); i++) {
-				if(deck.get(i).getCardID() == cardId) {
-					viewPager.setCurrentItem(i);
-					setTitle("Note #" + i);
-					break;
-				}
-			}
-			
 			viewPager.setOnPageChangeListener(new OnPageChangeListener(){
 	
 				@Override
 				public void onPageScrollStateChanged(int arg0) {
-					setTitle("Card #" + (arg0+1));
+					
 				}
 	
 				@Override

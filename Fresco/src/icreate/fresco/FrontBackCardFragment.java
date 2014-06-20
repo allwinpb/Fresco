@@ -206,4 +206,17 @@ public class FrontBackCardFragment extends Fragment implements TabHost.OnTabChan
 		}
 	}
 	
+	public String saveContent() {
+		switch(type) {
+			case TEXT:
+				return FragmentText.saveContent();
+			case DOODLE:
+				return FragmentDoodle.saveContent();
+			case IMAGE:
+				return FragmentGallery.saveContent();
+			default:
+				return FragmentCamera.saveContent();
+		}
+	}
+	
 }
