@@ -28,4 +28,11 @@
     <string name="title_activity_activity_camera">ActivityCamera</string>
 	<string name="gallery">Go to Gallery</string>
 	<string name="camera">Take a photo</string>
+	<string name="description">Camera</string>
+	<string name="return_button">Return Button</string>
+	<string name="deck_textview">Deck_1</string>
+	<string name="edit_button">Edit Card</string>
+	<string name="delete_button">Delete Card</string>
+	<string name="add_button">Add Card</string>
+	<string name="review_button">Review Card</string>
 </resources>
