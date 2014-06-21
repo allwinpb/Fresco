@@ -90,4 +90,8 @@ public class CardsViewPager extends FragmentActivity {
 	protected static Deck getDeck() {
 		return deck;
 	}
+	
+	public void setCurrentItem(int index) {
+		viewPager.setCurrentItem(index, true);
+	}
 }

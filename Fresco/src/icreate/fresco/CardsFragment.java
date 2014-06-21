@@ -4,8 +4,6 @@ import icreate.animation.FlippingAnimation;
 import icreate.fresco.Card.Side;
 import icreate.fresco.Card.Type;
 
-import java.io.File;
-
 import android.app.ActionBar;
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -113,12 +111,31 @@ public class CardsFragment extends Fragment {
 		imageButtonBack = (ImageButton) view.findViewById(R.id.imageButtonBack);
 		imageButtonTo = (ImageButton) view.findViewById(R.id.imageButtonTo);
 		
+		OnClickListener listener = new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				switch(v.getId()) {
+					case R.id.imageButtonBack:
+						((CardsViewPager) getActivity()).setCurrentItem(index-1);
+						break;
+					case R.id.imageButtonTo:
+						((CardsViewPager) getActivity()).setCurrentItem(index+1);
+						break;
+					default:
+						break;
+				}
+			}
+		};
+		
 		if(index >= 1) {
 			imageButtonBack.setVisibility(View.VISIBLE);
+			imageButtonBack.setOnClickListener(listener);
 		}
 		
 		if(index < cardsCount - 1) {
 			imageButtonTo.setVisibility(View.VISIBLE);
+			imageButtonTo.setOnClickListener(listener);
 		}
 	}
 
@@ -186,7 +203,7 @@ public class CardsFragment extends Fragment {
 		return textView;
 	}
 	
-	private View addImage(String path) {
+	/*private View addImage(String path) {
 		ImageView image = new ImageView(this.getActivity());
 		
 		File imgFile = new  File(path);
@@ -197,6 +214,18 @@ public class CardsFragment extends Fragment {
 		}
 		
 		return null; 
+	}*/
+
+	private View addImage(String jsonString) {
+		ImageView doodle = new ImageView(this.getActivity()); 
+		Bitmap bitmap = convertFromJSONToImage(jsonString);
+		
+		if(bitmap != null) {
+			doodle.setImageBitmap(bitmap);
+			return doodle;
+		}
+		
+		return null;
 	}
 	
 	private View addDoodle(String jsonString) {
