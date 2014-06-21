@@ -129,6 +129,7 @@ public class SqliteHelper extends SQLiteOpenHelper {
 		database.execSQL(cardQuery);
 		
 		database.close();
+		
 	}
 	
 	public Deck getDeck(int deckID, String deckName) {
