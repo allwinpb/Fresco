@@ -1,6 +1,7 @@
 package icreate.fresco;
 
 import icreate.fresco.Card.Type;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -227,5 +228,9 @@ public class FrontBackCardFragment extends Fragment implements TabHost.OnTabChan
 				return cameraFragment.getContent();
 		}
 	}
-	
+	@Override
+	public void onActivityResult(int requestCode, int resultCode, Intent data) {
+	    Fragment fragment = getChildFragmentManager().findFragmentById(R.id.tab_camera);
+	    fragment.onActivityResult(requestCode, resultCode, data);
+	}
 }

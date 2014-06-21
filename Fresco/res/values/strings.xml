@@ -41,4 +41,5 @@
 	<string name="review_button">Review Card</string>
 	<string name="front_back_tv">Front back</string>
 	<string name="index_tv">Index TextView</string>
+	<string name="take_picture">Take a picture</string>
 </resources>
