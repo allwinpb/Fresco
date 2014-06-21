@@ -282,13 +282,17 @@ public class AddEditActivity extends FragmentActivity implements OnTabChangeList
 	}
 	
 	private void saveCardContent() {
-		cardFrontType = frontFragment.getType();
-		cardBackType = backFragment.getType();
+		if(frontFragment != null) 
+			cardFrontString = frontFragment.getContent();
+		if(backFragment != null)
+			cardBackString = backFragment.getContent();
 	}
 
 	private void saveCardType() {
-		cardFrontString = frontFragment.getContent();
-		cardBackString = backFragment.getContent();
+		if(frontFragment != null)
+			cardFrontType = frontFragment.getType();
+		if(backFragment != null)
+			cardBackType = backFragment.getType();
 	}
 
 	
