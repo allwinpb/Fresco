@@ -3,10 +3,12 @@ package icreate.fresco;
 import java.io.FileNotFoundException;
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -22,7 +24,7 @@ public class FragmentGallery extends Fragment{
 	final static int RESULT_LOAD_IMAGE = 0;
 	Bitmap bmp;
 	Button takePic;
-	private Uri fileUri;
+	private Uri selectedImage;
 	public static final int MEDIA_TYPE_IMAGE = 1;
 
 	public static FragmentGallery createFragment(String content) {
@@ -57,11 +59,61 @@ public class FragmentGallery extends Fragment{
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
 		// TODO Auto-generated method stub
 		super.onActivityResult(requestCode, resultCode, data);
-		Uri selectedImageUri = data.getData(); 
-		iv.setImageURI(selectedImageUri);
+		if (requestCode == RESULT_LOAD_IMAGE && resultCode == getActivity().RESULT_OK && null != data) {
+            selectedImage = data.getData();
+            String[] filePathColumn = { MediaStore.Images.Media.DATA };
+            Cursor cursor = getActivity().getContentResolver().query(selectedImage,filePathColumn, null, null, null);
+            cursor.moveToFirst();
+            int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+            String picturePath = cursor.getString(columnIndex);
+            cursor.close();
+            iv.setImageBitmap(getScaledBitmap(picturePath, 800, 800));
+        }
 	}
-	public String getContent() {
-		return bmp.toString();
+	private Bitmap getScaledBitmap(String picturePath, int width, int height) {
+	    BitmapFactory.Options sizeOptions = new BitmapFactory.Options();
+	    sizeOptions.inJustDecodeBounds = true;
+	    BitmapFactory.decodeFile(picturePath, sizeOptions);
+
+	    int inSampleSize = calculateInSampleSize(sizeOptions, width, height);
+
+	    sizeOptions.inJustDecodeBounds = false;
+	    sizeOptions.inSampleSize = inSampleSize;
+
+	    return BitmapFactory.decodeFile(picturePath, sizeOptions);
 	}
+	private int calculateInSampleSize(BitmapFactory.Options options, int reqWidth, int reqHeight) {
+	    // Raw height and width of image
+	    final int height = options.outHeight;
+	    final int width = options.outWidth;
+	    int inSampleSize = 1;
+
+	    if (height > reqHeight || width > reqWidth) {
+
+	        // Calculate ratios of height and width to requested height and
+	        // width
+	        final int heightRatio = Math.round((float) height / (float) reqHeight);
+	        final int widthRatio = Math.round((float) width / (float) reqWidth);
+
+	        // Choose the smallest ratio as inSampleSize value, this will
+	        // guarantee
+	        // a final image with both dimensions larger than or equal to the
+	        // requested height and width.
+	        inSampleSize = heightRatio < widthRatio ? heightRatio : widthRatio;
+	    }
+
+	    return inSampleSize;
+	}
+	public String getContent() 
+    {
+        String[] projection = { MediaStore.Images.Media.DATA };
+        Cursor cursor = getActivity().managedQuery(selectedImage, projection, null, null, null);
+        if (cursor == null) return null;
+        int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+        cursor.moveToFirst();
+        String s=cursor.getString(column_index);
+        cursor.close();
+        return s;
+    }
 
 }

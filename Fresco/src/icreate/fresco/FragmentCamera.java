@@ -72,9 +72,8 @@ public class FragmentCamera extends Fragment {
 	
 	public String getContent() {
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
-		bmp.compress(Bitmap.CompressFormat.PNG, 100, baos);
+		bmp.compress(Bitmap.CompressFormat.PNG, 80, baos);
 		byte[] b = baos.toByteArray();
-		String temp = Base64.encodeToString(b, Base64.DEFAULT);
-		return temp;
+		return Base64.encodeToString(b, Base64.DEFAULT);
 	}
 }

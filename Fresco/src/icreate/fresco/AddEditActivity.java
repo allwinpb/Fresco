@@ -317,7 +317,9 @@ public class AddEditActivity extends FragmentActivity implements OnTabChangeList
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		// TODO Auto-generated method stub
 		super.onActivityResult(requestCode, resultCode, data);
-		frontFragment.onActivityResult(requestCode, resultCode, data);
-		//backFragment.onActivityResult(requestCode, resultCode, data);
+		if(frontFragment != null)
+			frontFragment.onActivityResult(requestCode, resultCode, data);
+		else
+			backFragment.onActivityResult(requestCode, resultCode, data);
 	}
 }

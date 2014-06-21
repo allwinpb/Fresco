@@ -230,7 +230,9 @@ public class FrontBackCardFragment extends Fragment implements TabHost.OnTabChan
 	}
 	@Override
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
-	    Fragment fragment = getChildFragmentManager().findFragmentById(R.id.tab_camera);
-	    fragment.onActivityResult(requestCode, resultCode, data);
+		super.onActivityResult(requestCode, resultCode, data);
+		for (Fragment fragment : getChildFragmentManager().getFragments()) {
+            fragment.onActivityResult(requestCode, resultCode, data);
+        }
 	}
 }
