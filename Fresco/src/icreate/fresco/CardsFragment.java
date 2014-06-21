@@ -9,6 +9,7 @@ import java.io.File;
 import android.app.ActionBar;
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -93,7 +94,7 @@ public class CardsFragment extends Fragment {
 		frontBackTextView = (TextView) view.findViewById(R.id.frontBackTextView);
 		indexTextView = (TextView) view.findViewById(R.id.indexTextView);
 		
-		frontBackTextView.setText("Front Card");
+		frontBackTextView.setText("Front");
 		indexTextView.setText(String.format("%d of %d", (index+1), cardsCount));
 		
 		ActionBar actionBar = getActivity().getActionBar();
@@ -121,9 +122,9 @@ public class CardsFragment extends Fragment {
 	    isFrontCard = !isFrontCard;
 	    
 	    if(isFrontCard == true) {
-	    	frontBackTextView.setText("Front Card");
+	    	frontBackTextView.setText("Front");
 	    } else {
-	    	frontBackTextView.setText("Back Card");
+	    	frontBackTextView.setText("Back");
 	    }
 	 
 	    if (cardFace.getVisibility() == View.GONE)
@@ -161,7 +162,7 @@ public class CardsFragment extends Fragment {
 		TextView textView = new TextView(this.getActivity());
 		textView.setText(text);
 		textView.setTextSize(25);
-		textView.setTextColor(Color.BLACK);
+		textView.setTextColor(Color.WHITE);
 		textView.setGravity(Gravity.CENTER);
 		
 		return textView;

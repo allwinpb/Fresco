@@ -3,11 +3,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@drawable/background"
-    android:layout_marginTop="15dp"
-	android:layout_marginLeft="35dp"
-	android:layout_marginRight="35dp"
-	android:layout_marginBottom="5dp"
 	android:paddingRight="0dp"
 	android:gravity="center" >
 

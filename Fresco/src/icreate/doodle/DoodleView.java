@@ -1,7 +1,5 @@
 package icreate.doodle;
 
-import icreate.fresco.CardsFragment;
-
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -46,7 +44,7 @@ public class DoodleView extends View {
 		
 		paintLine =  new Paint();
 		paintLine.setAntiAlias(true);
-		paintLine.setColor(Color.BLACK);
+		paintLine.setColor(Color.WHITE);
 		paintLine.setStyle(Paint.Style.STROKE);
 		paintLine.setStrokeWidth(15);
 		paintLine.setStrokeCap(Paint.Cap.ROUND);
@@ -58,7 +56,13 @@ public class DoodleView extends View {
 	public void setBitmap (String json) {
 		bitmap = convertToMutable(convertFromJSONToImage(json));
 		
-		bitmapCanvas = new Canvas(bitmap);
+		if(bitmapCanvas != null) {
+			bitmapCanvas.setBitmap(bitmap);
+		} else {
+			bitmapCanvas = new Canvas(bitmap);
+		}
+		
+		bitmap.eraseColor(Color.argb(255, 39, 174, 96));
 	}
 	
 	public String getJSONString() {
@@ -72,16 +76,16 @@ public class DoodleView extends View {
 	@Override
 	protected void onSizeChanged(int w, int h, int oldw, int oldh) {
 		super.onSizeChanged(w, h, oldw, oldh);
-		
-		bitmap = Bitmap.createBitmap(getWidth(), getHeight() - 15, Bitmap.Config.ARGB_8888);
+	
+		bitmap = Bitmap.createBitmap(getWidth(), getHeight(), Bitmap.Config.ARGB_8888);
 		bitmapCanvas = new Canvas(bitmap);
-		bitmap.eraseColor(Color.WHITE);
+		bitmap.eraseColor(Color.argb(255, 39, 174, 96));
 	}
 	
 	public void clear() {
 		pathMap.clear();
 		previousPointMap.clear();
-		bitmap.eraseColor(Color.WHITE);
+		bitmap.eraseColor(Color.argb(255, 39, 174, 96));
 		invalidate();
 	}
 	

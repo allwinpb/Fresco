@@ -61,6 +61,7 @@ public class NoCardsFragment extends Fragment{
 						newCardIntent.putExtra(Constant.DECK_NAME, deck.getDeckName());
 						
 						startActivity(newCardIntent);
+						getActivity().finish();
 						break;
 						
 				}

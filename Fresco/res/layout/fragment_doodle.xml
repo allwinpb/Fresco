@@ -1,13 +1,15 @@
-<icreate.doodle.DoodleView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/doodleView"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background"
-    android:layout_marginTop="15dp"
-	android:layout_marginLeft="35dp"
-	android:layout_marginRight="35dp"
-	android:layout_marginBottom="5dp"
-	android:paddingRight="0dp"
-	android:gravity="center"/>
+    android:background="#27AE60"
+    android:orientation="vertical" >
 
+	<icreate.doodle.DoodleView 
+	    android:id="@+id/doodleView"
+	    android:layout_width="match_parent"
+	    android:layout_height="match_parent"
+		android:paddingRight="0dp"
+		android:gravity="center"/>
+
+</LinearLayout>

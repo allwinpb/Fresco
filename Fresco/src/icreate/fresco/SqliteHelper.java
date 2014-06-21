@@ -223,6 +223,7 @@ public class SqliteHelper extends SQLiteOpenHelper {
 					card.setContent(Side.FRONT, cursor.getString(2));
 					card.setType(Side.BACK, getType(cursor.getString(3)));
 					card.setContent(Side.BACK, cursor.getString(4));
+					
 				}
 					
 			} while(cursor.moveToNext());
