@@ -1,5 +1,11 @@
 package icreate.fresco;
 
+import java.io.FileNotFoundException;
+
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
@@ -7,57 +13,63 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 
 public class FragmentGallery extends Fragment{
-	EditText editText;
-	
+	ImageView targetImage;
+	final static int cameraData = 0;
+	Bitmap bmp;
+	Button takePic;
+	private Uri fileUri;
+	public static final int MEDIA_TYPE_IMAGE = 1;
+
 	public static FragmentGallery createFragment(String content) {
 		Bundle bundle = new Bundle();
 		bundle.putString(Constant.CONTENT, content);
-		
+
 		FragmentGallery fragment = new FragmentGallery();
 		fragment.setArguments(bundle);
-		
+
 		return fragment;
 	}
-	
+
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
-            Bundle savedInstanceState) {
-		
-		View view = inflater.inflate(R.layout.fragment_text, container, false);
-		
-		String content = this.getArguments().getString(Constant.CONTENT);
-		
-		editText = (EditText) view.findViewById(R.id.cardEditText);
-		editText.setText(content);
-		editText.addTextChangedListener(new TextWatcher(){
+			Bundle savedInstanceState) {
+
+		View view = inflater.inflate(R.layout.fragment_gallery, container, false);
+		ImageView targetImage = (ImageView)view.findViewById(R.id.gallery);
+		//String content = this.getArguments().getString(Constant.CONTENT);
+		Button gallery = (Button)view.findViewById(R.id.goGallery);
+		gallery.setOnClickListener(new View.OnClickListener() {
 
 			@Override
-			public void beforeTextChanged(CharSequence s, int start, int count,
-					int after) {
-				
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				Intent intent = new Intent(Intent.ACTION_PICK,
+						android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+				startActivityForResult(intent, 0);
 			}
-
-			@Override
-			public void onTextChanged(CharSequence s, int start, int before,
-					int count) {
-				
-			}
-
-			@Override
-			public void afterTextChanged(Editable s) {
-				String content = editText.getText().toString();
-				((AddEditActivity)getActivity()).setContent(content);
-			}
-			
 		});
-        
-        return view;
-    }
-	
+
+		return view;
+	}
+	@Override
+	public void onActivityResult(int requestCode, int resultCode, Intent data) {
+		// TODO Auto-generated method stub
+		super.onActivityResult(requestCode, resultCode, data);
+		Uri targetUri = data.getData();
+		try {
+			bmp = BitmapFactory.decodeStream(getActivity().getContentResolver().openInputStream(targetUri));
+			targetImage.setImageBitmap(bmp);
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 	public String getContent() {
-		return editText.getText().toString();
+		return bmp.toString();
 	}
 
 }

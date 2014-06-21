@@ -21,7 +21,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 
 public class FragmentCamera extends Fragment {
-	static ImageView iv;
+	ImageView iv;
 	final static int cameraData = 0;
 	Bitmap bmp;
 	Button takePic;
