@@ -3,6 +3,7 @@ package icreate.fresco;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -56,13 +57,23 @@ public class DeckModel{
 	}
 	
 	public boolean save(){
+		SQLiteDatabase dbHandle = _db.writeOp();
+		ContentValues values = new ContentValues();
+		values.put("name", _name);
 		if(_id.equals("")){
 			//This is a create operation
+			_id = Long.toString(dbHandle.insert("decks", null, values));
+			if(_id.equals("-1")){
+				_id = "";
+				return false;
+			}
+			return true;
 		}else{
 			//This is an update operation
+			return dbHandle.update("decks", values, "_id=?", new String[]{_id}) > 0;
 		}
-		return true;
 	}
+	
 	//getter setter methods
 	public String id(){
 		return _id;
