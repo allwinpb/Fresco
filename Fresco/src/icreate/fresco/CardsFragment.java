@@ -1,5 +1,6 @@
 package icreate.fresco;
 
+import icreate.animation.FlippingAnimation;
 import icreate.fresco.Card.Side;
 import icreate.fresco.Card.Type;
 
