@@ -39,4 +39,6 @@
 	<string name="delete_button">Delete Card</string>
 	<string name="add_button">Add Card</string>
 	<string name="review_button">Review Card</string>
+	<string name="front_back_tv">Front back</string>
+	<string name="index_tv">Index TextView</string>
 </resources>
