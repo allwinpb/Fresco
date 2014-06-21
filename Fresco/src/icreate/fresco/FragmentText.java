@@ -11,7 +11,7 @@ import android.widget.EditText;
 
 public class FragmentText extends Fragment {
 	
-	static EditText editText;
+	EditText editText;
 	
 	public static FragmentText createFragment(String content) {
 		Bundle bundle = new Bundle();
@@ -32,6 +32,8 @@ public class FragmentText extends Fragment {
 		
 		editText = (EditText) view.findViewById(R.id.cardEditText);
 		editText.setText(content);
+		int position = editText.length();
+		editText.setSelection(position);
 		editText.addTextChangedListener(new TextWatcher(){
 
 			@Override
@@ -57,7 +59,7 @@ public class FragmentText extends Fragment {
         return view;
     }
 	
-	public static String saveContent() {
+	public String getContent() {
 		return editText.getText().toString();
 	}
 }

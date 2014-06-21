@@ -1,7 +1,5 @@
 package icreate.fresco;
 
-import com.actionbarsherlock.app.SherlockFragment;
-
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
@@ -12,7 +10,7 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 
 public class FragmentGallery extends Fragment{
-	static EditText editText;
+	EditText editText;
 	
 	public static FragmentGallery createFragment(String content) {
 		Bundle bundle = new Bundle();
@@ -58,7 +56,7 @@ public class FragmentGallery extends Fragment{
         return view;
     }
 	
-	public static String saveContent() {
+	public String getContent() {
 		return editText.getText().toString();
 	}
 

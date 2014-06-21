@@ -28,6 +28,9 @@ public class AddEditActivity extends FragmentActivity implements OnTabChangeList
 	private Card card;
 	private boolean newEdit;
 	private String deckName;
+	
+	private FrontBackCardFragment frontFragment;
+	private FrontBackCardFragment backFragment;
 
 	private SqliteHelper database;
 
@@ -131,13 +134,13 @@ public class AddEditActivity extends FragmentActivity implements OnTabChangeList
 		FragmentManager fm = getSupportFragmentManager();
 		switch(tag) {
 		case FRONT:
-			FrontBackCardFragment frontFragment = FrontBackCardFragment.createFragment(cardFrontString, getIntType(cardFrontType));
+			frontFragment = FrontBackCardFragment.createFragment(cardFrontString, getIntType(cardFrontType));
 			fm.beginTransaction()
 			.replace(R.id.tab_front, frontFragment, FRONT)
 			.commit();
 			break;
 		case BACK:
-			FrontBackCardFragment backFragment = FrontBackCardFragment.createFragment(cardBackString, getIntType(cardBackType));
+			backFragment = FrontBackCardFragment.createFragment(cardBackString, getIntType(cardBackType));
 			fm.beginTransaction()
 			.replace(R.id.tab_back, backFragment, BACK)
 			.commit();
@@ -243,9 +246,10 @@ public class AddEditActivity extends FragmentActivity implements OnTabChangeList
 		.setMessage("Changes not saved will be discarded")
 		.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog, int which) {
+				saveCardType();
 				card.setType(Side.FRONT, cardFrontType);
 				card.setType(Side.BACK, cardBackType);
-				//saveCardContent();
+				saveCardContent();
 				card.setContent(Side.FRONT, cardFrontString);
 				card.setContent(Side.BACK, cardBackString);
 
@@ -276,6 +280,17 @@ public class AddEditActivity extends FragmentActivity implements OnTabChangeList
 		AlertDialog dialog = saveDialog.create();
 		dialog.show();
 	}
+	
+	private void saveCardContent() {
+		cardFrontType = frontFragment.getType();
+		cardBackType = backFragment.getType();
+	}
+
+	private void saveCardType() {
+		cardFrontString = frontFragment.getContent();
+		cardBackString = backFragment.getContent();
+	}
+
 	
 	private void changeTabColor() {
 		if(side == Side.FRONT) {

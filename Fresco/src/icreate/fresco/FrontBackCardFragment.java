@@ -20,6 +20,11 @@ public class FrontBackCardFragment extends Fragment implements TabHost.OnTabChan
 	private static final String GALLERY = "Gallery";
 	private static final String CAMERA = "Camera";
 	
+	private FragmentText textFragment;
+	private FragmentDoodle doodleFragment;
+	private FragmentGallery galleryFragment;
+	private FragmentCamera cameraFragment;
+	
 	private TabHost tabHost;
 	
 	String textContent = "";
@@ -107,28 +112,28 @@ public class FrontBackCardFragment extends Fragment implements TabHost.OnTabChan
 		
 		switch(tag) {
 			case TEXT:
-				FragmentText textFragment = FragmentText.createFragment(textContent);
+				textFragment = FragmentText.createFragment(textContent);
 				manager.beginTransaction()
 				.replace(R.id.tab_text, textFragment, TEXT)
 				.commit();
 				
 				break;
 			case DOODLE:
-				FragmentDoodle doodleFragment = FragmentDoodle.createFragment(doodleContent);
+				doodleFragment = FragmentDoodle.createFragment(doodleContent);
 				manager.beginTransaction()
 				.replace(R.id.tab_doodle, doodleFragment, DOODLE)
 				.commit();
 				
 				break;
 			case GALLERY:
-				FragmentGallery galleryFragment = FragmentGallery.createFragment(galleryContent);
+				galleryFragment = FragmentGallery.createFragment(galleryContent);
 				manager.beginTransaction()
 				.replace(R.id.tab_gallery, galleryFragment, GALLERY)
 				.commit();
 				
 				break;
 			case CAMERA:
-				FragmentText cameraFragment = FragmentText.createFragment(cameraContent);
+				cameraFragment = FragmentCamera.createFragment(cameraContent);
 				manager.beginTransaction()
 				.replace(R.id.tab_camera, cameraFragment, CAMERA)
 				.commit();
@@ -206,16 +211,20 @@ public class FrontBackCardFragment extends Fragment implements TabHost.OnTabChan
 		}
 	}
 	
-	public String saveContent() {
+	public Type getType() {
+		return type;
+	}
+	
+	public String getContent() {
 		switch(type) {
 			case TEXT:
-				return FragmentText.saveContent();
+				return textFragment.getContent();
 			case DOODLE:
-				return FragmentDoodle.saveContent();
+				return doodleFragment.getContent();
 			case IMAGE:
-				return FragmentGallery.saveContent();
+				return galleryFragment.getContent();
 			default:
-				return FragmentCamera.saveContent();
+				return cameraFragment.getContent();
 		}
 	}
 	

@@ -19,7 +19,7 @@ import android.view.ViewGroup;
 
 public class FragmentDoodle extends Fragment {
 
-	private static DoodleView doodle;
+	private DoodleView doodle;
 	
 	String jsonString = "";
 	
@@ -60,7 +60,7 @@ public class FragmentDoodle extends Fragment {
 		
 		View view = inflater.inflate(R.layout.fragment_doodle, container, false);
 		doodle = (DoodleView) view.findViewById(R.id.doodleView);
-		if(jsonString != "") {
+		if(!jsonString.isEmpty()) {
 			doodle.setBitmap(jsonString);
 		}
         
@@ -152,7 +152,7 @@ public class FragmentDoodle extends Fragment {
 		}
 	};
 	
-	public static String saveContent() {
+	public String getContent() {
 		return doodle.getJSONString();
 	}
 
