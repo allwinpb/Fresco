@@ -102,6 +102,15 @@ public class DeckModel{
 		}
 	}
 	
+	//Removes the current deck from the database. The instance is not destroyed and is treated as a new record
+	public boolean destroy(){
+		SQLiteDatabase dbHandle = _db.writeOp();
+		boolean result = dbHandle.delete("decks", "_id=?", new String[]{_id}) != 0;
+		dbHandle.delete("cards", "deck_id=?", new String[]{_id});
+		_id = "";
+		return result;
+	}
+	
 	//getter setter methods
 	public String id(){
 		return _id;
