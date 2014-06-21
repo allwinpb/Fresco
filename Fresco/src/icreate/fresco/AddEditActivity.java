@@ -29,6 +29,8 @@ public class AddEditActivity extends FragmentActivity implements OnTabChangeList
 	private boolean newEdit;
 	private String deckName;
 	
+	private int index;
+	
 	private FrontBackCardFragment frontFragment;
 	private FrontBackCardFragment backFragment;
 
@@ -95,6 +97,8 @@ public class AddEditActivity extends FragmentActivity implements OnTabChangeList
 		newEdit = receiveIntent.getBooleanExtra(Constant.NEW_EDIT, false);
 		deckName = receiveIntent.getStringExtra(Constant.DECK_NAME);
 		deckID  = receiveIntent.getIntExtra(Constant.DECK_ID, 1);
+		index = receiveIntent.getIntExtra(Constant.INDEX, -1);
+		
 		if( newEdit == true ) {
 			int cardID = receiveIntent.getIntExtra(Constant.CARD_ID, 1);
 			card = database.getCard(deckID, cardID);
@@ -133,18 +137,18 @@ public class AddEditActivity extends FragmentActivity implements OnTabChangeList
 	private void updateTabs(String tag) {
 		FragmentManager fm = getSupportFragmentManager();
 		switch(tag) {
-		case FRONT:
-			frontFragment = FrontBackCardFragment.createFragment(cardFrontString, getIntType(cardFrontType));
-			fm.beginTransaction()
-			.replace(R.id.tab_front, frontFragment, FRONT)
-			.commit();
-			break;
-		case BACK:
-			backFragment = FrontBackCardFragment.createFragment(cardBackString, getIntType(cardBackType));
-			fm.beginTransaction()
-			.replace(R.id.tab_back, backFragment, BACK)
-			.commit();
-			break;
+			case FRONT:
+				frontFragment = FrontBackCardFragment.createFragment(cardFrontString, getIntType(cardFrontType));
+				fm.beginTransaction()
+				.replace(R.id.tab_front, frontFragment, FRONT)
+				.commit();
+				break;
+			case BACK:
+				backFragment = FrontBackCardFragment.createFragment(cardBackString, getIntType(cardBackType));
+				fm.beginTransaction()
+				.replace(R.id.tab_back, backFragment, BACK)
+				.commit();
+				break;
 		}
 		changeTabColor();
 	}
@@ -222,6 +226,7 @@ public class AddEditActivity extends FragmentActivity implements OnTabChangeList
 				Intent sendIntent = new Intent(AddEditActivity.this, CardsViewPager.class);
 				sendIntent.putExtra(Constant.DECK_NAME, deckName);
 				sendIntent.putExtra(Constant.DECK_ID, deckID);
+				sendIntent.putExtra(Constant.INDEX, index);
 				startActivity(sendIntent);
 				finish();
 			}
@@ -263,6 +268,9 @@ public class AddEditActivity extends FragmentActivity implements OnTabChangeList
 				Intent sendIntent = new Intent(AddEditActivity.this, CardsViewPager.class);
 				sendIntent.putExtra(Constant.DECK_NAME, deckName);
 				sendIntent.putExtra(Constant.DECK_ID, deckID);
+				if(newEdit == false)
+					index++;
+				sendIntent.putExtra(Constant.INDEX, index);
 				startActivity(sendIntent);
 				finish();
 			}

@@ -9,7 +9,6 @@ import java.io.File;
 import android.app.ActionBar;
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -26,6 +25,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
@@ -44,6 +44,9 @@ public class CardsFragment extends Fragment {
 	
 	private TextView frontBackTextView;
 	private TextView indexTextView;
+	
+	private ImageButton imageButtonBack;
+	private ImageButton imageButtonTo;
 	
 	boolean isFrontCard = true;
 	
@@ -91,6 +94,8 @@ public class CardsFragment extends Fragment {
 		front.setOnClickListener(cardListener);
 		back.setOnClickListener(cardListener);
 		
+		setBackAndForwardArrow(view);
+		
 		frontBackTextView = (TextView) view.findViewById(R.id.frontBackTextView);
 		indexTextView = (TextView) view.findViewById(R.id.indexTextView);
 		
@@ -104,6 +109,19 @@ public class CardsFragment extends Fragment {
 		return view;
 	}
 	
+	private void setBackAndForwardArrow(View view) {
+		imageButtonBack = (ImageButton) view.findViewById(R.id.imageButtonBack);
+		imageButtonTo = (ImageButton) view.findViewById(R.id.imageButtonTo);
+		
+		if(index >= 1) {
+			imageButtonBack.setVisibility(View.VISIBLE);
+		}
+		
+		if(index < cardsCount - 1) {
+			imageButtonTo.setVisibility(View.VISIBLE);
+		}
+	}
+
 	private void setCardsView(View view) {
 		rootLayout = (View) view.findViewById(R.id.main_activity_root);
 		cardFace = (LinearLayout) view.findViewById(R.id.card_face);
@@ -250,6 +268,7 @@ public class CardsFragment extends Fragment {
 		intent.putExtra(Constant.DECK_NAME, deck.getDeckName());
 		intent.putExtra(Constant.DECK_ID, deck.getDeckID());
 		intent.putExtra(Constant.CARD_ID, -1);
+		intent.putExtra(Constant.INDEX, cardsCount);
 		startActivity(intent);
 		getActivity().finish();
 	}
@@ -292,6 +311,7 @@ public class CardsFragment extends Fragment {
 		intent.putExtra(Constant.DECK_NAME, deck.getDeckName());
 		intent.putExtra(Constant.DECK_ID, deck.getDeckID());
 		intent.putExtra(Constant.CARD_ID, cardID);
+		intent.putExtra(Constant.INDEX, index);
 		
 		startActivity(intent);
 		getActivity().finish();

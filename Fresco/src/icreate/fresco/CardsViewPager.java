@@ -15,6 +15,8 @@ public class CardsViewPager extends FragmentActivity {
 	private ViewPager viewPager;
 	private SqliteHelper database;
 	
+	private int index;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -24,6 +26,7 @@ public class CardsViewPager extends FragmentActivity {
 		Intent intent = getIntent();
 		String deckName = intent.getStringExtra(Constant.DECK_NAME);
 		int deckID = intent.getIntExtra(Constant.DECK_ID, 0);
+		index = intent.getIntExtra(Constant.INDEX, -1);
 		
 		deck = database.getDeck(deckID, deckName);
 		
@@ -77,6 +80,10 @@ public class CardsViewPager extends FragmentActivity {
 				}
 				
 			});
+			
+			if(index != -1) {
+				viewPager.setCurrentItem(index);
+			}
 		}
 	}	
 	

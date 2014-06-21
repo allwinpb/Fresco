@@ -22,46 +22,69 @@
     </TableRow>
     
      <TableRow
-        android:id="@+id/main_activity_root"
     	android:layout_width="match_parent"
     	android:layout_height="match_parent"
     	android:layout_weight="1"
-    	android:layout_marginTop="10dp"
-		android:layout_marginLeft="35dp"
-		android:layout_marginRight="35dp"
+    	android:layout_marginTop="5dp"
 		android:layout_marginBottom="5dp"
 		android:paddingRight="0dp"
     	android:gravity="center"  >
+
+         <ImageButton
+             android:id="@+id/imageButtonBack"
+             android:layout_width="0dp"
+             android:layout_weight="0.2"
+             android:layout_height="wrap_content"
+             android:src="@drawable/arrow_back" 
+             android:background="@android:color/transparent" 
+             android:visibility="invisible" />"
     	
-         <LinearLayout
-            android:id="@+id/card_face"
-            android:layout_width="0dip"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="@drawable/background"
-            android:clickable="true"
-            android:gravity="center"
-            android:orientation="vertical"
-            android:padding="5dp" >
+    	
+    	<LinearLayout
+    	    android:id="@+id/main_activity_root"
+    	    android:layout_width="0dip"
+    	    android:layout_height="match_parent"
+    	    android:layout_weight="1"
+    	    android:orientation="vertical" >
+    	    
+	         <LinearLayout
+	            android:id="@+id/card_face"
+	            android:layout_width="match_parent"
+	            android:layout_height="match_parent"
+	            android:background="@drawable/background"
+	            android:clickable="true"
+	            android:gravity="center"
+	            android:orientation="vertical"
+	            android:padding="5dp" >
+	        </LinearLayout>
+	        
+	        <LinearLayout
+				android:id="@+id/card_back"
+				android:layout_width="match_parent"
+				android:layout_height="match_parent"
+				android:orientation="vertical" 
+				android:gravity="center"
+				android:clickable="true"
+				android:background="@drawable/background"
+				android:padding="5dp" 
+				android:visibility="gone">
+			</LinearLayout>
+		
         </LinearLayout>
-        
-        <LinearLayout
-			android:id="@+id/card_back"
-			android:layout_width="0dip"
-			android:layout_height="match_parent"
-			android:layout_weight="1"
-			android:orientation="vertical" 
-			android:gravity="center"
-			android:clickable="true"
-			android:background="@drawable/background"
-			android:padding="5dp" 
-			android:visibility="gone">
-		</LinearLayout>
+		
+        <ImageButton
+             android:id="@+id/imageButtonTo"
+             android:layout_width="0dp"
+             android:layout_weight="0.2"
+             android:layout_height="wrap_content"
+             android:src="@drawable/arrow_to"
+             android:background="@android:color/transparent"
+             android:visibility="invisible" />
     </TableRow>
     
      <TableRow
         android:layout_width="match_parent"
-        android:layout_height="20dp"
+        android:layout_height="wrap_content"
         android:layout_marginBottom="10dp"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
