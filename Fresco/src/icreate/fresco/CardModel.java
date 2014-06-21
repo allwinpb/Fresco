@@ -138,6 +138,8 @@ public class CardModel {
 			return Type.IMAGE;
 		} else if (input.equalsIgnoreCase("doodle")) {
 			return Type.DOODLE;
+		} else if (input.equalsIgnoreCase("camera")) {
+			return Type.CAMERA;
 		}
 		return Type.TEXT;
 	}
@@ -150,6 +152,8 @@ public class CardModel {
 			return "image";
 		case DOODLE:
 			return "doodle";
+		case CAMERA:
+			return "camera";
 		}
 		return "text";
 	}
