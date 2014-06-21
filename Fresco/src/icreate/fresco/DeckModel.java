@@ -16,6 +16,7 @@ public class DeckModel{
 	private Context _context;
 	private List<CardModel> _cards;
 	
+	//Constructor
 	public DeckModel(Context context){
 		_id="";
 		_name = "";
@@ -24,6 +25,23 @@ public class DeckModel{
 		_db = new Database(context);
 	}
 	
+	//Get a list of all decks
+	public static ArrayList<DeckModel> all(Context context){
+		ArrayList<DeckModel> decks = new ArrayList<DeckModel>();
+		Database db = new Database(context);
+		SQLiteDatabase dbHandle = db.readOp();
+		Cursor i = dbHandle.rawQuery("select * from decks", null);
+		if(i.moveToFirst()){
+			do {
+				DeckModel deck = new DeckModel(context);
+				deck.id(i.getString(0));
+				decks.add(deck);
+			} while(i.moveToNext());
+		}
+		return decks;
+	}
+	
+	//Load a deck from the database into this instance
 	public void load(String id){
 		_id = id;
 		reload();
@@ -32,6 +50,7 @@ public class DeckModel{
 		load(Long.toString(id));
 	}
 	
+	//Refresh instance with data from the database. Overwrites any changes after save() is called
 	public void reload(){
 		//Update id, name and the cards list
 		if(_id.equals("")){
@@ -64,6 +83,7 @@ public class DeckModel{
 		dbHandle.close();
 	}
 	
+	//Commit changes to database. The entire row in the database is overwritten with the values in the instance
 	public boolean save(){
 		SQLiteDatabase dbHandle = _db.writeOp();
 		ContentValues values = new ContentValues();
