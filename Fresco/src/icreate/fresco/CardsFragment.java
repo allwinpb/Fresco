@@ -4,6 +4,9 @@ import icreate.animation.FlippingAnimation;
 import icreate.fresco.Card.Side;
 import icreate.fresco.Card.Type;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import android.app.ActionBar;
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -228,7 +231,22 @@ public class CardsFragment extends Fragment {
 		return null;
 	}
 	
-	private View addDoodle(String jsonString) {
+	private View addDoodle(String json) {
+		JSONObject object = null;
+		
+		try {
+			object = new JSONObject(json);
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+		
+		String jsonString = null;
+		
+		try {
+			jsonString = object.getString(Constant.JSON_BITMAP);
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
 		
 		ImageView doodle = new ImageView(this.getActivity()); 
 		Bitmap bitmap = convertFromJSONToImage(jsonString);

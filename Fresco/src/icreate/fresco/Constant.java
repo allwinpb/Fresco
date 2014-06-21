@@ -11,4 +11,7 @@ public class Constant {
 	public final static String FRONT_BACK = "icreate.fresco.front_back";
 	public final static String INDEX = "icreate.fresco.index";
 	public final static String NUMBER_OF_CARDS = "icreate.fresco.number_of_cards";
+	public final static String JSON_BITMAP = "icreate.doodleview.json_bitmap";
+	public final static String JSON_PATH = "icreate.doodleview.json_path";
+	public final static String JSON_POINT = "icreate.doodleview.json_point";
 }

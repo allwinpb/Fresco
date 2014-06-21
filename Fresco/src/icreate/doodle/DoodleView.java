@@ -1,5 +1,7 @@
 package icreate.doodle;
 
+import icreate.fresco.Constant;
+
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -9,6 +11,11 @@ import java.nio.MappedByteBuffer;
 import java.nio.channels.FileChannel;
 import java.nio.channels.FileChannel.MapMode;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -53,18 +60,109 @@ public class DoodleView extends View {
 		previousPointMap = new HashMap<Integer, Point>();
 	}
 	
-	public void setBitmap (String json) {
-		bitmap = convertToMutable(convertFromJSONToImage(json));
+	public void setBitmap(String jsonString) {
+		JSONObject json;
+		JSONObject jsonPath = null;
+		JSONObject jsonPoint = null;
 		
-		if(bitmapCanvas != null) {
-			bitmapCanvas.setBitmap(bitmap);
-		} else {
-			bitmapCanvas = new Canvas(bitmap);
+		try {
+			json = new JSONObject(jsonString);
+			jsonPath = json.getJSONObject(Constant.JSON_PATH);
+			jsonPoint = json.getJSONObject(Constant.JSON_POINT);
+		} catch (JSONException e) {
+			e.printStackTrace();
 		}
 		
-		bitmap.eraseColor(Color.argb(255, 39, 174, 96));
+		
+		pathMap = convertPathInteger(jsonPath);
+		previousPointMap = convertPointInteger(jsonPoint);
+		invalidate();
 	}
 	
+	private HashMap<Integer, Point> convertPointInteger(JSONObject jsonPoint) {
+		HashMap<Integer, Point> points = new HashMap<Integer, Point>();
+		Iterator<String> iter = jsonPoint.keys();
+		
+		while(iter.hasNext()) {
+			String key = iter.next();
+			Point point = null;
+			
+			try {
+				point = (Point) jsonPoint.get(key);
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
+			
+			points.put(Integer.parseInt(key), point);
+		}
+		
+		return points;
+	}
+
+	private HashMap<Integer, Path> convertPathInteger(JSONObject jsonPath) {
+		HashMap<Integer, Path> paths = new HashMap<Integer, Path>();
+		Iterator<String> iter = jsonPath.keys();
+		
+		while(iter.hasNext()) {
+			String key = iter.next();
+			Path path = null;
+			
+			try {
+				path = (Path) jsonPath.get(key);
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
+			
+			paths.put(Integer.parseInt(key), path);
+		}
+		
+		return paths;
+	}
+
+	public String getContent() {
+		JSONObject json = new JSONObject();
+		JSONObject points = new JSONObject(convertPointString(previousPointMap));
+		JSONObject paths = new JSONObject(convertPathString(pathMap));
+		
+		try {
+			json.put(Constant.JSON_BITMAP, getJSONString());
+			json.put(Constant.JSON_PATH, paths);
+			json.put(Constant.JSON_POINT, points);
+			
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+		
+		return json.toString();
+		
+	}
+	
+	private Map<String, Point> convertPointString(HashMap<Integer, Point> previousPointMap) {
+		Map<String, Point> map = new HashMap<String, Point>();
+		
+		for(Map.Entry <Integer, Point> entry : previousPointMap.entrySet()) {
+			Integer key = entry.getKey();
+			Point point = entry.getValue();
+			
+			map.put(String.valueOf(key), point);
+		}
+
+		return map;
+	}
+
+	private Map<String, Path> convertPathString(HashMap<Integer, Path> pathMap) {
+		Map<String, Path> map = new HashMap<String, Path>();
+		
+		for(Map.Entry <Integer, Path> entry : pathMap.entrySet()) {
+			Integer key = entry.getKey();
+			Path path = entry.getValue();
+			
+			map.put(String.valueOf(key), path);
+		}
+
+		return map;
+	}
+
 	public String getJSONString() {
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();  
 		bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos); //bm is the bitmap object   

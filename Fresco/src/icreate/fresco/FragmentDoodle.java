@@ -153,7 +153,7 @@ public class FragmentDoodle extends Fragment {
 	};
 	
 	public String getContent() {
-		return doodle.getJSONString();
+		return doodle.getContent();
 	}
 
 
