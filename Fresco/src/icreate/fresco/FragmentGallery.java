@@ -18,8 +18,8 @@ import android.widget.EditText;
 import android.widget.ImageView;
 
 public class FragmentGallery extends Fragment{
-	ImageView targetImage;
-	final static int cameraData = 0;
+	ImageView iv;
+	final static int RESULT_LOAD_IMAGE = 0;
 	Bitmap bmp;
 	Button takePic;
 	private Uri fileUri;
@@ -39,7 +39,7 @@ public class FragmentGallery extends Fragment{
 			Bundle savedInstanceState) {
 
 		View view = inflater.inflate(R.layout.fragment_gallery, container, false);
-		ImageView targetImage = (ImageView)view.findViewById(R.id.gallery);
+		iv = (ImageView)view.findViewById(R.id.gallery);
 		//String content = this.getArguments().getString(Constant.CONTENT);
 		Button gallery = (Button)view.findViewById(R.id.goGallery);
 		gallery.setOnClickListener(new View.OnClickListener() {
@@ -47,26 +47,18 @@ public class FragmentGallery extends Fragment{
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				Intent intent = new Intent(Intent.ACTION_PICK,
-						android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-				startActivityForResult(intent, 0);
+				Intent i = new Intent(Intent.ACTION_PICK,android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+				startActivityForResult(i, RESULT_LOAD_IMAGE);
 			}
 		});
-
 		return view;
 	}
 	@Override
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
 		// TODO Auto-generated method stub
 		super.onActivityResult(requestCode, resultCode, data);
-		Uri targetUri = data.getData();
-		try {
-			bmp = BitmapFactory.decodeStream(getActivity().getContentResolver().openInputStream(targetUri));
-			targetImage.setImageBitmap(bmp);
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		Uri selectedImageUri = data.getData(); 
+		iv.setImageURI(selectedImageUri);
 	}
 	public String getContent() {
 		return bmp.toString();
