@@ -139,6 +139,14 @@ public class CardModel {
 	public void backContent(String backContent) {
 		_backContent = backContent;
 	}
+	
+	public String deckID(){
+		return _deck_id;
+	}
+	
+	public void deckID(String deckID){
+		_deck_id = deckID;
+	}
 
 	private Type stringToType(String input) {
 		if (input.equalsIgnoreCase("text")) {
