@@ -32,4 +32,13 @@
 	<string name="button_erase">Erase</string>
 	<string name="button_cancel">Cancel</string>
 	<string name="message_erase">Erase the drawing?</string>
+	<string name="description">Camera</string>
+	<string name="return_button">Return Button</string>
+	<string name="deck_textview">Deck_1</string>
+	<string name="edit_button">Edit Card</string>
+	<string name="delete_button">Delete Card</string>
+	<string name="add_button">Add Card</string>
+	<string name="review_button">Review Card</string>
+	<string name="front_back_tv">Front back</string>
+	<string name="index_tv">Index TextView</string>
 </resources>
