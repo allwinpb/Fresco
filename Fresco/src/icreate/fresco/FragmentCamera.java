@@ -9,11 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 public class FragmentCamera extends Fragment {
-<<<<<<< HEAD
-	EditText editText;
-=======
 	static ImageView iv;
->>>>>>> origin/master
 	
 	public static FragmentCamera createFragment(String content) {
 		Bundle bundle = new Bundle();
@@ -38,13 +34,8 @@ public class FragmentCamera extends Fragment {
         return view;
     }
 	
-<<<<<<< HEAD
 	public String getContent() {
-		return editText.getText().toString();
-=======
-	public static String saveContent() {
 		return iv.toString();
->>>>>>> origin/master
 	}
 
 }

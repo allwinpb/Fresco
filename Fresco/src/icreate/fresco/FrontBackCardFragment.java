@@ -133,11 +133,7 @@ public class FrontBackCardFragment extends Fragment implements TabHost.OnTabChan
 				
 				break;
 			case CAMERA:
-<<<<<<< HEAD
 				cameraFragment = FragmentCamera.createFragment(cameraContent);
-=======
-				FragmentCamera cameraFragment = FragmentCamera.createFragment(cameraContent);
->>>>>>> origin/master
 				manager.beginTransaction()
 				.replace(R.id.tab_camera, cameraFragment, CAMERA)
 				.commit();
