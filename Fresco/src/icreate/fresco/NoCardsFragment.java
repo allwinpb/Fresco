@@ -73,7 +73,7 @@ public class NoCardsFragment extends Fragment{
 		
 		
 		deckNameTextView = (TextView) view.findViewById(R.id.deckNameTextView);
-		String text = deck.getDeckName() + " " +getResources().getString(R.string.no_cards);
+		String text = deck.getDeckName() + " " + getResources().getString(R.string.no_cards);
 		deckNameTextView.setText(text);
 		
 		ActionBar actionBar = getActivity().getActionBar();
