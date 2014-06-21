@@ -24,7 +24,15 @@ public class DeckModel{
 		_db = new Database(context);
 	}
 	
-	public void refreshDeck(){
+	public void load(String id){
+		_id = id;
+		reload();
+	}
+	public void load(Long id){
+		load(Long.toString(id));
+	}
+	
+	public void reload(){
 		//Update id, name and the cards list
 		if(_id.equals("")){
 			//Deck is not pointing to anything
