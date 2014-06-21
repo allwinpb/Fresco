@@ -82,6 +82,15 @@ public class CardModel {
 		}
 	}
 
+	// Removes the current card from the database.
+	public boolean destroy() {
+		SQLiteDatabase dbHandle = _db.writeOp();
+		boolean result = dbHandle
+				.delete("cards", "_id=?", new String[] { _id }) != 0;
+		_id = "";
+		return result;
+	}
+
 	// Setter getter methods for card properties
 	public String id() {
 		return _id;
