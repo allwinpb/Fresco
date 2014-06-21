@@ -83,6 +83,33 @@ public class DeckModel{
 		dbHandle.close();
 	}
 	
+	//Return an array of cards associated with this deck
+	public ArrayList<CardModel> cards(){
+		ArrayList<CardModel> cards = new ArrayList<CardModel>();
+		SQLiteDatabase dbHandle = _db.readOp();
+		Cursor i = dbHandle.rawQuery("select * from cards where deck_id=?", new String[]{_id});
+		if(i.moveToFirst()){
+			do {
+				CardModel card = new CardModel(_context);
+				card.id(i.getString(0));
+				card.frontType(i.getString(1));
+				card.frontContent(i.getString(2));
+				card.backType(i.getString(3));
+				card.backContent(i.getString(4));
+				card.deckID(i.getString(5));
+				_cards.add(card);
+			} while(i.moveToNext());
+		}
+		return cards;
+	}
+	
+	//Create a new card associated with this deck
+	public CardModel newCard(){
+		CardModel newCard = new CardModel(_context);
+		newCard.deckID(_id);
+		return newCard;
+	}
+	
 	//Commit changes to database. The entire row in the database is overwritten with the values in the instance
 	public boolean save(){
 		SQLiteDatabase dbHandle = _db.writeOp();
@@ -120,6 +147,7 @@ public class DeckModel{
 	}
 	
 	public String name(){
+		reload();
 		return _name;
 	}
 	public void name(String name){
