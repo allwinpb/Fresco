@@ -61,7 +61,6 @@ public class FrescoMain extends ListActivity {
 						database.deleteDeck(deck.getDeckID());
 						listDeck.remove(position);
 						m_adapter.notifyDataSetChanged();
-						
 					}
 				});
 
