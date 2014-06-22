@@ -19,6 +19,7 @@ public class AddDeck extends Activity {
 		setContentView(R.layout.add_deck);
 		et = (EditText)findViewById(R.id.deck);
 	}
+	@SuppressWarnings("deprecation")
 	public void Finish(View v){
 		String s = et.getText().toString();
 		Intent i = getIntent();
@@ -28,7 +29,7 @@ public class AddDeck extends Activity {
 			setResult(RESULT_OK,i);
 			finish();
 		}else{
-			showDialog(DISMISS);
+			showDialog(0, null);
 		}
 	}
 	@Override

@@ -1,21 +1,19 @@
 package icreate.fresco;
 import java.util.ArrayList;
-
 import android.os.Handler;
 import android.os.Message;
+import android.annotation.SuppressLint;
 import android.app.ListActivity;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.ShareCompat.IntentBuilder;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ListView;
-import android.widget.SearchView;
 import android.app.AlertDialog;
 public class FrescoMain extends ListActivity {
 	private ArrayList<Deck> listDeck = new ArrayList<Deck>();
@@ -79,6 +77,7 @@ public class FrescoMain extends ListActivity {
 		Thread thread =  new Thread(null, viewParts, "MagentoBackground");
 		thread.start();
 	}
+	@SuppressLint("HandlerLeak")
 	private Handler handler = new Handler()
 	{
 		public void handleMessage(Message msg)
@@ -93,6 +92,7 @@ public class FrescoMain extends ListActivity {
 			setListAdapter(m_adapter);
 		}
 	};
+	/*
 	private void createDeckList() {
 		// TODO Auto-generated method stub
 		Card card = new Card();
@@ -109,7 +109,7 @@ public class FrescoMain extends ListActivity {
 		deck1._cards.add(card1);
 		listDeck.add(deck1);
 
-	}
+	}*/
 	@Override
 	protected void onListItemClick(ListView l, View v, int position, long id) {
 		// TODO Auto-generated method stub

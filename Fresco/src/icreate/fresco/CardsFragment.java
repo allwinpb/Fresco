@@ -186,7 +186,8 @@ public class CardsFragment extends Fragment {
 				view = addDoodle(content);
 				break;
 				
-			default:
+			case CAMERA:
+				view = addImage(content);
 				break;
 		}
 		
@@ -343,7 +344,7 @@ public class CardsFragment extends Fragment {
 		intent.putExtra(Constant.INDEX, index);
 		
 		startActivity(intent);
-		getActivity().finish();
+		//getActivity().finish();
 	}
 	
 	private void reviewDeck() {
@@ -353,6 +354,7 @@ public class CardsFragment extends Fragment {
 	private void returnBack() {
 		Intent intent = new Intent(getActivity(), FrescoMain.class);
 		startActivity(intent);
+		getActivity().finish();
 	}
 
 }

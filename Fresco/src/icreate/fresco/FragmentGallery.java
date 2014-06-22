@@ -1,22 +1,22 @@
 package icreate.fresco;
 
-import java.io.FileNotFoundException;
+import java.io.ByteArrayOutputStream;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
-import android.text.Editable;
-import android.text.TextWatcher;
+import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
 
 public class FragmentGallery extends Fragment{
@@ -26,6 +26,7 @@ public class FragmentGallery extends Fragment{
 	Button takePic;
 	private Uri selectedImage;
 	public static final int MEDIA_TYPE_IMAGE = 1;
+	private String Gallery;
 
 	public static FragmentGallery createFragment(String content) {
 		Bundle bundle = new Bundle();
@@ -39,7 +40,7 @@ public class FragmentGallery extends Fragment{
 
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-
+		onRestoreInstanceState(savedInstanceState);
 		View view = inflater.inflate(R.layout.fragment_gallery, container, false);
 		iv = (ImageView)view.findViewById(R.id.gallery);
 		//String content = this.getArguments().getString(Constant.CONTENT);
@@ -59,61 +60,71 @@ public class FragmentGallery extends Fragment{
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
 		// TODO Auto-generated method stub
 		super.onActivityResult(requestCode, resultCode, data);
-		if (requestCode == RESULT_LOAD_IMAGE && resultCode == getActivity().RESULT_OK && null != data) {
-            selectedImage = data.getData();
-            String[] filePathColumn = { MediaStore.Images.Media.DATA };
-            Cursor cursor = getActivity().getContentResolver().query(selectedImage,filePathColumn, null, null, null);
-            cursor.moveToFirst();
-            int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
-            String picturePath = cursor.getString(columnIndex);
-            cursor.close();
-            iv.setImageBitmap(getScaledBitmap(picturePath, 800, 800));
+		if (resultCode == Activity.RESULT_OK) {
+			selectedImage = data.getData();
+			String[] filePathColumn = { MediaStore.Images.Media.DATA };
+			Cursor cursor = getActivity().getContentResolver().query(selectedImage,filePathColumn, null, null, null);
+			cursor.moveToFirst();
+			int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+			String picturePath = cursor.getString(columnIndex);
+			cursor.close();
+			int w = 512; int h = 384; // size that does not lead to OutOfMemoryException on Nexus One
+			Bitmap b = BitmapFactory.decodeFile(picturePath);
+
+			// Hack to determine whether the image is rotated
+			boolean rotated = b.getWidth() > b.getHeight();
+
+			bmp = null;
+
+			// If not rotated, just scale it
+			if (!rotated) {
+				bmp = Bitmap.createScaledBitmap(b, w, h, true);
+				iv.setImageBitmap(bmp);
+				b.recycle();
+				b = null;
+
+				// If rotated, scale it by switching width and height and then rotated it
+			} else {
+				Bitmap scaledBmp = Bitmap.createScaledBitmap(b, h, w, true);
+				b.recycle();
+				b = null;
+
+				Matrix mat = new Matrix();
+				mat.postRotate(90);
+				bmp = Bitmap.createBitmap(scaledBmp, 0, 0, h, w, mat, true);
+				iv.setImageBitmap(bmp);
+				// Release image resources
+				scaledBmp.recycle();
+				scaledBmp = null;
+			}	
+			//iv.setImageBitmap(resultBmp);
+		}
+	}
+	@Override
+	public void onPause() {
+		// TODO Auto-generated method stub
+		super.onPause();
+		onSaveInstanceState(new Bundle());
+	}
+	
+	@Override
+	public void onSaveInstanceState(Bundle outState) {
+		// TODO Auto-generated method stub
+		super.onSaveInstanceState(outState);
+		outState.putSerializable("Gallery", Gallery);
+	}
+	public void onRestoreInstanceState(Bundle savedInstanceState){
+		
+		if(savedInstanceState != null){
+           Gallery = savedInstanceState.getString("Gallery");            
         }
 	}
-	private Bitmap getScaledBitmap(String picturePath, int width, int height) {
-	    BitmapFactory.Options sizeOptions = new BitmapFactory.Options();
-	    sizeOptions.inJustDecodeBounds = true;
-	    BitmapFactory.decodeFile(picturePath, sizeOptions);
-
-	    int inSampleSize = calculateInSampleSize(sizeOptions, width, height);
-
-	    sizeOptions.inJustDecodeBounds = false;
-	    sizeOptions.inSampleSize = inSampleSize;
-
-	    return BitmapFactory.decodeFile(picturePath, sizeOptions);
+	public String getContent(){
+		ByteArrayOutputStream baos = new ByteArrayOutputStream();  
+		bmp.compress(Bitmap.CompressFormat.PNG, 100, baos);   
+		byte[] byteArrayImage = baos.toByteArray(); 
+		
+		return Base64.encodeToString(byteArrayImage, Base64.DEFAULT);
 	}
-	private int calculateInSampleSize(BitmapFactory.Options options, int reqWidth, int reqHeight) {
-	    // Raw height and width of image
-	    final int height = options.outHeight;
-	    final int width = options.outWidth;
-	    int inSampleSize = 1;
-
-	    if (height > reqHeight || width > reqWidth) {
-
-	        // Calculate ratios of height and width to requested height and
-	        // width
-	        final int heightRatio = Math.round((float) height / (float) reqHeight);
-	        final int widthRatio = Math.round((float) width / (float) reqWidth);
-
-	        // Choose the smallest ratio as inSampleSize value, this will
-	        // guarantee
-	        // a final image with both dimensions larger than or equal to the
-	        // requested height and width.
-	        inSampleSize = heightRatio < widthRatio ? heightRatio : widthRatio;
-	    }
-
-	    return inSampleSize;
-	}
-	public String getContent() 
-    {
-        String[] projection = { MediaStore.Images.Media.DATA };
-        Cursor cursor = getActivity().managedQuery(selectedImage, projection, null, null, null);
-        if (cursor == null) return null;
-        int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
-        cursor.moveToFirst();
-        String s=cursor.getString(column_index);
-        cursor.close();
-        return s;
-    }
 
 }

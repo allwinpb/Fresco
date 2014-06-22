@@ -3,20 +3,18 @@ package icreate.fresco;
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.webkit.WebView.FindListener;
 import android.widget.Button;
 import android.widget.ImageView;
 
@@ -25,7 +23,7 @@ public class FragmentCamera extends Fragment {
 	final static int cameraData = 0;
 	Bitmap bmp;
 	Button takePic;
-	private Uri fileUri;
+	//private Uri selectedImage;
 	public static final int MEDIA_TYPE_IMAGE = 1;
 
 	public static FragmentCamera createFragment(String content) {
@@ -55,7 +53,7 @@ public class FragmentCamera extends Fragment {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				Intent image = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+				Intent image = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 				startActivityForResult(image, cameraData);
 			}
 		});
@@ -65,15 +63,30 @@ public class FragmentCamera extends Fragment {
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
 		// TODO Auto-generated method stub
 		super.onActivityResult(requestCode, resultCode, data);
+		if (resultCode == Activity.RESULT_OK) {
+			bmp = null;
 			Bundle extras = data.getExtras();
 			bmp = (Bitmap)extras.get("data");
 			iv.setImageBitmap(bmp);
+		}
+	}
+	@Override
+	public void onPause() {
+		// TODO Auto-generated method stub
+		super.onPause();
+		onSaveInstanceState(new Bundle());
+	}
+	@Override
+	public void onSaveInstanceState(Bundle outState) {
+		// TODO Auto-generated method stub
+		super.onSaveInstanceState(outState);
 	}
 	
 	public String getContent() {
-		ByteArrayOutputStream baos = new ByteArrayOutputStream();
-		bmp.compress(Bitmap.CompressFormat.PNG, 80, baos);
-		byte[] b = baos.toByteArray();
-		return Base64.encodeToString(b, Base64.DEFAULT);
+		ByteArrayOutputStream baos = new ByteArrayOutputStream();  
+		bmp.compress(Bitmap.CompressFormat.PNG, 100, baos);   
+		byte[] byteArrayImage = baos.toByteArray(); 
+		
+		return Base64.encodeToString(byteArrayImage, Base64.DEFAULT);
 	}
 }

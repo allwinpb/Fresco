@@ -1,6 +1,5 @@
 package icreate.fresco;
 
-import android.R.color;
 import android.app.Activity;
 import android.graphics.Color;
 import android.os.Bundle;
