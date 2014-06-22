@@ -26,7 +26,7 @@ public class FragmentGallery extends Fragment{
 	Button takePic;
 	private Uri selectedImage;
 	public static final int MEDIA_TYPE_IMAGE = 1;
-	private String Gallery;
+	//private String Gallery;
 
 	public static FragmentGallery createFragment(String content) {
 		Bundle bundle = new Bundle();
@@ -40,7 +40,7 @@ public class FragmentGallery extends Fragment{
 
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		onRestoreInstanceState(savedInstanceState);
+		//onRestoreInstanceState(savedInstanceState);
 		View view = inflater.inflate(R.layout.fragment_gallery, container, false);
 		iv = (ImageView)view.findViewById(R.id.gallery);
 		//String content = this.getArguments().getString(Constant.CONTENT);
@@ -100,6 +100,7 @@ public class FragmentGallery extends Fragment{
 			//iv.setImageBitmap(resultBmp);
 		}
 	}
+	/*
 	@Override
 	public void onPause() {
 		// TODO Auto-generated method stub
@@ -113,12 +114,13 @@ public class FragmentGallery extends Fragment{
 		super.onSaveInstanceState(outState);
 		outState.putSerializable("Gallery", Gallery);
 	}
+	
 	public void onRestoreInstanceState(Bundle savedInstanceState){
 		
 		if(savedInstanceState != null){
            Gallery = savedInstanceState.getString("Gallery");            
         }
-	}
+	}*/
 	public String getContent(){
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();  
 		bmp.compress(Bitmap.CompressFormat.PNG, 100, baos);   

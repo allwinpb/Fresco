@@ -70,6 +70,7 @@ public class FragmentCamera extends Fragment {
 			iv.setImageBitmap(bmp);
 		}
 	}
+	/*
 	@Override
 	public void onPause() {
 		// TODO Auto-generated method stub
@@ -80,7 +81,7 @@ public class FragmentCamera extends Fragment {
 	public void onSaveInstanceState(Bundle outState) {
 		// TODO Auto-generated method stub
 		super.onSaveInstanceState(outState);
-	}
+	}*/
 	
 	public String getContent() {
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();  

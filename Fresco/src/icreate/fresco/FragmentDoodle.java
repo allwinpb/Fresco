@@ -70,8 +70,9 @@ public class FragmentDoodle extends Fragment {
 	@Override
 	public void onPause() {
 		super.onPause();
-		onSaveInstanceState(new Bundle());      
 		disableAccelerometerListening();
+		//onSaveInstanceState(new Bundle());      
+		
 	}
 	
 	private void enableAccelerometerListening() {
@@ -151,11 +152,12 @@ public class FragmentDoodle extends Fragment {
 			
 		}
 	};
+	/*
 	@Override
 	public void onSaveInstanceState(Bundle outState) {
 		// TODO Auto-generated method stub
 		super.onSaveInstanceState(outState);
-	}
+	}*/
 	public String getContent() {
 		return doodle.getContent();
 	}
