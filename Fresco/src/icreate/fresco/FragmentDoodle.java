@@ -157,7 +157,7 @@ public class FragmentDoodle extends Fragment {
 		super.onSaveInstanceState(outState);
 	}
 	public String getContent() {
-		return doodle.getJSONString();
+		return doodle.getContent();
 	}
 
 
