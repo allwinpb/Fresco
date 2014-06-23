@@ -59,6 +59,7 @@ public class NoCardsFragment extends Fragment{
 						newCardIntent.putExtra(Constant.DECK_ID, deck.getDeckID());
 						newCardIntent.putExtra(Constant.CARD_ID, -1);
 						newCardIntent.putExtra(Constant.DECK_NAME, deck.getDeckName());
+						newCardIntent.putExtra(Constant.POSITION_COLOR, ((CardsViewPager)getActivity()).getPositionColor());
 						
 						startActivity(newCardIntent);
 						getActivity().finish();
@@ -80,6 +81,8 @@ public class NoCardsFragment extends Fragment{
 		ActionBar actionBar = getActivity().getActionBar();
 		actionBar.setTitle(deck.getDeckName());
 		actionBar.setDisplayHomeAsUpEnabled(true);
+		
+		view.setBackgroundColor(((CardsViewPager)getActivity()).getColor());
 		
 		return view;
 	}

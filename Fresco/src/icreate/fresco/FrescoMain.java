@@ -1,4 +1,5 @@
 package icreate.fresco;
+
 import java.util.ArrayList;
 import android.os.Handler;
 import android.os.Message;
@@ -15,8 +16,18 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ListView;
 import android.app.AlertDialog;
+
 public class FrescoMain extends ListActivity {
 	private ArrayList<Deck> listDeck = new ArrayList<Deck>();
+	
+	public static final int color[][] = {
+		{142, 68 , 173},
+		{192, 57, 43},
+		{41, 128, 185},
+		{211, 84, 0},
+		{44, 62, 80},
+		{230, 126, 34}}; 
+	
 	//private ArrayAdapter<String> adapter;
 	//private static ArrayList<Deck> listDeck;
 	private Runnable viewParts;
@@ -117,6 +128,7 @@ public class FrescoMain extends ListActivity {
 		Intent intent = new Intent(this, CardsViewPager.class);
 		Deck deck = listDeck.get(position);
 		intent.putExtra(Constant.DECK_ID, deck.getDeckID());
+		intent.putExtra(Constant.POSITION_COLOR, position);
 		intent.putExtra(Constant.DECK_NAME, deck.getDeckName());
 		startActivityForResult(intent, 1);
 	}

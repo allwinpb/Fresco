@@ -14,4 +14,6 @@ public class Constant {
 	public final static String JSON_BITMAP = "icreate.doodleview.json_bitmap";
 	public final static String JSON_PATH = "icreate.doodleview.json_path";
 	public final static String JSON_POINT = "icreate.doodleview.json_point";
+	public static final String POSITION_COLOR = "icreate.fresco.position_color";
+	public static final String SHARED_PREFS = "icreate.fresco.shared_prefs";
 }

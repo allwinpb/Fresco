@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginBottom="5dp"
+    android:layout_marginBottom="15dp"
     android:layout_marginLeft="35dp"
     android:layout_marginRight="35dp"
     android:layout_marginTop="15dp"
@@ -15,12 +15,12 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="25dp"
         android:layout_marginRight="25dp"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="5dp"
         android:layout_marginBottom="2.5dp"
         android:contentDescription="@string/camera"
         android:gravity="center"
         android:layout_weight="15"
-        android:src="@drawable/gallery" />
+        android:src="@drawable/gallery_256" />
 
     <requestFocus />
 
@@ -32,6 +32,9 @@
         android:layout_marginLeft="25dp"
         android:layout_marginRight="25dp"
         android:layout_marginTop="2.5dp"
+        android:layout_marginBottom="15dp"
+        android:textSize= "20sp"
+        android:textColor="@android:color/white"
         android:layout_weight="1"
         android:background="@drawable/background" />
 

@@ -4,8 +4,10 @@ import icreate.fresco.Card.Side;
 import icreate.fresco.Card.Type;
 import android.app.ActionBar;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
@@ -28,8 +30,11 @@ public class AddEditActivity extends FragmentActivity implements OnTabChangeList
 	private Card card;
 	private boolean newEdit;
 	private String deckName;
+	private int positionColor;
 	
 	private int index;
+	
+	private SharedPreferences sharedPref;
 	
 	private FrontBackCardFragment frontFragment;
 	private FrontBackCardFragment backFragment;
@@ -67,12 +72,12 @@ public class AddEditActivity extends FragmentActivity implements OnTabChangeList
 
 	public void setType(Type type) {
 		switch(side) {
-		case FRONT:
-			cardFrontType = type;
-			break;
-		case BACK:
-			cardBackType = type;
-			break;
+			case FRONT:
+				cardFrontType = type;
+				break;
+			case BACK:
+				cardBackType = type;
+				break;
 		}
 	}
 
@@ -93,11 +98,14 @@ public class AddEditActivity extends FragmentActivity implements OnTabChangeList
 
 		database = FrescoMain.getDatabase();
 
+		sharedPref = getSharedPreferences(Constant.SHARED_PREFS, Context.MODE_PRIVATE);
+		
 		Intent receiveIntent = getIntent();
 		newEdit = receiveIntent.getBooleanExtra(Constant.NEW_EDIT, false);
 		deckName = receiveIntent.getStringExtra(Constant.DECK_NAME);
 		deckID  = receiveIntent.getIntExtra(Constant.DECK_ID, 1);
 		index = receiveIntent.getIntExtra(Constant.INDEX, -1);
+		positionColor = receiveIntent.getIntExtra(Constant.POSITION_COLOR, 0);
 		
 		if( newEdit == true ) {
 			int cardID = receiveIntent.getIntExtra(Constant.CARD_ID, 1);
@@ -175,18 +183,31 @@ public class AddEditActivity extends FragmentActivity implements OnTabChangeList
 
 		return 0;
 	}
+	
+	private Type getTypeFromInt(int type) {
+		switch(type) {
+			case 0:
+				return Type.TEXT;
+			case 1:
+				return Type.DOODLE;
+			case 2:
+				return Type.IMAGE;
+			default:
+				return Type.CAMERA;
+		}
+	}
 
 	@Override
 	public void onTabChanged(String tabId) {
 		switch(tabId) {
-		case FRONT:
-			side = Side.FRONT;
-			updateTabs(FRONT);
-			break;
-		case BACK:
-			side = Side.BACK;
-			updateTabs(BACK);
-			break;
+			case FRONT:
+				side = Side.FRONT;
+				updateTabs(FRONT);
+				break;
+			case BACK:
+				side = Side.BACK;
+				updateTabs(BACK);
+				break;
 		}
 	}
 
@@ -227,6 +248,7 @@ public class AddEditActivity extends FragmentActivity implements OnTabChangeList
 				sendIntent.putExtra(Constant.DECK_NAME, deckName);
 				sendIntent.putExtra(Constant.DECK_ID, deckID);
 				sendIntent.putExtra(Constant.INDEX, index);
+				sendIntent.putExtra(Constant.POSITION_COLOR, positionColor);
 				startActivity(sendIntent);
 				finish();
 			}
@@ -244,51 +266,80 @@ public class AddEditActivity extends FragmentActivity implements OnTabChangeList
 	}
 	
 	private void confirmSaving() {
+		
+		boolean isContentEmpty = false;
+		
+		saveCard();
 		AlertDialog.Builder saveDialog = new AlertDialog.Builder(AddEditActivity.this);
-
 		saveDialog
 		.setTitle("Save confirmation")
-		.setMessage("Changes not saved will be discarded")
-		.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-			public void onClick(DialogInterface dialog, int which) {
-				saveCardType();
-				card.setType(Side.FRONT, cardFrontType);
-				card.setType(Side.BACK, cardBackType);
-				saveCardContent();
-				card.setContent(Side.FRONT, cardFrontString);
-				card.setContent(Side.BACK, cardBackString);
-
-				database = FrescoMain.getDatabase();
-				if(newEdit == false) {
-					database.insertCard(deckID, card);
-				} else {
-					database.updateCard(deckID, card);
-				}
-
-				Intent sendIntent = new Intent(AddEditActivity.this, CardsViewPager.class);
-				sendIntent.putExtra(Constant.DECK_NAME, deckName);
-				sendIntent.putExtra(Constant.DECK_ID, deckID);
-				if(newEdit == false)
-					index++;
-				sendIntent.putExtra(Constant.INDEX, index);
-				startActivity(sendIntent);
-				finish();
-			}
-
-		});
-
-		saveDialog
-		.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
-			public void onClick(DialogInterface dialog, int which) {
-				dialog.cancel();
-			}
-		})
+		.setMessage("Do you want to save the card?")
 		.setIcon(android.R.drawable.ic_dialog_info);
-
+		
+		if(cardFrontString.isEmpty()) {
+			isContentEmpty = true;
+			saveDialog.setMessage("Please add front card content");
+		} 
+		
+		if(cardBackString.isEmpty()) {
+			isContentEmpty = true;
+			saveDialog.setMessage("Please add back card content");
+		}
+		
+		if(isContentEmpty == false) {
+			saveDialog
+			.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+				public void onClick(DialogInterface dialog, int which) {
+					
+					database = FrescoMain.getDatabase();
+					if(newEdit == false) {
+						database.insertCard(deckID, card);
+					} else {
+						database.updateCard(deckID, card);
+					}
+	
+					Intent sendIntent = new Intent(AddEditActivity.this, CardsViewPager.class);
+					sendIntent.putExtra(Constant.DECK_NAME, deckName);
+					sendIntent.putExtra(Constant.DECK_ID, deckID);
+					sendIntent.putExtra(Constant.POSITION_COLOR, positionColor);
+					if(newEdit == false)
+						index++;
+					sendIntent.putExtra(Constant.INDEX, index);
+					startActivity(sendIntent);
+					finish();
+				}
+	
+			});
+	
+			saveDialog
+			.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+				public void onClick(DialogInterface dialog, int which) {
+					dialog.cancel();
+				}
+			});
+		} else {
+			saveDialog.setNeutralButton("Okay", new DialogInterface.OnClickListener() {
+				
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+					dialog.cancel();
+				}
+			});
+		}
+		
 		AlertDialog dialog = saveDialog.create();
 		dialog.show();
 	}
 	
+	private void saveCard() {
+		saveCardType();
+		card.setType(Side.FRONT, cardFrontType);
+		card.setType(Side.BACK, cardBackType);
+		saveCardContent();
+		card.setContent(Side.FRONT, cardFrontString);
+		card.setContent(Side.BACK, cardBackString);
+	}
+
 	private void saveCardContent() {
 		if(frontFragment != null) 
 			cardFrontString = frontFragment.getContent();
@@ -313,13 +364,38 @@ public class AddEditActivity extends FragmentActivity implements OnTabChangeList
 			tabHost.getTabWidget().getChildAt(0).setBackgroundColor(ORANGE);
 		}
 	}
+	
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		// TODO Auto-generated method stub
 		super.onActivityResult(requestCode, resultCode, data);
 		if(frontFragment != null)
 			frontFragment.onActivityResult(requestCode, resultCode, data);
 		else
 			backFragment.onActivityResult(requestCode, resultCode, data);
 	}
+
+	@Override
+	protected void onResume() {
+		super.onResume();
+		
+		String content = sharedPref.getString(Constant.CONTENT, "");
+		setContent(content);
+		
+		int type = sharedPref.getInt(Constant.TYPE, 0);
+		setType(getTypeFromInt(type));
+	}
+
+	@Override
+	protected void onStop() {
+		super.onStop();
+		
+		SharedPreferences.Editor editor = sharedPref.edit();
+		
+		editor.putString(Constant.CONTENT, getContent(side));
+		editor.putInt(Constant.TYPE, getIntType(getType(side)));
+		
+		editor.commit();
+	}
+	
+	
 }

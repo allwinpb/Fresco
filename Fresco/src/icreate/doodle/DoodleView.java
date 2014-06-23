@@ -61,6 +61,11 @@ public class DoodleView extends View {
 	}
 	
 	public void setBitmap(String jsonString) {
+		bitmap = convertToMutable(convertFromJSONToImage(jsonString));
+		bitmapCanvas = new Canvas(bitmap);
+	}
+	
+	/*public void setBitmap(String jsonString) {
 		JSONObject json;
 		JSONObject jsonPath = null;
 		JSONObject jsonPoint = null;
@@ -77,7 +82,7 @@ public class DoodleView extends View {
 		pathMap = convertPathInteger(jsonPath);
 		previousPointMap = convertPointInteger(jsonPoint);
 		invalidate();
-	}
+	}*/
 	
 	private HashMap<Integer, Point> convertPointInteger(JSONObject jsonPoint) {
 		HashMap<Integer, Point> points = new HashMap<Integer, Point>();
@@ -119,6 +124,7 @@ public class DoodleView extends View {
 		return paths;
 	}
 
+	/*
 	public String getContent() {
 		JSONObject json = new JSONObject();
 		JSONObject points = new JSONObject(convertPointString(previousPointMap));
@@ -135,6 +141,10 @@ public class DoodleView extends View {
 		
 		return json.toString();
 		
+	}*/
+	
+	public String getContent() {
+		return convertFromImageToJSON(bitmap);
 	}
 	
 	private Map<String, Point> convertPointString(HashMap<Integer, Point> previousPointMap) {
@@ -300,6 +310,14 @@ public class DoodleView extends View {
 	        e.getMessage(); 
 	        return null;
 		}
+	}
+	
+	private String convertFromImageToJSON(Bitmap bitmap) {
+		ByteArrayOutputStream baos = new ByteArrayOutputStream();  
+		bitmap.compress(Bitmap.CompressFormat.PNG, 100, baos);   
+		byte[] byteArrayImage = baos.toByteArray(); 
+		
+		return Base64.encodeToString(byteArrayImage, Base64.DEFAULT);
 	}
 	
 	public static Bitmap convertToMutable(Bitmap imgIn) {
