@@ -25,15 +25,9 @@
         android:ems="10"
         android:gravity="center"
         android:hint="@string/hint"
-<<<<<<< HEAD
         android:padding="10dp" >
 
         <requestFocus />
-=======
-        android:imeOptions="actionDone"
-        android:padding="20dp"
-        android:background="#C0C0C0" >
->>>>>>> origin/master
     </EditText>
 
     <LinearLayout

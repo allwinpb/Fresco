@@ -14,12 +14,8 @@
 	    android:layout_marginLeft="25dp"
 	    android:padding="5dp"
 	    android:layout_gravity="center_vertical"
-<<<<<<< HEAD
 	    android:src="@drawable/book"
 	    android:layout_weight="1"/>
-=======
-	    android:background="@drawable/book"/>
->>>>>>> origin/master
 
     <TextView
         android:id="@+id/deck"
@@ -44,11 +40,7 @@
 	    android:layout_marginRight="25dp"
 	    android:padding="5dp"
 	    android:layout_gravity="center_vertical"
-<<<<<<< HEAD
 	    android:src="@drawable/arrow_forward"
 	    android:layout_weight="1"/>
-=======
-	    android:background="@drawable/arrow_forward"/>
->>>>>>> origin/master
     
 </LinearLayout>
