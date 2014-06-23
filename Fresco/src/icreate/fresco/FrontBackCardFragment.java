@@ -246,19 +246,15 @@ public class FrontBackCardFragment extends Fragment implements TabHost.OnTabChan
 				public void onClick(View v) {
 					switch(type) {
 						case TEXT:
-							updateTab(TEXT);
 							tabHost.setCurrentTab(0);
 							break;
 						case DOODLE:
-							updateTab(DOODLE);
 							tabHost.setCurrentTab(1);
 							break;
 						case IMAGE:
-							updateTab(GALLERY);
 							tabHost.setCurrentTab(2);
 							break;
 						case CAMERA:
-							updateTab(CAMERA);
 							tabHost.setCurrentTab(3);
 							break;
 				}
@@ -269,9 +265,9 @@ public class FrontBackCardFragment extends Fragment implements TabHost.OnTabChan
 			toast.setView(view);
 	        toast.setGravity(Gravity.CENTER_HORIZONTAL | Gravity.CENTER_VERTICAL,
 	                0, 0);
-	        toast.setDuration(Toast.LENGTH_LONG);
+	        toast.setDuration(Toast.LENGTH_SHORT);
 	        toast.show();
-			
+
 		}*/
 	}
 	
