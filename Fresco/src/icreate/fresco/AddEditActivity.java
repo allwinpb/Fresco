@@ -110,6 +110,7 @@ public class AddEditActivity extends FragmentActivity implements OnTabChangeList
 		deckID  = receiveIntent.getIntExtra(Constant.DECK_ID, 1);
 		index = receiveIntent.getIntExtra(Constant.INDEX, -1);
 		positionColor = receiveIntent.getIntExtra(Constant.POSITION_COLOR, 0);
+		side = getSide(receiveIntent.getBooleanExtra(Constant.SIDE, true));
 		
 		if( newEdit == true ) {
 			int cardID = receiveIntent.getIntExtra(Constant.CARD_ID, 1);
@@ -140,9 +141,14 @@ public class AddEditActivity extends FragmentActivity implements OnTabChangeList
 
 		tabHost.addTab(newTab(FRONT, FRONT, R.id.tab_front));
 		tabHost.addTab(newTab(BACK, BACK, R.id.tab_back));
-
-		updateTabs(FRONT);
-		tabHost.setCurrentTab(0);
+		
+		if(side == Side.FRONT) {
+			updateTabs(FRONT);
+			tabHost.setCurrentTab(0);
+		} else {
+			updateTabs(BACK);
+			tabHost.setCurrentTab(1);
+		}
 		tabHost.setOnTabChangedListener(this);
 	}
 
@@ -376,6 +382,12 @@ public class AddEditActivity extends FragmentActivity implements OnTabChangeList
 			tabHost.getTabWidget().getChildAt(1).setBackgroundColor(GREEN);
 			tabHost.getTabWidget().getChildAt(0).setBackgroundColor(ORANGE);
 		}
+	}
+	
+	private Side getSide(boolean isFront) {
+		if(isFront)
+			return Side.FRONT;
+		return Side.BACK;
 	}
 	
 	@Override

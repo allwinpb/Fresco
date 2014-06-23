@@ -1,15 +1,24 @@
 package icreate.fresco;
 
 import icreate.fresco.Card.Type;
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.text.SpannableString;
+import android.text.style.StyleSpan;
+import android.text.style.UnderlineSpan;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.TabHost;
 import android.widget.TabHost.TabSpec;
+import android.widget.TextView;
+import android.widget.Toast;
 
 public class FrontBackCardFragment extends Fragment implements TabHost.OnTabChangeListener{
 	
@@ -90,18 +99,22 @@ public class FrontBackCardFragment extends Fragment implements TabHost.OnTabChan
 			case TEXT:
 				updateTab(TEXT);
 				changeTabColor(TEXT);
+				tabHost.setCurrentTab(0);
 				break;
 			case DOODLE:
 				updateTab(DOODLE);
 				changeTabColor(DOODLE);
+				tabHost.setCurrentTab(1);
 				break;
 			case IMAGE:
 				updateTab(GALLERY);
 				changeTabColor(GALLERY);
+				tabHost.setCurrentTab(2);
 				break;
 			case CAMERA:
 				updateTab(CAMERA);
 				changeTabColor(CAMERA);
+				tabHost.setCurrentTab(3);
 				break;
 		}
 		
@@ -164,32 +177,102 @@ public class FrontBackCardFragment extends Fragment implements TabHost.OnTabChan
 		}
 		return Type.TEXT;
 	}
+	
+	private String getStringType(Type type) {
+		switch(type) {
+			case TEXT:
+				return "Text";
+			case DOODLE:
+				return "Doodle";
+			case IMAGE:
+				return "Gallery";
+			case CAMERA:
+				return "Camera";
+		}
+		return "Text";
+	}
+	
 
 	@Override
 	public void onTabChanged(String tag) {
-		changeTabColor(tag);
-		switch(tag) {
-			case TEXT:
-				type = Type.TEXT;	
-				((AddEditActivity)getActivity()).setType(Type.TEXT);
-				updateTab(TEXT);
-				break;
-			case DOODLE:
-				type = Type.DOODLE;
-				((AddEditActivity)getActivity()).setType(Type.DOODLE);
-				updateTab(DOODLE);
-				break;
-			case GALLERY:
-				type = Type.IMAGE;
-				((AddEditActivity)getActivity()).setType(Type.IMAGE);
-				updateTab(GALLERY);
-				break;
-			case CAMERA:
-				type = Type.CAMERA;
-				((AddEditActivity)getActivity()).setType(Type.CAMERA);
-				updateTab(CAMERA);
-				break;
-		}
+		
+		/*String content = getContent();
+		if(content.isEmpty()) {*/
+		
+			changeTabColor(tag);
+			switch(tag) {
+				case TEXT:
+					type = Type.TEXT;	
+					((AddEditActivity)getActivity()).setType(Type.TEXT);
+					updateTab(TEXT);
+					break;
+				case DOODLE:
+					type = Type.DOODLE;
+					((AddEditActivity)getActivity()).setType(Type.DOODLE);
+					updateTab(DOODLE);
+					break;
+				case GALLERY:
+					type = Type.IMAGE;
+					((AddEditActivity)getActivity()).setType(Type.IMAGE);
+					updateTab(GALLERY);
+					break;
+				case CAMERA:
+					type = Type.CAMERA;
+					((AddEditActivity)getActivity()).setType(Type.CAMERA);
+					updateTab(CAMERA);
+					break;
+			}
+			
+		//} 
+		
+		/*else {
+			LayoutInflater inflater = (LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+			View view = inflater.inflate(R.layout.tab_warning_toast, null);
+			
+			TextView tabText = (TextView) view.findViewById(R.id.tabText);
+			String tab = getStringType(type);
+			String tabTextContent = tab + " is not empty. Changing tabs will automatically discard previous content";
+			tabText.setText(tabTextContent);
+			
+			TextView returnBackText = (TextView) view.findViewById(R.id.returnBackText);
+			SpannableString spanString = new SpannableString(returnBackText.getText().toString());
+			spanString.setSpan(new UnderlineSpan(), 0, spanString.length(), 0);
+			spanString.setSpan(new StyleSpan(Typeface.ITALIC), 0, spanString.length(), 0);
+			returnBackText.setText(spanString);
+			
+			returnBackText.setOnClickListener(new OnClickListener(){
+
+				@Override
+				public void onClick(View v) {
+					switch(type) {
+						case TEXT:
+							updateTab(TEXT);
+							tabHost.setCurrentTab(0);
+							break;
+						case DOODLE:
+							updateTab(DOODLE);
+							tabHost.setCurrentTab(1);
+							break;
+						case IMAGE:
+							updateTab(GALLERY);
+							tabHost.setCurrentTab(2);
+							break;
+						case CAMERA:
+							updateTab(CAMERA);
+							tabHost.setCurrentTab(3);
+							break;
+				}
+				}}
+			); 
+			
+			Toast toast = new Toast(getActivity());
+			toast.setView(view);
+	        toast.setGravity(Gravity.CENTER_HORIZONTAL | Gravity.CENTER_VERTICAL,
+	                0, 0);
+	        toast.setDuration(Toast.LENGTH_LONG);
+	        toast.show();
+			
+		}*/
 	}
 	
 	private void changeTabColor(String tag) {

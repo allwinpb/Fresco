@@ -35,7 +35,8 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
             android:padding="5dp"
-            android:src="@drawable/canvas_eraser" />
+            android:src="@drawable/canvas_eraser"
+            android:background="@drawable/button_pressed" />
 
         <ImageButton
             android:id="@+id/sizeImageButton"

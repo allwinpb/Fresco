@@ -4,9 +4,6 @@ import icreate.animation.FlippingAnimation;
 import icreate.fresco.Card.Side;
 import icreate.fresco.Card.Type;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import android.app.ActionBar;
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -25,6 +22,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.View.OnLongClickListener;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -94,6 +92,8 @@ public class CardsFragment extends Fragment {
 		
 		front.setOnClickListener(cardListener);
 		back.setOnClickListener(cardListener);
+		front.setOnLongClickListener(longClickListener);
+		back.setOnLongClickListener(longClickListener);
 		
 		setBackAndForwardArrow(view);
 		
@@ -323,6 +323,24 @@ public class CardsFragment extends Fragment {
 			flipCard();
 		}
 		
+	};
+	
+	private OnLongClickListener longClickListener = new OnLongClickListener(){
+
+		@Override
+		public boolean onLongClick(View v) {
+			
+			Intent intent = new Intent(getActivity(), AddEditActivity.class);
+			intent.putExtra(Constant.NEW_EDIT, true);
+			intent.putExtra(Constant.DECK_NAME, deck.getDeckName());
+			intent.putExtra(Constant.DECK_ID, deck.getDeckID());
+			intent.putExtra(Constant.CARD_ID, cardID);
+			intent.putExtra(Constant.INDEX, index);
+			intent.putExtra(Constant.POSITION_COLOR, ((CardsViewPager)getActivity()).getPositionColor());
+			intent.putExtra(Constant.SIDE, isFrontCard);
+			
+			return false;
+		}
 	};
 	
 	private void addCard() {
