@@ -12,4 +12,5 @@
      <color name="green_sea">#ff16a085</color>
     <color name="green_sea_focused">#ff3498db</color>
    <color name="add_deck">#FF176C</color>
+   <color name="list_deck_background">#8e44ad</color>
 </resources>

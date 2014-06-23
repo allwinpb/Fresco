@@ -21,7 +21,7 @@ import android.app.AlertDialog;
 
 public class FrescoMain extends ListActivity {
 	private ArrayList<Deck> listDeck = new ArrayList<Deck>();
-	
+
 	public static final int color[][] = {
 		{142, 68 , 173},
 		{192, 57, 43},
@@ -29,7 +29,7 @@ public class FrescoMain extends ListActivity {
 		{211, 84, 0},
 		{44, 62, 80},
 		{230, 126, 34}}; 
-	
+
 	//private ArrayAdapter<String> adapter;
 	//private static ArrayList<Deck> listDeck;
 	private Runnable viewParts;
@@ -49,11 +49,12 @@ public class FrescoMain extends ListActivity {
 		this.getListView().setLongClickable(true);
 		this.getListView().setOnItemLongClickListener(new OnItemLongClickListener() {
 			public boolean onItemLongClick(AdapterView<?> parent, View v, final int position, long id) {
-				
+
 				Intent intent = new Intent(v.getContext(), EditDeck.class);
 				Deck deck = listDeck.get(position);
 				intent.putExtra(Constant.DECK_ID, deck.getDeckID());
 				intent.putExtra(Constant.DECK_NAME, deck.getDeckName());
+				intent.putExtra(Constant.POSITION_COLOR, position);
 				startActivityForResult(intent, 2);
 				return true;
 			}	
@@ -112,6 +113,7 @@ public class FrescoMain extends ListActivity {
 		intent.putExtra(Constant.POSITION_COLOR, position);
 		intent.putExtra(Constant.DECK_NAME, deck.getDeckName());
 		startActivityForResult(intent, 1);
+
 	}
 	public static SqliteHelper getDatabase() {
 		return database;
@@ -124,6 +126,7 @@ public class FrescoMain extends ListActivity {
 		getMenuInflater().inflate(R.menu.main, menu);
 		searchItem = menu.findItem(R.id.search_icon);
 		return super.onCreateOptionsMenu(menu);
+
 	}
 
 	@Override
@@ -148,20 +151,37 @@ public class FrescoMain extends ListActivity {
 		super.onActivityResult(requestCode, resultCode, data);
 		if(requestCode == 1){
 			if(resultCode == RESULT_OK){
+
 				Deck tmp = new Deck(data.getStringExtra("deck"));
 				database.insertDeck(data.getStringExtra("deck"));
 				int id = getResources().getIdentifier(data.getStringExtra("icon"),"drawable",getPackageName());
 				((ImageView)findViewById(R.id.category)).setImageResource(id);
 				listDeck.add(tmp);
 				m_adapter.notifyDataSetChanged();
+
 			}
 			else{
 
 			}
 		}
 		if(requestCode == 2){
+
+			Deck tmp = listDeck.get(data.getIntExtra("position", 0));
+			database.deleteDeck(data.getIntExtra("position", 0));
+			listDeck.remove(tmp);
+
 			if(resultCode == RESULT_OK){
-				
+
+				Deck deck = new Deck(data.getStringExtra("deck"));
+				listDeck.add(deck);
+				database.insertDeck(data.getStringExtra("deck"));
+				m_adapter.notifyDataSetChanged();
+
+			}
+			else{
+
+				m_adapter.notifyDataSetChanged();
+
 			}
 		}
 

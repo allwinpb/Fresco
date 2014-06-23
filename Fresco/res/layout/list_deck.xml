@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#8e44ad"
+    android:background="@color/list_deck_background"
     android:orientation="horizontal" >
 	
 	<ImageView 
@@ -11,7 +11,6 @@
 	    android:layout_height="wrap_content"
 	    android:layout_marginTop="10dp"
 	    android:layout_marginBottom="10dp"
-	    android:layout_marginLeft="25dp"
 	    android:padding="5dp"
 	    android:layout_gravity="center_vertical"
 	    android:src="@drawable/book"/>
@@ -20,8 +19,8 @@
         android:id="@+id/deck"
         android:layout_width="0dip"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:textSize = "25sp"
+        android:layout_weight="10"
+        android:textSize = "@dimen/text"
         android:layout_marginTop="10dp"
 	    android:layout_marginBottom="10dp"
         android:textColor="@android:color/white"
@@ -36,7 +35,6 @@
 	    android:layout_height="wrap_content"
 	    android:layout_marginTop="10dp"
 	    android:layout_marginBottom="10dp"
-	    android:layout_marginRight="25dp"
 	    android:padding="5dp"
 	    android:layout_gravity="center_vertical"
 	    android:src="@drawable/arrow_forward"/>

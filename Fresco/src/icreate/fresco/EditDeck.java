@@ -24,6 +24,7 @@ public class EditDeck extends Activity implements OnClickListener {
 	Button delete;
 	String editText;
 	String icon = "";
+	int pos;
 	ImageButton people, hammer, cat, number, german, film, talk, key, home, book, picture, christmas;
 	ImageButton newspaper, basketball, musics, hamburger;
 	final private static int DISMISS = 1;
@@ -72,27 +73,28 @@ public class EditDeck extends Activity implements OnClickListener {
 		musics.setOnClickListener(this);
 		hamburger.setOnClickListener(this);
 		done.setOnClickListener(this);
+		delete.setOnClickListener(this);
 
 		
-		retrieveEditText();
-
-	}
-	public void retrieveEditText(){
 		Intent receiveIntent = getIntent();
 		et.setText(receiveIntent.getStringExtra(Constant.DECK_NAME));
+		pos = receiveIntent.getIntExtra(Constant.POSITION_COLOR, 0);
+
 	}
+	
 	@SuppressWarnings("deprecation")
 	public void Finish(){
 		editText = et.getText().toString();
 		Intent i = getIntent();
 		//String msg = i.getStringExtra("numbers");
 		if(!editText.equals("")){
-			i.putExtra("deck", editText);
 			if(icon.equals("")){
 				showDialog(0, null);
 			}
 			else{
+				i.putExtra("deck", editText);
 				i.putExtra("icon", icon);
+				i.putExtra("position", pos);
 				setResult(RESULT_OK,i);
 				finish();
 			}
@@ -291,8 +293,11 @@ public class EditDeck extends Activity implements OnClickListener {
 			Finish();
 			break;
 		case R.id.delete:
-			
-			
+			Intent i = getIntent();
+			pos = i.getIntExtra(Constant.POSITION_COLOR, 0);
+			i.putExtra("position", pos);
+			setResult(0, i);
+			finish();
 			break;
 		}
 	}
