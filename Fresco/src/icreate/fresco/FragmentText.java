@@ -1,5 +1,6 @@
 package icreate.fresco;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
@@ -7,6 +8,7 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
 public class FragmentText extends Fragment {
@@ -34,6 +36,12 @@ public class FragmentText extends Fragment {
 		editText.setText(content);
 		int position = editText.length();
 		editText.setSelection(position);
+		
+		InputMethodManager imm = (InputMethodManager) getActivity()
+				.getSystemService(Context.INPUT_METHOD_SERVICE);
+		imm.hideSoftInputFromWindow(editText.getWindowToken(),
+				0);
+		
 		editText.addTextChangedListener(new TextWatcher(){
 
 			@Override

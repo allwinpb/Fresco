@@ -107,6 +107,8 @@ public class CardsFragment extends Fragment {
 		actionBar.setTitle(deck.getDeckName());
 		actionBar.setDisplayHomeAsUpEnabled(true);
 		
+		view.setBackgroundColor(((CardsViewPager)getActivity()).getColor());
+		
 		return view;
 	}
 	
@@ -158,18 +160,18 @@ public class CardsFragment extends Fragment {
 	public void flipCard() {	 
 	    FlippingAnimation flipAnimation = new FlippingAnimation(cardFace, cardBack);
 	    isFrontCard = !isFrontCard;
-	    
-	    if(isFrontCard == true) {
-	    	frontBackTextView.setText("Front");
-	    } else {
-	    	frontBackTextView.setText("Back");
-	    }
 	 
 	    if (cardFace.getVisibility() == View.GONE)
 	    {
 	        flipAnimation.reverse();
 	    }
 	    rootLayout.startAnimation(flipAnimation);
+	    
+	    if(isFrontCard == true) {
+	    	frontBackTextView.setText("Front");
+	    } else {
+	    	frontBackTextView.setText("Back");
+	    }
 	}
 	
 	private View setUpTextImageView(String content, Type type) {
@@ -232,6 +234,7 @@ public class CardsFragment extends Fragment {
 		return null;
 	}
 	
+	/*
 	private View addDoodle(String json) {
 		JSONObject object = null;
 		
@@ -249,6 +252,18 @@ public class CardsFragment extends Fragment {
 			e.printStackTrace();
 		}
 		
+		ImageView doodle = new ImageView(this.getActivity()); 
+		Bitmap bitmap = convertFromJSONToImage(jsonString);
+		
+		if(bitmap != null) {
+			doodle.setImageBitmap(bitmap);
+			return doodle;
+		}
+		
+		return null;
+	}*/
+	
+	private View addDoodle(String jsonString) {
 		ImageView doodle = new ImageView(this.getActivity()); 
 		Bitmap bitmap = convertFromJSONToImage(jsonString);
 		
@@ -317,6 +332,7 @@ public class CardsFragment extends Fragment {
 		intent.putExtra(Constant.DECK_ID, deck.getDeckID());
 		intent.putExtra(Constant.CARD_ID, -1);
 		intent.putExtra(Constant.INDEX, cardsCount);
+		intent.putExtra(Constant.POSITION_COLOR, ((CardsViewPager)getActivity()).getPositionColor());
 		startActivity(intent);
 		getActivity().finish();
 	}
@@ -334,6 +350,7 @@ public class CardsFragment extends Fragment {
 						Intent i = new Intent(getActivity(), CardsViewPager.class);
 						i.putExtra(Constant.DECK_ID, deck.getDeckID());
 						i.putExtra(Constant.DECK_NAME, deck.getDeckName());
+						i.putExtra(Constant.POSITION_COLOR, ((CardsViewPager)getActivity()).getPositionColor());
 						startActivity(i);
 						break;
 					case Dialog.BUTTON_NEGATIVE:
@@ -360,6 +377,7 @@ public class CardsFragment extends Fragment {
 		intent.putExtra(Constant.DECK_ID, deck.getDeckID());
 		intent.putExtra(Constant.CARD_ID, cardID);
 		intent.putExtra(Constant.INDEX, index);
+		intent.putExtra(Constant.POSITION_COLOR, ((CardsViewPager)getActivity()).getPositionColor());
 		
 		startActivity(intent);
 		//getActivity().finish();

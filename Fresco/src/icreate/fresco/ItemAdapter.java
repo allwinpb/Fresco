@@ -3,6 +3,7 @@ package icreate.fresco;
 import java.util.ArrayList;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,11 +13,21 @@ import android.widget.TextView;
 public class ItemAdapter extends ArrayAdapter<Deck> {
 	private ArrayList<Deck> objects;
 	
+	public static final int color[][] = {
+		{142, 68 , 173},
+		{192, 57, 43},
+		{41, 128, 185},
+		{211, 84, 0},
+		{44, 62, 80},
+		{230, 126, 34}};
+	
 	public ItemAdapter(Context context, int textViewResourceId, ArrayList<Deck> objects) {
 		super(context, textViewResourceId, objects);
 		this.objects = objects;
 	}
 	public View getView(int position, View convertView, ViewGroup parent){
+		
+		parent.setBackgroundColor(Color.argb(255, 236, 240, 241));
 
 		// assign the view we are converting to a local variable
 		View v = convertView;
@@ -40,6 +51,7 @@ public class ItemAdapter extends ArrayAdapter<Deck> {
 			}
 		}
 		// the view must be returned to our activity
+		v.setBackgroundColor(Color.argb(255, color[position%6][0], color[position%6][1], color[position%6][2]));
 		return v;
 	}
 }

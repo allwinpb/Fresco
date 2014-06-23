@@ -1,6 +1,7 @@
 package icreate.fresco;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -10,12 +11,21 @@ import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 
 public class CardsViewPager extends FragmentActivity {
+	
+	public static final int color[][] = {
+		{142, 68 , 173},
+		{192, 57, 43},
+		{41, 128, 185},
+		{211, 84, 0},
+		{44, 62, 80},
+		{230, 126, 34}};
 
 	private static Deck deck;
 	private ViewPager viewPager;
 	private SqliteHelper database;
 	
 	private int index;
+	private int positionColor;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +37,7 @@ public class CardsViewPager extends FragmentActivity {
 		String deckName = intent.getStringExtra(Constant.DECK_NAME);
 		int deckID = intent.getIntExtra(Constant.DECK_ID, 0);
 		index = intent.getIntExtra(Constant.INDEX, -1);
+		positionColor = intent.getIntExtra(Constant.POSITION_COLOR, 0);
 		
 		deck = database.getDeck(deckID, deckName);
 		
@@ -86,6 +97,14 @@ public class CardsViewPager extends FragmentActivity {
 			}
 		}
 	}	
+	
+	public int getColor() {
+		return Color.argb(255, color[positionColor%6][0], color[positionColor%6][1], color[positionColor%6][2]);
+	}
+	
+	public int getPositionColor() {
+		return positionColor;
+	}
 	
 	protected static Deck getDeck() {
 		return deck;

@@ -5,11 +5,59 @@
     android:background="#27AE60"
     android:orientation="vertical" >
 
-	<icreate.doodle.DoodleView 
-	    android:id="@+id/doodleView"
-	    android:layout_width="match_parent"
-	    android:layout_height="match_parent"
-		android:paddingRight="0dp"
-		android:gravity="center"/>
+    
+    <icreate.doodle.DoodleView
+        android:id="@+id/doodleView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:gravity="center" />
+    
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" 
+        android:gravity="center"
+        android:layout_gravity="center"
+        android:background="#16a085">
+
+        <ImageButton
+            android:id="@+id/penImageButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/button_pressed"
+            android:padding="5dp"
+            android:src="@drawable/canvas_pen" />
+
+        <ImageButton
+            android:id="@+id/eraserImageButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:padding="5dp"
+            android:background="@drawable/button_pressed"
+            android:src="@drawable/canvas_eraser" />
+
+        <ImageButton
+            android:id="@+id/sizeImageButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:background="@drawable/button_pressed"
+            android:padding="5dp"
+            android:src="@drawable/canvas_size" />
+
+        <ImageButton
+            android:id="@+id/clearAllImageButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/canvas_clearall" 
+            android:padding="5dp"
+            android:layout_marginLeft="20dp"
+            android:background="@drawable/button_pressed" />
+
+    </LinearLayout>
+
+    
 
 </LinearLayout>
