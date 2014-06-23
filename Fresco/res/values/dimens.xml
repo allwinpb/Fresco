@@ -6,4 +6,6 @@
     <dimen name="text">20dp</dimen>
     <dimen name="margin">1dp</dimen>
     <dimen name="height">50dp</dimen>
+    <dimen name="image_margin_top">10dp</dimen>
+    <dimen name="image_padding">10dp</dimen>
 </resources>

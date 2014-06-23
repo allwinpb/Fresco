@@ -1,5 +1,6 @@
 package icreate.fresco;
 import java.util.ArrayList;
+
 import android.os.Handler;
 import android.os.Message;
 import android.annotation.SuppressLint;
@@ -13,6 +14,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemLongClickListener;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.app.AlertDialog;
 public class FrescoMain extends ListActivity {
@@ -36,35 +38,14 @@ public class FrescoMain extends ListActivity {
 		this.getListView().setLongClickable(true);
 		this.getListView().setOnItemLongClickListener(new OnItemLongClickListener() {
 			public boolean onItemLongClick(AdapterView<?> parent, View v, final int position, long id) {
-				AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(FrescoMain.this);
-				dialogBuilder.setTitle("Delete");
-				dialogBuilder.setMessage("Do you want to delete this deck?");
 				
-				
-				dialogBuilder.setNegativeButton("No", new OnClickListener() {
-
-					@Override
-					public void onClick(DialogInterface dialog, int which) {
-						// TODO Auto-generated method stub
-
-					}
-				});
-				
-				
-				dialogBuilder.setPositiveButton("Yes", new OnClickListener() {
-					@Override
-					public void onClick(DialogInterface arg0, int arg1) {
-						// TODO Auto-generated method stub
-						Deck deck = listDeck.get(position);
-						database.deleteDeck(deck.getDeckID());
-						listDeck.remove(position);
-						m_adapter.notifyDataSetChanged();
-					}
-				});
-
-				dialogBuilder.create().show();
+				Intent intent = new Intent(v.getContext(), EditDeck.class);
+				Deck deck = listDeck.get(position);
+				intent.putExtra(Constant.DECK_ID, deck.getDeckID());
+				intent.putExtra(Constant.DECK_NAME, deck.getDeckName());
+				startActivityForResult(intent, 2);
 				return true;
-			}
+			}	
 		});
 
 
@@ -157,11 +138,18 @@ public class FrescoMain extends ListActivity {
 			if(resultCode == RESULT_OK){
 				Deck tmp = new Deck(data.getStringExtra("deck"));
 				database.insertDeck(data.getStringExtra("deck"));
+				int id = getResources().getIdentifier(data.getStringExtra("icon"),"drawable",getPackageName());
+				((ImageView)findViewById(R.id.category)).setImageResource(id);
 				listDeck.add(tmp);
 				m_adapter.notifyDataSetChanged();
 			}
 			else{
 
+			}
+		}
+		if(requestCode == 2){
+			if(resultCode == RESULT_OK){
+				
 			}
 		}
 

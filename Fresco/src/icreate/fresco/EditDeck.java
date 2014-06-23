@@ -1,11 +1,11 @@
 package icreate.fresco;
+
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
-import android.graphics.ColorFilter;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
@@ -17,11 +17,11 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.TextView;
 
-public class AddDeck extends Activity implements OnClickListener {
+public class EditDeck extends Activity implements OnClickListener {
 	EditText et;
 	Button done;
+	Button delete;
 	String editText;
 	String icon = "";
 	ImageButton people, hammer, cat, number, german, film, talk, key, home, book, picture, christmas;
@@ -31,7 +31,10 @@ public class AddDeck extends Activity implements OnClickListener {
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.add_deck);
+		setContentView(R.layout.edit_deck);
+		
+		
+		delete = (Button)findViewById(R.id.delete);
 		done = (Button)findViewById(R.id.done);
 		et = (EditText)findViewById(R.id.deck);
 		people = (ImageButton)findViewById(R.id.people);
@@ -50,7 +53,7 @@ public class AddDeck extends Activity implements OnClickListener {
 		basketball = (ImageButton)findViewById(R.id.basketball);
 		musics = (ImageButton)findViewById(R.id.musics);
 		hamburger = (ImageButton)findViewById(R.id.hamburger);
-
+		
 
 		people.setOnClickListener(this);
 		hammer.setOnClickListener(this);
@@ -70,7 +73,13 @@ public class AddDeck extends Activity implements OnClickListener {
 		hamburger.setOnClickListener(this);
 		done.setOnClickListener(this);
 
+		
+		retrieveEditText();
 
+	}
+	public void retrieveEditText(){
+		Intent receiveIntent = getIntent();
+		et.setText(receiveIntent.getStringExtra(Constant.DECK_NAME));
 	}
 	@SuppressWarnings("deprecation")
 	public void Finish(){
@@ -114,7 +123,7 @@ public class AddDeck extends Activity implements OnClickListener {
 	}
 
 	private void confirmLeaving() {
-		AlertDialog.Builder exitDialog = new AlertDialog.Builder(AddDeck.this);
+		AlertDialog.Builder exitDialog = new AlertDialog.Builder(EditDeck.this);
 
 		exitDialog
 		.setTitle("Exit Confirmation")

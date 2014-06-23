@@ -10,8 +10,7 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10sp"
-        android:text="@string/no_deckname"
-        android:textColor="@color/white"
+        android:text="@string/no_icon"
         android:gravity="center" />
 
     <Button
@@ -20,7 +19,6 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="10sp"
-        android:textColor="@color/white"
         android:text="@string/dialogButton" />
 
 </LinearLayout>
