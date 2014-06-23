@@ -290,6 +290,10 @@ public class EditDeck extends Activity implements OnClickListener {
 		case R.id.done:
 			Finish();
 			break;
+		case R.id.delete:
+			
+			
+			break;
 		}
 	}
 	public void setDefaultColor(){
