@@ -63,7 +63,7 @@ public class FragmentDoodle extends Fragment {
 	//private int eraserWidth = 15;
 	
 	private int width = 15;
-	private static final int ACCELERATION_THRESHOLD = 30000;
+	private static final int ACCELERATION_THRESHOLD = 10000;
 	
 	private SensorManager sensorManager; 
 	private AtomicBoolean dialogIsDisplayed = new AtomicBoolean();
@@ -373,12 +373,7 @@ public class FragmentDoodle extends Fragment {
 		imageView.setImageBitmap(bitmap);
 		
 	}
-	/*
-	@Override
-	public void onSaveInstanceState(Bundle outState) {
-		// TODO Auto-generated method stub
-		super.onSaveInstanceState(outState);
-	}*/
+	
 	public String getContent() {
 		return doodle.getContent();
 	}
