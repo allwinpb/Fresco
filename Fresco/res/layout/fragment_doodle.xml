@@ -25,7 +25,7 @@
             android:id="@+id/penImageButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/button_pressed"
+            android:background="@drawable/border"
             android:padding="5dp"
             android:src="@drawable/canvas_pen" />
 
@@ -35,7 +35,6 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
             android:padding="5dp"
-            android:background="@drawable/button_pressed"
             android:src="@drawable/canvas_eraser" />
 
         <ImageButton

@@ -8,6 +8,7 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -37,6 +38,8 @@ public class FragmentDoodle extends Fragment {
 	
 	private static final int DEFAULT_WIDTH = 15;
 	
+	private SharedPreferences prefs;
+	
 	private float acceleration; 
 	private float currentAcceleration; 
 	private float lastAcceleration; 
@@ -50,19 +53,17 @@ public class FragmentDoodle extends Fragment {
 	private ImageButton sizeImageButton;
 	private ImageButton clearAllImageButton;
 	private Button defaultButton;
-	private Button cancelButton;
-	private Button saveButton;
 	
-	private enum CanvasTool {
+	/*private enum CanvasTool {
 		PENCIL, ERASER
-	};
+	};*/
 	
-	private CanvasTool canvasTool = CanvasTool.PENCIL;
+	//private CanvasTool canvasTool = CanvasTool.PENCIL;
+	//private int pencilWidth = 15;
+	//private int eraserWidth = 15;
+	
 	private int width = 15;
-	private int pencilWidth = 15;
-	private int eraserWidth = 15;
-	
-	private static final int ACCELERATION_THRESHOLD = 15000;
+	private static final int ACCELERATION_THRESHOLD = 30000;
 	
 	private SensorManager sensorManager; 
 	private AtomicBoolean dialogIsDisplayed = new AtomicBoolean();
@@ -88,6 +89,16 @@ public class FragmentDoodle extends Fragment {
 		lastAcceleration = SensorManager.GRAVITY_EARTH;
 		
 		enableAccelerometerListening();
+		getSharedPreferences();
+	}
+
+	private void getSharedPreferences() {
+		prefs = getActivity().getSharedPreferences(
+			      Constant.DOODLE_SHARED_PREFS, Context.MODE_PRIVATE);
+		
+		if(prefs != null) {
+			width = prefs.getInt(Constant.DOODLE_WIDTH, 15);
+		} 
 	}
 
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -106,9 +117,9 @@ public class FragmentDoodle extends Fragment {
 		sizeImageButton.setOnClickListener(listener);
 		clearAllImageButton.setOnClickListener(listener);
 		
-		if(!jsonString.isEmpty()) {
+		/*if(!jsonString.isEmpty()) {
 			doodle.setBitmap(jsonString);
-		}
+		}*/
         
         return view;
     }
@@ -117,8 +128,29 @@ public class FragmentDoodle extends Fragment {
 	public void onPause() {
 		super.onPause();
 		disableAccelerometerListening();
-		//onSaveInstanceState(new Bundle());      
 		
+		SharedPreferences.Editor editor = prefs.edit();
+		
+		editor.putInt(Constant.DOODLE_WIDTH, width);
+		editor.commit();
+	}
+	
+	@Override
+	public void onResume() {
+		super.onResume();
+		enableAccelerometerListening();
+		
+		width = prefs.getInt(Constant.DOODLE_WIDTH, 15);
+	}
+	
+	@Override
+	public void onStop() {
+		super.onStop();
+		
+		SharedPreferences.Editor editor = prefs.edit();
+		
+		editor.putInt(Constant.DOODLE_WIDTH, width);
+		editor.commit();
 	}
 	
 	private OnClickListener listener = new OnClickListener(){
@@ -127,13 +159,17 @@ public class FragmentDoodle extends Fragment {
 		public void onClick(View v) {
 			switch(v.getId()) {
 				case R.id.penImageButton:
-					canvasTool = CanvasTool.PENCIL;
+					//canvasTool = CanvasTool.PENCIL;
 					doodle.setDrawingColor(Color.WHITE);
+					penImageButton.setBackgroundResource(R.drawable.border);
+					eraserImageButton.setBackgroundResource(0);
 					break;
 					
 				case R.id.eraserImageButton:
-					canvasTool = CanvasTool.ERASER;
+					//canvasTool = CanvasTool.ERASER;
 					doodle.setDrawingColor(Color.argb(255, 39, 174, 96));
+					eraserImageButton.setBackgroundResource(R.drawable.border);
+					penImageButton.setBackgroundResource(0);
 					break;
 					
 				case R.id.sizeImageButton:

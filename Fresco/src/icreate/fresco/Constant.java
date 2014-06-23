@@ -16,4 +16,6 @@ public class Constant {
 	public final static String JSON_POINT = "icreate.doodleview.json_point";
 	public static final String POSITION_COLOR = "icreate.fresco.position_color";
 	public static final String SHARED_PREFS = "icreate.fresco.shared_prefs";
+	public static final String DOODLE_SHARED_PREFS = "icreate.fresco.doodle_shared_prefs";
+	public static final String DOODLE_WIDTH = "icreate.fresco.doodle_width";
 }
