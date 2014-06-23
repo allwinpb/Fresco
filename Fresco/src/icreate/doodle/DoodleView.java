@@ -1,7 +1,5 @@
 package icreate.doodle;
 
-import icreate.fresco.Constant;
-
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;

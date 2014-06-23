@@ -37,6 +37,11 @@ public class FragmentText extends Fragment {
 		int position = editText.length();
 		editText.setSelection(position);
 		
+		InputMethodManager imm = (InputMethodManager) getActivity()
+				.getSystemService(Context.INPUT_METHOD_SERVICE);
+		imm.hideSoftInputFromWindow(editText.getWindowToken(),
+				0);
+		
 		editText.addTextChangedListener(new TextWatcher(){
 
 			@Override

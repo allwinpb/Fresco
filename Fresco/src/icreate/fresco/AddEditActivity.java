@@ -8,15 +8,19 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.TabHost;
 import android.widget.TabHost.OnTabChangeListener;
 import android.widget.TabHost.TabSpec;
+import android.widget.TextView;
 
 public class AddEditActivity extends FragmentActivity implements OnTabChangeListener {
 	
@@ -163,7 +167,16 @@ public class AddEditActivity extends FragmentActivity implements OnTabChangeList
 
 	private TabSpec newTab(String tag, String tagLabel, int contentId) {
 		TabSpec tabSpec = tabHost.newTabSpec(tag);
-		tabSpec.setIndicator(tagLabel);
+		
+		TextView text = new TextView(this);
+		text.setText(tagLabel);
+		text.setTypeface(null, Typeface.BOLD_ITALIC);
+		text.setTextColor(Color.WHITE);
+		text.setTextSize(20);
+		text.setGravity(Gravity.CENTER);
+		text.setHeight(100);
+		
+		tabSpec.setIndicator(text);
 		tabSpec.setContent(contentId);
 		return tabSpec;
 	
@@ -273,18 +286,18 @@ public class AddEditActivity extends FragmentActivity implements OnTabChangeList
 		AlertDialog.Builder saveDialog = new AlertDialog.Builder(AddEditActivity.this);
 		saveDialog
 		.setTitle("Save confirmation")
-		.setMessage("Do you want to save the card?")
+		.setMessage("Do you want to save and exit?")
 		.setIcon(android.R.drawable.ic_dialog_info);
-		
-		if(cardFrontString.isEmpty()) {
-			isContentEmpty = true;
-			saveDialog.setMessage("Please add front card content");
-		} 
 		
 		if(cardBackString.isEmpty()) {
 			isContentEmpty = true;
 			saveDialog.setMessage("Please add back card content");
 		}
+		
+		if(cardFrontString.isEmpty()) {
+			isContentEmpty = true;
+			saveDialog.setMessage("Please add front card content");
+		} 
 		
 		if(isContentEmpty == false) {
 			saveDialog
