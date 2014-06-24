@@ -167,7 +167,7 @@ public class FrescoMain extends ListActivity {
 		if(requestCode == 2){
 
 			Deck tmp = listDeck.get(data.getIntExtra("position", 0));
-			database.deleteDeck(data.getIntExtra("position", 0));
+			database.deleteDeck(tmp.getDeckID());
 			listDeck.remove(tmp);
 
 			if(resultCode == RESULT_OK){

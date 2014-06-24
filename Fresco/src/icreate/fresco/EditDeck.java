@@ -33,8 +33,8 @@ public class EditDeck extends Activity implements OnClickListener {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.edit_deck);
-		
-		
+
+
 		delete = (Button)findViewById(R.id.delete);
 		done = (Button)findViewById(R.id.done);
 		et = (EditText)findViewById(R.id.deck);
@@ -54,7 +54,7 @@ public class EditDeck extends Activity implements OnClickListener {
 		basketball = (ImageButton)findViewById(R.id.basketball);
 		musics = (ImageButton)findViewById(R.id.musics);
 		hamburger = (ImageButton)findViewById(R.id.hamburger);
-		
+
 
 		people.setOnClickListener(this);
 		hammer.setOnClickListener(this);
@@ -75,13 +75,13 @@ public class EditDeck extends Activity implements OnClickListener {
 		done.setOnClickListener(this);
 		delete.setOnClickListener(this);
 
-		
+
 		Intent receiveIntent = getIntent();
 		et.setText(receiveIntent.getStringExtra(Constant.DECK_NAME));
 		pos = receiveIntent.getIntExtra(Constant.POSITION_COLOR, 0);
 
 	}
-	
+
 	@SuppressWarnings("deprecation")
 	public void Finish(){
 		editText = et.getText().toString();
@@ -293,11 +293,28 @@ public class EditDeck extends Activity implements OnClickListener {
 			Finish();
 			break;
 		case R.id.delete:
-			Intent i = getIntent();
-			pos = i.getIntExtra(Constant.POSITION_COLOR, 0);
-			i.putExtra("position", pos);
-			setResult(0, i);
-			finish();
+			AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(EditDeck.this);
+			dialogBuilder.setTitle("Delete");
+			dialogBuilder.setMessage("Do you want to delete this deck?");
+			dialogBuilder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+
+				public void onClick(DialogInterface dialog, int which) {
+					// TODO Auto-generated method stub
+					dialog.cancel();
+				}
+			});
+			dialogBuilder.setPositiveButton("Yes", new DialogInterface.OnClickListener(){
+				public void onClick(DialogInterface dialog, int which){
+					Intent i = getIntent();
+					pos = i.getIntExtra(Constant.POSITION_COLOR, 0);
+					i.putExtra("position", pos);
+					setResult(0, i);
+					finish();	
+				}
+
+			});
+			dialogBuilder.create().show();
+
 			break;
 		}
 	}
