@@ -52,12 +52,12 @@
 	            android:value="icreate.fresco.CardsViewPager" />
          </activity>
          <activity 
-             android:name=".PlayCards"
+             android:name="icreate.fresco.PlayCards"
              android:label="@string/app_name"
              android:screenOrientation="portrait" >
          </activity>
          <activity 
-             android:name=".EditDeck"
+             android:name="icreate.fresco.EditDeck"
              android:label="@string/app_name"
              android:screenOrientation="portrait" >
          </activity>
