@@ -7,7 +7,6 @@ public class Deck {
 	private String _name;
 	List<Card> _cards;
 	int _deckID;
-	String _deckIcon;
 	
 	public Deck(String name){
 		_name = name;
@@ -17,15 +16,11 @@ public class Deck {
 	public int getDeckID() {
 		return _deckID;
 	}
-	public String getDeckIcon(){
-		return _deckIcon;
-	}
+	
 	public void setDeckID(int id) {
 		_deckID = id;
 	}
-	public void setDeckIcon(String icon){
-		_deckIcon = icon;
-	}
+	
 	public String getDeckName() {
 		return _name;
 	}
