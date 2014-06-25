@@ -37,13 +37,7 @@ public class AddEditActivity extends FragmentActivity implements OnTabChangeList
 	private int positionColor;
 
 	private int index;
-<<<<<<< HEAD
-	
-=======
 
-	private SharedPreferences sharedPref;
-
->>>>>>> origin/master
 	private FrontBackCardFragment frontFragment;
 	private FrontBackCardFragment backFragment;
 
@@ -105,13 +99,7 @@ public class AddEditActivity extends FragmentActivity implements OnTabChangeList
 		setContentView(R.layout.activity_add_edit);
 		Log.d("AddEditActivity", "onCreate");
 		database = FrescoMain.getDatabase();
-<<<<<<< HEAD
-		
-=======
 
-		sharedPref = getSharedPreferences(Constant.SHARED_PREFS, Context.MODE_PRIVATE);
-
->>>>>>> origin/master
 		Intent receiveIntent = getIntent();
 		newEdit = receiveIntent.getBooleanExtra(Constant.NEW_EDIT, false);
 		deckName = receiveIntent.getStringExtra(Constant.DECK_NAME);
@@ -210,22 +198,6 @@ public class AddEditActivity extends FragmentActivity implements OnTabChangeList
 
 		return 0;
 	}
-<<<<<<< HEAD
-=======
-
-	private Type getTypeFromInt(int type) {
-		switch(type) {
-		case 0:
-			return Type.TEXT;
-		case 1:
-			return Type.DOODLE;
-		case 2:
-			return Type.IMAGE;
-		default:
-			return Type.CAMERA;
-		}
-	}
->>>>>>> origin/master
 
 	@Override
 	public void onTabChanged(String tabId) {
@@ -413,20 +385,8 @@ public class AddEditActivity extends FragmentActivity implements OnTabChangeList
 		else
 			backFragment.onActivityResult(requestCode, resultCode, data);
 	}
-<<<<<<< HEAD
+
 	
-=======
-
-	@Override
-	protected void onResume() {
-		super.onResume();
-		Log.d("AddEditActivity", "onResume");
-		String content = sharedPref.getString(Constant.CONTENT, "");
-		setContent(content);
-
-		int type = sharedPref.getInt(Constant.TYPE, 0);
-		setType(getTypeFromInt(type));
-	}
 	@Override
 	protected void onSaveInstanceState(Bundle outState) {
 		// TODO Auto-generated method stub
@@ -439,18 +399,5 @@ public class AddEditActivity extends FragmentActivity implements OnTabChangeList
 		super.onRestoreInstanceState(savedInstanceState);
 		Log.d("AddEditActivity", "onRestoreInstanceState");
 	}
-	@Override
-	protected void onStop() {
-		super.onStop();
-		Log.d("AddEditActivity", "onStop");
-		SharedPreferences.Editor editor = sharedPref.edit();
-
-		editor.putString(Constant.CONTENT, getContent(side));
-		editor.putInt(Constant.TYPE, getIntType(getType(side)));
-
-		editor.commit();
-	}
-
-
->>>>>>> origin/master
+	
 }

@@ -197,7 +197,7 @@ public class FrontBackCardFragment extends Fragment implements TabHost.OnTabChan
 	@Override
 	public void onTabChanged(String tag) {
 		
-<<<<<<< HEAD
+		Log.d("FrontBackCard", "OnTabChanged");
 		String content = getContent();
 		final Type previousType = type;
 		
@@ -243,107 +243,76 @@ public class FrontBackCardFragment extends Fragment implements TabHost.OnTabChan
 				break;
 		}
 		
-=======
-		/*String content = getContent();
-		if(content.isEmpty()) {*/
-		Log.d("FrontBackCard", "OnTabChanged");
-			changeTabColor(tag);
-			switch(tag) {
-				case TEXT:
-					type = Type.TEXT;	
-					((AddEditActivity)getActivity()).setType(Type.TEXT);
-					updateTab(TEXT);
-					break;
-				case DOODLE:
-					type = Type.DOODLE;
-					((AddEditActivity)getActivity()).setType(Type.DOODLE);
-					updateTab(DOODLE);
-					break;
-				case GALLERY:
-					type = Type.IMAGE;
-					((AddEditActivity)getActivity()).setType(Type.IMAGE);
-					updateTab(GALLERY);
-					break;
-				case CAMERA:
-					type = Type.CAMERA;
-					((AddEditActivity)getActivity()).setType(Type.CAMERA);
-					updateTab(CAMERA);
-					break;
-			}
+		if(content.isEmpty()) {
+			changeTabColor(getStringType(previousType));
 			
-		//} 
->>>>>>> origin/master
-		
-	if(content.isEmpty()) {
-		changeTabColor(getStringType(previousType));
-		
-		LayoutInflater inflater = (LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-		View view = inflater.inflate(R.layout.tab_warning_toast, null);
-		
-		TextView tabText = (TextView) view.findViewById(R.id.tabText);
-		String tab = getStringType(previousType);
-		String tabTextContent = tab + " is not empty. Changing tabs will automatically discard previous content";
-		tabText.setText(tabTextContent);
-		
-		TextView returnBackText = (TextView) view.findViewById(R.id.returnBackText);
-		SpannableString spanString = new SpannableString(returnBackText.getText().toString());
-		spanString.setSpan(new UnderlineSpan(), 0, spanString.length(), 0);
-		spanString.setSpan(new StyleSpan(Typeface.ITALIC), 0, spanString.length(), 0);
-		returnBackText.setText(spanString);
-		
-		final FragmentManager manager = getChildFragmentManager();
-		
-		returnBackText.setOnClickListener(new OnClickListener(){
-
-			@Override
-			public void onClick(View v) {
-				
-				switch(previousType) {
-					case TEXT:
-						tabHost.setCurrentTab(0);
-						type = Type.TEXT;	
-						((AddEditActivity)getActivity()).setType(Type.TEXT);
-						manager.beginTransaction()
-						.replace(R.id.tab_text, textFragment, TEXT)
-						.commit();
-						break;
-					case DOODLE:
-						tabHost.setCurrentTab(1);
-						type = Type.DOODLE;
-						((AddEditActivity)getActivity()).setType(Type.DOODLE);
-						manager.beginTransaction()
-						.replace(R.id.tab_doodle, doodleFragment, DOODLE)
-						.commit();
-						break;
-					case IMAGE:
-						tabHost.setCurrentTab(2);
-						type = Type.IMAGE;
-						((AddEditActivity)getActivity()).setType(Type.IMAGE);
-						manager.beginTransaction()
-						.replace(R.id.tab_gallery, galleryFragment, GALLERY)
-						.commit();
-						break;
-					case CAMERA:
-						tabHost.setCurrentTab(3);
-						type = Type.CAMERA;
-						((AddEditActivity)getActivity()).setType(Type.CAMERA);
-						manager.beginTransaction()
-						.replace(R.id.tab_camera, cameraFragment, CAMERA)
-						.commit();
-						break;
+			LayoutInflater inflater = (LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+			View view = inflater.inflate(R.layout.tab_warning_toast, null);
+			
+			TextView tabText = (TextView) view.findViewById(R.id.tabText);
+			String tab = getStringType(previousType);
+			String tabTextContent = tab + " is not empty. Changing tabs will automatically discard previous content";
+			tabText.setText(tabTextContent);
+			
+			TextView returnBackText = (TextView) view.findViewById(R.id.returnBackText);
+			SpannableString spanString = new SpannableString(returnBackText.getText().toString());
+			spanString.setSpan(new UnderlineSpan(), 0, spanString.length(), 0);
+			spanString.setSpan(new StyleSpan(Typeface.ITALIC), 0, spanString.length(), 0);
+			returnBackText.setText(spanString);
+			
+			final FragmentManager manager = getChildFragmentManager();
+			
+			returnBackText.setOnClickListener(new OnClickListener(){
+	
+				@Override
+				public void onClick(View v) {
+					
+					switch(previousType) {
+						case TEXT:
+							tabHost.setCurrentTab(0);
+							type = Type.TEXT;	
+							((AddEditActivity)getActivity()).setType(Type.TEXT);
+							manager.beginTransaction()
+							.replace(R.id.tab_text, textFragment, TEXT)
+							.commit();
+							break;
+						case DOODLE:
+							tabHost.setCurrentTab(1);
+							type = Type.DOODLE;
+							((AddEditActivity)getActivity()).setType(Type.DOODLE);
+							manager.beginTransaction()
+							.replace(R.id.tab_doodle, doodleFragment, DOODLE)
+							.commit();
+							break;
+						case IMAGE:
+							tabHost.setCurrentTab(2);
+							type = Type.IMAGE;
+							((AddEditActivity)getActivity()).setType(Type.IMAGE);
+							manager.beginTransaction()
+							.replace(R.id.tab_gallery, galleryFragment, GALLERY)
+							.commit();
+							break;
+						case CAMERA:
+							tabHost.setCurrentTab(3);
+							type = Type.CAMERA;
+							((AddEditActivity)getActivity()).setType(Type.CAMERA);
+							manager.beginTransaction()
+							.replace(R.id.tab_camera, cameraFragment, CAMERA)
+							.commit();
+							break;
+					}
+					
 				}
-				
+			}); 
+			
+			Toast toast = new Toast(getActivity());
+			toast.setView(view);
+	        toast.setGravity(Gravity.CENTER_HORIZONTAL | Gravity.CENTER_VERTICAL,
+	                0, 0);
+	        toast.setDuration(Toast.LENGTH_SHORT);
+	        toast.show();
+	
 			}
-		}); 
-		
-		Toast toast = new Toast(getActivity());
-		toast.setView(view);
-        toast.setGravity(Gravity.CENTER_HORIZONTAL | Gravity.CENTER_VERTICAL,
-                0, 0);
-        toast.setDuration(Toast.LENGTH_SHORT);
-        toast.show();
-
-		}
 	}
 	
 	private void changeTabColor(String tag) {
