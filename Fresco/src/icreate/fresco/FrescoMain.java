@@ -29,7 +29,8 @@ public class FrescoMain extends ListActivity {
 		{211, 84, 0},
 		{44, 62, 80},
 		{230, 126, 34}}; 
-
+	public static final String icon[]={"people", "hammer", "cat", "number", "german", "film", "talk", "key", "home",
+		"book", "picture", "christmas", "newspaper",  "basketball", "musics", "hamburger"};
 	//private ArrayAdapter<String> adapter;
 	//private static ArrayList<Deck> listDeck;
 	private Runnable viewParts;
