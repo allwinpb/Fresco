@@ -68,7 +68,7 @@ public class FragmentGallery extends Fragment{
 			int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
 			String picturePath = cursor.getString(columnIndex);
 			cursor.close();
-			int w = 512; int h = 384; // size that does not lead to OutOfMemoryException on Nexus One
+			int w = 300; int h = 384; // size that does not lead to OutOfMemoryException on Nexus One
 			Bitmap b = BitmapFactory.decodeFile(picturePath);
 
 			// Hack to determine whether the image is rotated

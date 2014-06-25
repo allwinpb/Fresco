@@ -3,7 +3,6 @@ package icreate.fresco;
 import icreate.animation.FlippingAnimation;
 import icreate.fresco.Card.Side;
 import icreate.fresco.Card.Type;
-
 import android.app.ActionBar;
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -15,6 +14,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Base64;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -69,7 +69,7 @@ public class CardsFragment extends Fragment {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		database = FrescoMain.getDatabase();
-		
+		Log.d("CardsFragment", "onCreate");
 		deck = CardsViewPager.getDeck();
 		cardID = getArguments().getInt(Constant.CARD_ID);
 		currentCard = deck.getCard(cardID);
@@ -82,7 +82,7 @@ public class CardsFragment extends Fragment {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		
+		Log.d("CardsFragment", "onCreateView");
 		View view = inflater.inflate(R.layout.fragment_cards, container, false);
 		
 		setCardsView(view);
@@ -115,7 +115,7 @@ public class CardsFragment extends Fragment {
 	private void setBackAndForwardArrow(View view) {
 		imageButtonBack = (ImageButton) view.findViewById(R.id.imageButtonBack);
 		imageButtonTo = (ImageButton) view.findViewById(R.id.imageButtonTo);
-		
+		Log.d("CardsFragment", "setBackAndForwardArrow");
 		OnClickListener listener = new OnClickListener() {
 
 			@Override
@@ -145,6 +145,7 @@ public class CardsFragment extends Fragment {
 	}
 
 	private void setCardsView(View view) {
+		Log.d("CardsFragment", "setCardsView");
 		rootLayout = (View) view.findViewById(R.id.main_activity_root);
 		cardFace = (LinearLayout) view.findViewById(R.id.card_face);
 	    cardBack = (LinearLayout) view.findViewById(R.id.card_back);
@@ -175,7 +176,7 @@ public class CardsFragment extends Fragment {
 	}
 	
 	private View setUpTextImageView(String content, Type type) {
-		
+		Log.d("CardsFragment", "setUpTextImageView");
 		View view = null;
 		
 		switch(type) {
@@ -200,6 +201,7 @@ public class CardsFragment extends Fragment {
 	}
 	
 	private View addText(String text) {
+		Log.d("CardsFragment", "addText");
 		TextView textView = new TextView(this.getActivity());
 		textView.setText(text);
 		textView.setTextSize(25);
@@ -223,6 +225,7 @@ public class CardsFragment extends Fragment {
 	}*/
 
 	private View addImage(String jsonString) {
+		Log.d("CardsFragment", "addImage");
 		ImageView doodle = new ImageView(this.getActivity()); 
 		Bitmap bitmap = convertFromJSONToImage(jsonString);
 		
@@ -264,6 +267,7 @@ public class CardsFragment extends Fragment {
 	}*/
 	
 	private View addDoodle(String jsonString) {
+		Log.d("CardsFragment", "addDoodle");
 		ImageView doodle = new ImageView(this.getActivity()); 
 		Bitmap bitmap = convertFromJSONToImage(jsonString);
 		

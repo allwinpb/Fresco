@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
 import android.util.Base64;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -43,10 +44,15 @@ public class FragmentCamera extends Fragment {
 		View view = inflater.inflate(R.layout.camera, container, false);
 		InputStream is = getResources().openRawResource(R.drawable.ic_launcher);
 		bmp = BitmapFactory.decodeStream(is);
-		//String content = this.getArguments().getString(Constant.CONTENT);
 		takePic = (Button)view.findViewById(R.id.takePic);
 		iv = (ImageView) view.findViewById(R.id.camera);
-
+		String content = this.getArguments().getString(Constant.CONTENT);
+		Bitmap bitmap = null;
+		if(!content.isEmpty()){
+			bitmap = convertFromJSONToImage(content);
+			iv.setImageBitmap(bitmap);
+		}
+		
 
 		takePic.setOnClickListener(new OnClickListener() {
 
@@ -54,12 +60,27 @@ public class FragmentCamera extends Fragment {
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
 				Intent image = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-				startActivityForResult(image, cameraData);
+				getParentFragment().startActivityForResult(image, cameraData);
 			}
 		});
 		return view;
 	}
 	@Override
+	public void onSaveInstanceState(Bundle outState) {
+		outState.putParcelable("camera", bmp);
+		Log.d("FragmentCamera", "onSaveInstanceState");
+		getParentFragment().onSaveInstanceState(outState);
+
+	};
+	@Override
+	public void onActivityCreated(Bundle savedInstanceState) {
+		// TODO Auto-generated method stub
+		super.onActivityCreated(savedInstanceState);
+		if(savedInstanceState != null){
+			bmp = savedInstanceState.getParcelable("camera");
+			iv.setImageBitmap(bmp);
+		}
+	}
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
 		// TODO Auto-generated method stub
 		super.onActivityResult(requestCode, resultCode, data);
@@ -82,12 +103,24 @@ public class FragmentCamera extends Fragment {
 		// TODO Auto-generated method stub
 		super.onSaveInstanceState(outState);
 	}*/
-	
+
 	public String getContent() {
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();  
 		bmp.compress(Bitmap.CompressFormat.PNG, 100, baos);   
 		byte[] byteArrayImage = baos.toByteArray(); 
-		
+
 		return Base64.encodeToString(byteArrayImage, Base64.DEFAULT);
 	}
+	
+	private Bitmap convertFromJSONToImage(String jsonString) {
+		try {
+	        byte[] encodeByte = Base64.decode(jsonString, Base64.DEFAULT);
+	        Bitmap bitmap = BitmapFactory.decodeByteArray(encodeByte, 0,
+	                encodeByte.length);
+	        return bitmap;
+		} catch (Exception e) {
+	        e.getMessage(); 
+	        return null;
+		}
+	}	
 }
