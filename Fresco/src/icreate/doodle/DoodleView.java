@@ -363,6 +363,10 @@ public class DoodleView extends View {
 
 	    return imgIn;
 	}
+
+	public boolean isEmpty() {
+		return pathMap.isEmpty() && previousPointMap.isEmpty();
+	}
 	
 	/*public void saveImage() {
 		

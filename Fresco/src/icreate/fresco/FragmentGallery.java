@@ -26,6 +26,7 @@ public class FragmentGallery extends Fragment{
 	Button takePic;
 	private Uri selectedImage;
 	public static final int MEDIA_TYPE_IMAGE = 1;
+	boolean isUploaded = false;
 	//private String Gallery;
 
 	public static FragmentGallery createFragment(String content) {
@@ -43,7 +44,12 @@ public class FragmentGallery extends Fragment{
 		//onRestoreInstanceState(savedInstanceState);
 		View view = inflater.inflate(R.layout.fragment_gallery, container, false);
 		iv = (ImageView)view.findViewById(R.id.gallery);
-		//String content = this.getArguments().getString(Constant.CONTENT);
+		String content = this.getArguments().getString(Constant.CONTENT);
+		if(!content.isEmpty()){
+			isUploaded = true;
+			bmp = convertFromJSONToImage(content);
+			iv.setImageBitmap(bmp);
+		}
 		Button gallery = (Button)view.findViewById(R.id.goGallery);
 		gallery.setOnClickListener(new View.OnClickListener() {
 
@@ -52,6 +58,7 @@ public class FragmentGallery extends Fragment{
 				// TODO Auto-generated method stub
 				Intent i = new Intent(Intent.ACTION_PICK,android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
 				startActivityForResult(i, RESULT_LOAD_IMAGE);
+				isUploaded = true;
 			}
 		});
 		return view;
@@ -122,11 +129,31 @@ public class FragmentGallery extends Fragment{
         }
 	}*/
 	public String getContent(){
-		ByteArrayOutputStream baos = new ByteArrayOutputStream();  
-		bmp.compress(Bitmap.CompressFormat.PNG, 100, baos);   
-		byte[] byteArrayImage = baos.toByteArray(); 
-		
-		return Base64.encodeToString(byteArrayImage, Base64.DEFAULT);
+		if(bmp != null) {
+			ByteArrayOutputStream baos = new ByteArrayOutputStream();  
+			bmp.compress(Bitmap.CompressFormat.PNG, 100, baos);   
+			byte[] byteArrayImage = baos.toByteArray(); 
+
+			return Base64.encodeToString(byteArrayImage, Base64.DEFAULT);
+		} else {
+			return  "";
+		}
+	}
+	
+	private Bitmap convertFromJSONToImage(String jsonString) {
+		try {
+	        byte[] encodeByte = Base64.decode(jsonString, Base64.DEFAULT);
+	        Bitmap bitmap = BitmapFactory.decodeByteArray(encodeByte, 0,
+	                encodeByte.length);
+	        return bitmap;
+		} catch (Exception e) {
+	        e.getMessage(); 
+	        return null;
+		}
+	}
+
+	public boolean isEmpty() {
+		return !isUploaded;
 	}
 
 }

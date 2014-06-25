@@ -21,6 +21,7 @@ public class SqliteHelper extends SQLiteOpenHelper {
 	public static final String TABLE_DECK = "decks";
 	public static final String DECK_ID = "_id";
 	public static final String DECK_NAME = "name";
+	public static final String DECK_ICON_NAME = "icon_name";
 	public static final String TABLE_CARD = "cards";
 	public static final String CARD_ID = "_id";
 	public static final String CARD_FRONT_TYPE = "front_type";
@@ -33,7 +34,8 @@ public class SqliteHelper extends SQLiteOpenHelper {
 	private static final String TABLE_DECK_CREATE = "create table "
 			+ TABLE_DECK + "(" + 
 			DECK_ID + " integer primary key autoincrement, " + 
-			DECK_NAME + " text not null);";
+			DECK_NAME + " text not null, "+
+			DECK_ICON_NAME + "text not null);";
 	private static final String TABLE_CARD_CREATE = "create table "
 			+ TABLE_CARD + "(" + 
 			CARD_ID + " integer primary key autoincrement, " + 

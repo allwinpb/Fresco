@@ -152,13 +152,13 @@ public class AddEditActivity extends FragmentActivity implements OnTabChangeList
 		Log.d("AddEditActivity", "updateTabs");
 		switch(tag) {
 		case FRONT:
-			frontFragment = FrontBackCardFragment.createFragment(cardFrontString, getIntType(cardFrontType));
+			frontFragment = FrontBackCardFragment.createFragment(cardFrontString, getIntType(cardFrontType), true);
 			fm.beginTransaction()
 			.replace(R.id.tab_front, frontFragment, FRONT)
 			.commit();
 			break;
 		case BACK:
-			backFragment = FrontBackCardFragment.createFragment(cardBackString, getIntType(cardBackType));
+			backFragment = FrontBackCardFragment.createFragment(cardBackString, getIntType(cardBackType), false);
 			fm.beginTransaction()
 			.replace(R.id.tab_back, backFragment, BACK)
 			.commit();
@@ -177,7 +177,7 @@ public class AddEditActivity extends FragmentActivity implements OnTabChangeList
 		text.setTextSize(20);
 		text.setGravity(Gravity.CENTER);
 		text.setHeight(100);
-
+		
 		tabSpec.setIndicator(text);
 		tabSpec.setContent(contentId);
 		return tabSpec;
@@ -203,8 +203,18 @@ public class AddEditActivity extends FragmentActivity implements OnTabChangeList
 	public void onTabChanged(String tabId) {
 
 		Log.d("AddEditActivity", "onTabChanged");
+		
+		switch(side) {
+			case FRONT:
+				cardFrontString = frontFragment.getContent();
+				break;
+			case BACK:
+				cardBackString = backFragment.getContent();
+				break;
+		}
+		
 		switch(tabId) {
-		case FRONT:
+		case FRONT:	
 			side = Side.FRONT;
 			updateTabs(FRONT);
 			break;
@@ -398,6 +408,12 @@ public class AddEditActivity extends FragmentActivity implements OnTabChangeList
 		// TODO Auto-generated method stub
 		super.onRestoreInstanceState(savedInstanceState);
 		Log.d("AddEditActivity", "onRestoreInstanceState");
+	}
+	
+	@Override
+	protected void onDestroy() {
+		super.onDestroy();
+		Log.d("AddEditActivity", "onDestroy");
 	}
 	
 }

@@ -70,4 +70,9 @@ public class FragmentText extends Fragment {
 	public String getContent() {
 		return editText.getText().toString();
 	}
+
+	public boolean isEmpty() {
+		String content = editText.getText().toString();
+		return content.isEmpty();
+	}
 }

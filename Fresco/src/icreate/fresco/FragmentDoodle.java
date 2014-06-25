@@ -146,6 +146,7 @@ public class FragmentDoodle extends Fragment {
 	@Override
 	public void onStop() {
 		super.onStop();
+		disableAccelerometerListening();
 		
 		SharedPreferences.Editor editor = prefs.edit();
 		
@@ -378,5 +379,10 @@ public class FragmentDoodle extends Fragment {
 		return doodle.getContent();
 	}
 
+	public boolean isEmpty() {
+		return doodle.isEmpty();
+	}
+
+	
 
 }

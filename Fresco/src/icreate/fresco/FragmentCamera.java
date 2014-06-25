@@ -24,6 +24,7 @@ public class FragmentCamera extends Fragment {
 	final static int cameraData = 0;
 	Bitmap bmp;
 	Button takePic;
+	boolean isUploaded = false;
 	//private Uri selectedImage;
 	public static final int MEDIA_TYPE_IMAGE = 1;
 
@@ -42,15 +43,13 @@ public class FragmentCamera extends Fragment {
 			Bundle savedInstanceState) {
 
 		View view = inflater.inflate(R.layout.camera, container, false);
-		InputStream is = getResources().openRawResource(R.drawable.ic_launcher);
-		bmp = BitmapFactory.decodeStream(is);
 		takePic = (Button)view.findViewById(R.id.takePic);
 		iv = (ImageView) view.findViewById(R.id.camera);
 		String content = this.getArguments().getString(Constant.CONTENT);
-		Bitmap bitmap = null;
 		if(!content.isEmpty()){
-			bitmap = convertFromJSONToImage(content);
-			iv.setImageBitmap(bitmap);
+			isUploaded = true;
+			bmp = convertFromJSONToImage(content);
+			iv.setImageBitmap(bmp);
 		}
 		
 
@@ -59,6 +58,7 @@ public class FragmentCamera extends Fragment {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
+				isUploaded = true;
 				Intent image = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 				getParentFragment().startActivityForResult(image, cameraData);
 			}
@@ -105,11 +105,15 @@ public class FragmentCamera extends Fragment {
 	}*/
 
 	public String getContent() {
-		ByteArrayOutputStream baos = new ByteArrayOutputStream();  
-		bmp.compress(Bitmap.CompressFormat.PNG, 100, baos);   
-		byte[] byteArrayImage = baos.toByteArray(); 
+		if(bmp != null) {
+			ByteArrayOutputStream baos = new ByteArrayOutputStream();  
+			bmp.compress(Bitmap.CompressFormat.PNG, 100, baos);   
+			byte[] byteArrayImage = baos.toByteArray(); 
 
-		return Base64.encodeToString(byteArrayImage, Base64.DEFAULT);
+			return Base64.encodeToString(byteArrayImage, Base64.DEFAULT);
+		} else {
+			return  "";
+		}
 	}
 	
 	private Bitmap convertFromJSONToImage(String jsonString) {
@@ -122,5 +126,16 @@ public class FragmentCamera extends Fragment {
 	        e.getMessage(); 
 	        return null;
 		}
+	}
+
+
+	public boolean isEmpty() {
+		return !isUploaded;
 	}	
+	
+	@Override
+	public void onDestroy() {
+		super.onDestroy();
+		Log.d("FragmentCamera", "onDestroy");
+	}
 }
