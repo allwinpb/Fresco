@@ -7,10 +7,19 @@ public class Deck {
 	private String _name;
 	List<Card> _cards;
 	int _deckID;
+	String _deckIcon;
 	
 	public Deck(String name){
 		_name = name;
 		_cards = new ArrayList<Card>();
+	}
+	
+	public String getDeckIcon(){
+		return _deckIcon;
+	}
+	
+	public void setDeckIcon(String icon){
+		_deckIcon = icon;
 	}
 	
 	public int getDeckID() {
