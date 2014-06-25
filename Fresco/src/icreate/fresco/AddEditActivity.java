@@ -4,10 +4,8 @@ import icreate.fresco.Card.Side;
 import icreate.fresco.Card.Type;
 import android.app.ActionBar;
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -37,8 +35,6 @@ public class AddEditActivity extends FragmentActivity implements OnTabChangeList
 	private int positionColor;
 	
 	private int index;
-	
-	private SharedPreferences sharedPref;
 	
 	private FrontBackCardFragment frontFragment;
 	private FrontBackCardFragment backFragment;
@@ -101,8 +97,6 @@ public class AddEditActivity extends FragmentActivity implements OnTabChangeList
 		setContentView(R.layout.activity_add_edit);
 
 		database = FrescoMain.getDatabase();
-
-		sharedPref = getSharedPreferences(Constant.SHARED_PREFS, Context.MODE_PRIVATE);
 		
 		Intent receiveIntent = getIntent();
 		newEdit = receiveIntent.getBooleanExtra(Constant.NEW_EDIT, false);
@@ -201,19 +195,6 @@ public class AddEditActivity extends FragmentActivity implements OnTabChangeList
 		}
 
 		return 0;
-	}
-	
-	private Type getTypeFromInt(int type) {
-		switch(type) {
-			case 0:
-				return Type.TEXT;
-			case 1:
-				return Type.DOODLE;
-			case 2:
-				return Type.IMAGE;
-			default:
-				return Type.CAMERA;
-		}
 	}
 
 	@Override
@@ -398,29 +379,5 @@ public class AddEditActivity extends FragmentActivity implements OnTabChangeList
 		else
 			backFragment.onActivityResult(requestCode, resultCode, data);
 	}
-
-	@Override
-	protected void onResume() {
-		super.onResume();
-		
-		String content = sharedPref.getString(Constant.CONTENT, "");
-		setContent(content);
-		
-		int type = sharedPref.getInt(Constant.TYPE, 0);
-		setType(getTypeFromInt(type));
-	}
-
-	@Override
-	protected void onStop() {
-		super.onStop();
-		
-		SharedPreferences.Editor editor = sharedPref.edit();
-		
-		editor.putString(Constant.CONTENT, getContent(side));
-		editor.putInt(Constant.TYPE, getIntType(getType(side)));
-		
-		editor.commit();
-	}
-	
 	
 }
