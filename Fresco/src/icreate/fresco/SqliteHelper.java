@@ -35,7 +35,7 @@ public class SqliteHelper extends SQLiteOpenHelper {
 			+ TABLE_DECK + "(" + 
 			DECK_ID + " integer primary key autoincrement, " + 
 			DECK_NAME + " text not null, "+
-			DECK_ICON_NAME + "text not null);";
+			DECK_ICON_NAME + " text not null);";
 	private static final String TABLE_CARD_CREATE = "create table "
 			+ TABLE_CARD + "(" + 
 			CARD_ID + " integer primary key autoincrement, " + 
@@ -81,9 +81,11 @@ public class SqliteHelper extends SQLiteOpenHelper {
 
 				int deckID = Integer.parseInt(cursor.getString(0));
 				String deckName = cursor.getString(1);
+				String iconName = cursor.getString(2);
 
 				Deck deck = new Deck(deckName);
 				deck.setDeckID(deckID);
+				deck.setDeckIcon(iconName);
 
 				listDeck.add(deck);
 
@@ -91,19 +93,34 @@ public class SqliteHelper extends SQLiteOpenHelper {
 		}
 
 		database.close();
+		Log.d("SqliteHelper", "getDecks() " + listDeck.size());
 
 		return listDeck;
 	}
 
-	public void insertDeck(String deckName) {
+	public void insertDeck(String deckName, String iconName) {
 		SQLiteDatabase database = this.getWritableDatabase();
 
 		ContentValues values = new ContentValues();
 
 		values.put(DECK_NAME, deckName);
+		values.put(DECK_ICON_NAME, iconName);
 
 		database.insert(TABLE_DECK, null, values);
 		database.close();
+		Log.d("SqliteHelper", "Deck saved");
+		
+		if(deckName.isEmpty()) {
+			Log.d("SqliteHelper", "DeckName empty");
+		}
+		
+		if(iconName.isEmpty()) {
+			Log.d("SqliteHelper", "IconName empty");
+		}
+		
+		if(values.size() == 0) {
+			Log.d("SqliteHelper", "Values empty");
+		}
 	}
 
 	public int updateDeckName(Deck deck) {
@@ -112,6 +129,7 @@ public class SqliteHelper extends SQLiteOpenHelper {
 		ContentValues values = new ContentValues();
 
 		values.put(DECK_NAME, deck.getDeckName());
+		values.put(DECK_ICON_NAME, deck.getDeckIcon());
 
 		int result = database.update(TABLE_DECK, values, DECK_ID + " = ?", new String[]{
 				String.valueOf(deck.getDeckID())

@@ -154,9 +154,8 @@ public class FrescoMain extends ListActivity {
 			if(resultCode == RESULT_OK){
 
 				Deck tmp = new Deck(data.getStringExtra("deck"));
-				database.insertDeck(data.getStringExtra("deck"));
-				int id = getResources().getIdentifier(data.getStringExtra("icon"),"drawable",getPackageName());
-				((ImageView)findViewById(R.id.category)).setImageResource(id);
+				tmp.setDeckIcon(data.getStringExtra("icon"));
+				database.insertDeck(data.getStringExtra("deck"), data.getStringExtra("icon"));
 				listDeck.add(tmp);
 				m_adapter.notifyDataSetChanged();
 
@@ -174,8 +173,9 @@ public class FrescoMain extends ListActivity {
 			if(resultCode == RESULT_OK){
 
 				Deck deck = new Deck(data.getStringExtra("deck"));
+				deck.setDeckIcon(data.getStringExtra("icon"));
 				listDeck.add(deck);
-				database.insertDeck(data.getStringExtra("deck"));
+				database.insertDeck(data.getStringExtra("deck"), data.getStringExtra("icon"));
 				m_adapter.notifyDataSetChanged();
 
 			}

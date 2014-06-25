@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 public class ItemAdapter extends ArrayAdapter<Deck> {
@@ -49,6 +50,12 @@ public class ItemAdapter extends ArrayAdapter<Deck> {
 				}
 				deck.setText(name);
 			}
+			
+			String iconName = i.getDeckIcon();
+			int id = getContext().getResources().getIdentifier(iconName, "drawable", getContext().getPackageName());
+			ImageView imageView = (ImageView) v.findViewById(R.id.category); 
+			imageView.setImageResource(id);
+			
 		}
 		// the view must be returned to our activity
 		v.setBackgroundColor(Color.argb(255, color[position%6][0], color[position%6][1], color[position%6][2]));
