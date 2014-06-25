@@ -10,6 +10,7 @@ import android.support.v4.app.FragmentManager;
 import android.text.SpannableString;
 import android.text.style.StyleSpan;
 import android.text.style.UnderlineSpan;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -57,7 +58,7 @@ public class FrontBackCardFragment extends Fragment implements TabHost.OnTabChan
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		
+		Log.d("FrontBackCard", "Oncreate");
 		type = getType(getArguments().getInt(Constant.TYPE));
 		switch(type) {
 			case TEXT:
@@ -80,7 +81,7 @@ public class FrontBackCardFragment extends Fragment implements TabHost.OnTabChan
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		View view = inflater.inflate(R.layout.four_tabs, container, false);
-		
+		Log.d("FrontBackCard", "OncreateView");
 		initializeTabHost(view);
 		
 		return view;
@@ -123,7 +124,7 @@ public class FrontBackCardFragment extends Fragment implements TabHost.OnTabChan
 	
 	private void updateTab(String tag) {
 		FragmentManager manager = getChildFragmentManager();
-		
+		Log.d("FrontBackCard", "UpdateTab");
 		switch(tag) {
 			case TEXT:
 				textFragment = FragmentText.createFragment(textContent);
@@ -196,6 +197,7 @@ public class FrontBackCardFragment extends Fragment implements TabHost.OnTabChan
 	@Override
 	public void onTabChanged(String tag) {
 		
+<<<<<<< HEAD
 		String content = getContent();
 		final Type previousType = type;
 		
@@ -241,6 +243,36 @@ public class FrontBackCardFragment extends Fragment implements TabHost.OnTabChan
 				break;
 		}
 		
+=======
+		/*String content = getContent();
+		if(content.isEmpty()) {*/
+		Log.d("FrontBackCard", "OnTabChanged");
+			changeTabColor(tag);
+			switch(tag) {
+				case TEXT:
+					type = Type.TEXT;	
+					((AddEditActivity)getActivity()).setType(Type.TEXT);
+					updateTab(TEXT);
+					break;
+				case DOODLE:
+					type = Type.DOODLE;
+					((AddEditActivity)getActivity()).setType(Type.DOODLE);
+					updateTab(DOODLE);
+					break;
+				case GALLERY:
+					type = Type.IMAGE;
+					((AddEditActivity)getActivity()).setType(Type.IMAGE);
+					updateTab(GALLERY);
+					break;
+				case CAMERA:
+					type = Type.CAMERA;
+					((AddEditActivity)getActivity()).setType(Type.CAMERA);
+					updateTab(CAMERA);
+					break;
+			}
+			
+		//} 
+>>>>>>> origin/master
 		
 	if(content.isEmpty()) {
 		changeTabColor(getStringType(previousType));
@@ -353,6 +385,7 @@ public class FrontBackCardFragment extends Fragment implements TabHost.OnTabChan
 	@Override
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
+		Log.d("FrontBackCard", "OnActivityResult");
 		for (Fragment fragment : getChildFragmentManager().getFragments()) {
             fragment.onActivityResult(requestCode, resultCode, data);
         }

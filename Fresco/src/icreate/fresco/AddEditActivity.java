@@ -11,6 +11,7 @@ import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -21,9 +22,10 @@ import android.widget.TabHost.TabSpec;
 import android.widget.TextView;
 
 public class AddEditActivity extends FragmentActivity implements OnTabChangeListener {
-	
+
 	public static final int GREEN  = 0xFF27AE60;
 	public static final int ORANGE = 0xFFD35400;
+	private Bundle saveBundle;
 
 	public static final String FRONT = "Front";
 	public static final String BACK = "Back";
@@ -33,9 +35,15 @@ public class AddEditActivity extends FragmentActivity implements OnTabChangeList
 	private boolean newEdit;
 	private String deckName;
 	private int positionColor;
-	
+
 	private int index;
+<<<<<<< HEAD
 	
+=======
+
+	private SharedPreferences sharedPref;
+
+>>>>>>> origin/master
 	private FrontBackCardFragment frontFragment;
 	private FrontBackCardFragment backFragment;
 
@@ -72,12 +80,12 @@ public class AddEditActivity extends FragmentActivity implements OnTabChangeList
 
 	public void setType(Type type) {
 		switch(side) {
-			case FRONT:
-				cardFrontType = type;
-				break;
-			case BACK:
-				cardBackType = type;
-				break;
+		case FRONT:
+			cardFrontType = type;
+			break;
+		case BACK:
+			cardBackType = type;
+			break;
 		}
 	}
 
@@ -95,9 +103,15 @@ public class AddEditActivity extends FragmentActivity implements OnTabChangeList
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_add_edit);
-
+		Log.d("AddEditActivity", "onCreate");
 		database = FrescoMain.getDatabase();
+<<<<<<< HEAD
 		
+=======
+
+		sharedPref = getSharedPreferences(Constant.SHARED_PREFS, Context.MODE_PRIVATE);
+
+>>>>>>> origin/master
 		Intent receiveIntent = getIntent();
 		newEdit = receiveIntent.getBooleanExtra(Constant.NEW_EDIT, false);
 		deckName = receiveIntent.getStringExtra(Constant.DECK_NAME);
@@ -105,7 +119,7 @@ public class AddEditActivity extends FragmentActivity implements OnTabChangeList
 		index = receiveIntent.getIntExtra(Constant.INDEX, -1);
 		positionColor = receiveIntent.getIntExtra(Constant.POSITION_COLOR, 0);
 		side = getSide(receiveIntent.getBooleanExtra(Constant.SIDE, true));
-		
+
 		if( newEdit == true ) {
 			int cardID = receiveIntent.getIntExtra(Constant.CARD_ID, 1);
 			card = database.getCard(deckID, cardID);
@@ -115,13 +129,12 @@ public class AddEditActivity extends FragmentActivity implements OnTabChangeList
 
 		initializeContent();
 		initializeTabHost();
-		
+
 		ActionBar actionBar = getActionBar();
 		actionBar.setTitle(deckName);
 		actionBar.setDisplayHomeAsUpEnabled(true);
-		
-	}
 
+	}
 	private void initializeContent() {
 		cardFrontType = card.getType(Side.FRONT);
 		cardFrontString = card.getContent(Side.FRONT);
@@ -135,7 +148,7 @@ public class AddEditActivity extends FragmentActivity implements OnTabChangeList
 
 		tabHost.addTab(newTab(FRONT, FRONT, R.id.tab_front));
 		tabHost.addTab(newTab(BACK, BACK, R.id.tab_back));
-		
+
 		if(side == Side.FRONT) {
 			updateTabs(FRONT);
 			tabHost.setCurrentTab(0);
@@ -148,26 +161,27 @@ public class AddEditActivity extends FragmentActivity implements OnTabChangeList
 
 	private void updateTabs(String tag) {
 		FragmentManager fm = getSupportFragmentManager();
+		Log.d("AddEditActivity", "updateTabs");
 		switch(tag) {
-			case FRONT:
-				frontFragment = FrontBackCardFragment.createFragment(cardFrontString, getIntType(cardFrontType));
-				fm.beginTransaction()
-				.replace(R.id.tab_front, frontFragment, FRONT)
-				.commit();
-				break;
-			case BACK:
-				backFragment = FrontBackCardFragment.createFragment(cardBackString, getIntType(cardBackType));
-				fm.beginTransaction()
-				.replace(R.id.tab_back, backFragment, BACK)
-				.commit();
-				break;
+		case FRONT:
+			frontFragment = FrontBackCardFragment.createFragment(cardFrontString, getIntType(cardFrontType));
+			fm.beginTransaction()
+			.replace(R.id.tab_front, frontFragment, FRONT)
+			.commit();
+			break;
+		case BACK:
+			backFragment = FrontBackCardFragment.createFragment(cardBackString, getIntType(cardBackType));
+			fm.beginTransaction()
+			.replace(R.id.tab_back, backFragment, BACK)
+			.commit();
+			break;
 		}
 		changeTabColor();
 	}
 
 	private TabSpec newTab(String tag, String tagLabel, int contentId) {
 		TabSpec tabSpec = tabHost.newTabSpec(tag);
-		
+
 		TextView text = new TextView(this);
 		text.setText(tagLabel);
 		text.setTypeface(null, Typeface.BOLD_ITALIC);
@@ -175,11 +189,11 @@ public class AddEditActivity extends FragmentActivity implements OnTabChangeList
 		text.setTextSize(20);
 		text.setGravity(Gravity.CENTER);
 		text.setHeight(100);
-		
+
 		tabSpec.setIndicator(text);
 		tabSpec.setContent(contentId);
 		return tabSpec;
-	
+
 	}
 
 	private int getIntType(Type type) {
@@ -196,18 +210,36 @@ public class AddEditActivity extends FragmentActivity implements OnTabChangeList
 
 		return 0;
 	}
+<<<<<<< HEAD
+=======
+
+	private Type getTypeFromInt(int type) {
+		switch(type) {
+		case 0:
+			return Type.TEXT;
+		case 1:
+			return Type.DOODLE;
+		case 2:
+			return Type.IMAGE;
+		default:
+			return Type.CAMERA;
+		}
+	}
+>>>>>>> origin/master
 
 	@Override
 	public void onTabChanged(String tabId) {
+
+		Log.d("AddEditActivity", "onTabChanged");
 		switch(tabId) {
-			case FRONT:
-				side = Side.FRONT;
-				updateTabs(FRONT);
-				break;
-			case BACK:
-				side = Side.BACK;
-				updateTabs(BACK);
-				break;
+		case FRONT:
+			side = Side.FRONT;
+			updateTabs(FRONT);
+			break;
+		case BACK:
+			side = Side.BACK;
+			updateTabs(BACK);
+			break;
 		}
 	}
 
@@ -221,19 +253,19 @@ public class AddEditActivity extends FragmentActivity implements OnTabChangeList
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch(item.getItemId()) {
-			case R.id.done_icon:
-				confirmSaving();
-				return true;
-			
-			case android.R.id.home:
-				confirmLeaving();
-				return true;
-				
-			default:
-				return super.onOptionsItemSelected(item);
+		case R.id.done_icon:
+			confirmSaving();
+			return true;
+
+		case android.R.id.home:
+			confirmLeaving();
+			return true;
+
+		default:
+			return super.onOptionsItemSelected(item);
 		}
 	}
-	
+
 	private void confirmLeaving() {
 		AlertDialog.Builder exitDialog = new AlertDialog.Builder(AddEditActivity.this);
 
@@ -243,7 +275,7 @@ public class AddEditActivity extends FragmentActivity implements OnTabChangeList
 		.setMessage("Changes not saved will be discarded")
 		.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog, int which) {
-				
+
 				Intent sendIntent = new Intent(AddEditActivity.this, CardsViewPager.class);
 				sendIntent.putExtra(Constant.DECK_NAME, deckName);
 				sendIntent.putExtra(Constant.DECK_ID, deckID);
@@ -264,40 +296,40 @@ public class AddEditActivity extends FragmentActivity implements OnTabChangeList
 		AlertDialog dialog = exitDialog.create();
 		dialog.show();
 	}
-	
+
 	private void confirmSaving() {
-		
+
 		boolean isContentEmpty = false;
-		
+
 		saveCard();
 		AlertDialog.Builder saveDialog = new AlertDialog.Builder(AddEditActivity.this);
 		saveDialog
 		.setTitle("Save confirmation")
 		.setMessage("Do you want to save and exit?")
 		.setIcon(android.R.drawable.ic_dialog_info);
-		
+
 		if(cardBackString.isEmpty()) {
 			isContentEmpty = true;
 			saveDialog.setMessage("Please add back card content");
 		}
-		
+
 		if(cardFrontString.isEmpty()) {
 			isContentEmpty = true;
 			saveDialog.setMessage("Please add front card content");
 		} 
-		
+
 		if(isContentEmpty == false) {
 			saveDialog
 			.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
 				public void onClick(DialogInterface dialog, int which) {
-					
+
 					database = FrescoMain.getDatabase();
 					if(newEdit == false) {
 						database.insertCard(deckID, card);
 					} else {
 						database.updateCard(deckID, card);
 					}
-	
+
 					Intent sendIntent = new Intent(AddEditActivity.this, CardsViewPager.class);
 					sendIntent.putExtra(Constant.DECK_NAME, deckName);
 					sendIntent.putExtra(Constant.DECK_ID, deckID);
@@ -308,9 +340,9 @@ public class AddEditActivity extends FragmentActivity implements OnTabChangeList
 					startActivity(sendIntent);
 					finish();
 				}
-	
+
 			});
-	
+
 			saveDialog
 			.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
 				public void onClick(DialogInterface dialog, int which) {
@@ -319,19 +351,20 @@ public class AddEditActivity extends FragmentActivity implements OnTabChangeList
 			});
 		} else {
 			saveDialog.setNeutralButton("Okay", new DialogInterface.OnClickListener() {
-				
+
 				@Override
 				public void onClick(DialogInterface dialog, int which) {
 					dialog.cancel();
 				}
 			});
 		}
-		
+
 		AlertDialog dialog = saveDialog.create();
 		dialog.show();
 	}
-	
+
 	private void saveCard() {
+		Log.d("AddEditActivity", "saveCard");
 		saveCardType();
 		card.setType(Side.FRONT, cardFrontType);
 		card.setType(Side.BACK, cardBackType);
@@ -354,7 +387,7 @@ public class AddEditActivity extends FragmentActivity implements OnTabChangeList
 			cardBackType = backFragment.getType();
 	}
 
-	
+
 	private void changeTabColor() {
 		if(side == Side.FRONT) {
 			tabHost.getTabWidget().getChildAt(0).setBackgroundColor(GREEN);
@@ -364,20 +397,60 @@ public class AddEditActivity extends FragmentActivity implements OnTabChangeList
 			tabHost.getTabWidget().getChildAt(0).setBackgroundColor(ORANGE);
 		}
 	}
-	
+
 	private Side getSide(boolean isFront) {
 		if(isFront)
 			return Side.FRONT;
 		return Side.BACK;
 	}
-	
+
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
+		Log.d("AddEditActivity", "onActivityResult");
 		if(frontFragment != null)
 			frontFragment.onActivityResult(requestCode, resultCode, data);
 		else
 			backFragment.onActivityResult(requestCode, resultCode, data);
 	}
+<<<<<<< HEAD
 	
+=======
+
+	@Override
+	protected void onResume() {
+		super.onResume();
+		Log.d("AddEditActivity", "onResume");
+		String content = sharedPref.getString(Constant.CONTENT, "");
+		setContent(content);
+
+		int type = sharedPref.getInt(Constant.TYPE, 0);
+		setType(getTypeFromInt(type));
+	}
+	@Override
+	protected void onSaveInstanceState(Bundle outState) {
+		// TODO Auto-generated method stub
+		super.onSaveInstanceState(outState);
+		Log.d("AddEditActivity", "onSaveInstanceState");
+	}
+	@Override
+	protected void onRestoreInstanceState(Bundle savedInstanceState) {
+		// TODO Auto-generated method stub
+		super.onRestoreInstanceState(savedInstanceState);
+		Log.d("AddEditActivity", "onRestoreInstanceState");
+	}
+	@Override
+	protected void onStop() {
+		super.onStop();
+		Log.d("AddEditActivity", "onStop");
+		SharedPreferences.Editor editor = sharedPref.edit();
+
+		editor.putString(Constant.CONTENT, getContent(side));
+		editor.putInt(Constant.TYPE, getIntType(getType(side)));
+
+		editor.commit();
+	}
+
+
+>>>>>>> origin/master
 }
