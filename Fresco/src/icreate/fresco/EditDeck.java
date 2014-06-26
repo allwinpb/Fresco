@@ -75,10 +75,67 @@ public class EditDeck extends Activity implements OnClickListener {
 		done.setOnClickListener(this);
 		delete.setOnClickListener(this);
 
+		retrieveDeck();
 
+
+	}
+
+	private void retrieveDeck() {
+		// TODO Auto-generated method stub
 		Intent receiveIntent = getIntent();
 		et.setText(receiveIntent.getStringExtra(Constant.DECK_NAME));
 		pos = receiveIntent.getIntExtra(Constant.POSITION_COLOR, 0);
+		icon = receiveIntent.getStringExtra(Constant.DECK_ICON);
+		switch(icon){
+		case "people":
+			people.setBackgroundColor(Color.rgb(39, 174, 96));
+			break;
+		case "hammer":
+			hammer.setBackgroundColor(Color.rgb(39, 174, 96));
+			break;
+		case "cat":
+			cat.setBackgroundColor(Color.rgb(39, 174, 96));
+			break;
+		case "number":
+			number.setBackgroundColor(Color.rgb(39, 174, 96));
+			break;
+		case "german":
+			german.setBackgroundColor(Color.rgb(39, 174, 96));
+			break;
+		case "film":
+			film.setBackgroundColor(Color.rgb(39, 174, 96));
+			break;
+		case "talk":
+			talk.setBackgroundColor(Color.rgb(39, 174, 96));
+			break;
+		case "key":
+			key.setBackgroundColor(Color.rgb(39, 174, 96));
+			break;
+		case "home":
+			home.setBackgroundColor(Color.rgb(39, 174, 96));
+			break;
+		case "book":
+			book.setBackgroundColor(Color.rgb(39, 174, 96));
+			break;
+		case "picture":
+			picture.setBackgroundColor(Color.rgb(39, 174, 96));
+			break;
+		case "christmas":
+			christmas.setBackgroundColor(Color.rgb(39, 174, 96));
+			break;
+		case "newspaper":
+			newspaper.setBackgroundColor(Color.rgb(39, 174, 96));
+			break;
+		case "basketball":
+			basketball.setBackgroundColor(Color.rgb(39, 174, 96));
+			break;
+		case "musics":
+			musics.setBackgroundColor(Color.rgb(39, 174, 96));
+			break;
+		case "hamburger":
+			hamburger.setBackgroundColor(Color.rgb(39, 174, 96));
+			break;
+		}
 
 	}
 

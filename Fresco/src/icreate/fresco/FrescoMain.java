@@ -55,6 +55,7 @@ public class FrescoMain extends ListActivity {
 				Deck deck = listDeck.get(position);
 				intent.putExtra(Constant.DECK_ID, deck.getDeckID());
 				intent.putExtra(Constant.DECK_NAME, deck.getDeckName());
+				intent.putExtra(Constant.DECK_ICON, deck.getDeckIcon());
 				intent.putExtra(Constant.POSITION_COLOR, position);
 				startActivityForResult(intent, 2);
 				return true;

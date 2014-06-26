@@ -19,6 +19,7 @@ public class Constant {
 	public static final String DOODLE_SHARED_PREFS = "icreate.fresco.doodle_shared_prefs";
 	public static final String DOODLE_WIDTH = "icreate.fresco.doodle_width";
 	public static final String SIDE = "icreate.fresco.side";
+	public static final String DECK_ICON = "icreate.fresco.deck_icon";
 	
 	public static final String FRONT_CONTENT = "icreate.fresco.front_content";
 	public static final String FRONT_TYPE = "icreate.fresco.front_type";
