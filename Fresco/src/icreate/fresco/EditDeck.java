@@ -83,7 +83,9 @@ public class EditDeck extends Activity implements OnClickListener {
 	private void retrieveDeck() {
 		// TODO Auto-generated method stub
 		Intent receiveIntent = getIntent();
-		et.setText(receiveIntent.getStringExtra(Constant.DECK_NAME));
+		String name = receiveIntent.getStringExtra(Constant.DECK_NAME); 
+		et.setText(name);
+		et.setSelection(name.length());
 		pos = receiveIntent.getIntExtra(Constant.POSITION_COLOR, 0);
 		icon = receiveIntent.getStringExtra(Constant.DECK_ICON);
 		switch(icon){

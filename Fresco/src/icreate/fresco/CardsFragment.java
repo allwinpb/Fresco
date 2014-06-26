@@ -105,6 +105,10 @@ public class CardsFragment extends Fragment {
 		
 		ActionBar actionBar = getActivity().getActionBar();
 		actionBar.setTitle(deck.getDeckName());
+		int id = getResources().getIdentifier(deck.getDeckIcon(), "drawable", getActivity().getPackageName());
+		actionBar.setIcon(id);
+		ImageView homeIcon = (ImageView) getActivity().findViewById(android.R.id.home);
+		homeIcon.setPadding(15, 0, 15, 0);
 		actionBar.setDisplayHomeAsUpEnabled(true);
 		
 		view.setBackgroundColor(((CardsViewPager)getActivity()).getColor());
@@ -336,7 +340,6 @@ public class CardsFragment extends Fragment {
 			
 			Intent intent = new Intent(getActivity(), AddEditActivity.class);
 			intent.putExtra(Constant.NEW_EDIT, true);
-			intent.putExtra(Constant.DECK_NAME, deck.getDeckName());
 			intent.putExtra(Constant.DECK_ID, deck.getDeckID());
 			intent.putExtra(Constant.CARD_ID, cardID);
 			intent.putExtra(Constant.INDEX, index);
@@ -350,7 +353,6 @@ public class CardsFragment extends Fragment {
 	private void addCard() {
 		Intent intent = new Intent(getActivity(), AddEditActivity.class);
 		intent.putExtra(Constant.NEW_EDIT, false);
-		intent.putExtra(Constant.DECK_NAME, deck.getDeckName());
 		intent.putExtra(Constant.DECK_ID, deck.getDeckID());
 		intent.putExtra(Constant.CARD_ID, -1);
 		intent.putExtra(Constant.INDEX, cardsCount);
@@ -371,7 +373,6 @@ public class CardsFragment extends Fragment {
 						database.deleteCard(cardID);
 						Intent i = new Intent(getActivity(), CardsViewPager.class);
 						i.putExtra(Constant.DECK_ID, deck.getDeckID());
-						i.putExtra(Constant.DECK_NAME, deck.getDeckName());
 						i.putExtra(Constant.POSITION_COLOR, ((CardsViewPager)getActivity()).getPositionColor());
 						startActivity(i);
 						break;
@@ -395,7 +396,6 @@ public class CardsFragment extends Fragment {
 	private void editCard(Card currentCard) {
 		Intent intent = new Intent(getActivity(), AddEditActivity.class);
 		intent.putExtra(Constant.NEW_EDIT, true);
-		intent.putExtra(Constant.DECK_NAME, deck.getDeckName());
 		intent.putExtra(Constant.DECK_ID, deck.getDeckID());
 		intent.putExtra(Constant.CARD_ID, cardID);
 		intent.putExtra(Constant.INDEX, index);

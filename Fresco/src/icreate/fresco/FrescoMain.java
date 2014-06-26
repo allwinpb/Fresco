@@ -113,7 +113,6 @@ public class FrescoMain extends ListActivity {
 		Deck deck = listDeck.get(position);
 		intent.putExtra(Constant.DECK_ID, deck.getDeckID());
 		intent.putExtra(Constant.POSITION_COLOR, position);
-		intent.putExtra(Constant.DECK_NAME, deck.getDeckName());
 		startActivityForResult(intent, 1);
 
 	}
@@ -156,7 +155,7 @@ public class FrescoMain extends ListActivity {
 
 				Deck tmp = new Deck(data.getStringExtra("deck"));
 				tmp.setDeckIcon(data.getStringExtra("icon"));
-				database.insertDeck(data.getStringExtra("deck"), data.getStringExtra("icon"));
+				database.insertDeck(tmp);
 				listDeck.add(tmp);
 				m_adapter.notifyDataSetChanged();
 
@@ -168,15 +167,12 @@ public class FrescoMain extends ListActivity {
 		if(requestCode == 2){
 
 			Deck tmp = listDeck.get(data.getIntExtra("position", 0));
-			database.deleteDeck(tmp.getDeckID());
-			listDeck.remove(tmp);
 
 			if(resultCode == RESULT_OK){
 
-				Deck deck = new Deck(data.getStringExtra("deck"));
-				deck.setDeckIcon(data.getStringExtra("icon"));
-				listDeck.add(deck);
-				database.insertDeck(data.getStringExtra("deck"), data.getStringExtra("icon"));
+				tmp.setDeckName(data.getStringExtra("deck"));
+				tmp.setDeckIcon(data.getStringExtra("icon"));
+				database.updateDeck(tmp);
 				m_adapter.notifyDataSetChanged();
 
 			}

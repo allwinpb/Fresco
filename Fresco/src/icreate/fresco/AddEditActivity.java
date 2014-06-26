@@ -4,6 +4,7 @@ import icreate.fresco.Card.Side;
 import icreate.fresco.Card.Type;
 import android.app.ActionBar;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
@@ -13,9 +14,14 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.SeekBar;
 import android.widget.TabHost;
 import android.widget.TabHost.OnTabChangeListener;
 import android.widget.TabHost.TabSpec;
@@ -25,15 +31,15 @@ public class AddEditActivity extends FragmentActivity implements OnTabChangeList
 
 	public static final int GREEN  = 0xFF27AE60;
 	public static final int ORANGE = 0xFFD35400;
-	private Bundle saveBundle;
 
 	public static final String FRONT = "Front";
 	public static final String BACK = "Back";
+	
+	Deck deck;
 
 	private int deckID;
 	private Card card;
 	private boolean newEdit;
-	private String deckName;
 	private int positionColor;
 
 	private int index;
@@ -102,12 +108,11 @@ public class AddEditActivity extends FragmentActivity implements OnTabChangeList
 
 		Intent receiveIntent = getIntent();
 		newEdit = receiveIntent.getBooleanExtra(Constant.NEW_EDIT, false);
-		deckName = receiveIntent.getStringExtra(Constant.DECK_NAME);
 		deckID  = receiveIntent.getIntExtra(Constant.DECK_ID, 1);
 		index = receiveIntent.getIntExtra(Constant.INDEX, -1);
 		positionColor = receiveIntent.getIntExtra(Constant.POSITION_COLOR, 0);
 		side = getSide(receiveIntent.getBooleanExtra(Constant.SIDE, true));
-
+		
 		if( newEdit == true ) {
 			int cardID = receiveIntent.getIntExtra(Constant.CARD_ID, 1);
 			card = database.getCard(deckID, cardID);
@@ -118,8 +123,14 @@ public class AddEditActivity extends FragmentActivity implements OnTabChangeList
 		initializeContent();
 		initializeTabHost();
 
+		deck = database.getDeck(deckID);
+		
 		ActionBar actionBar = getActionBar();
-		actionBar.setTitle(deckName);
+		actionBar.setTitle(deck.getDeckName());
+		int id = getResources().getIdentifier(deck.getDeckIcon(), "drawable", getPackageName());
+		actionBar.setIcon(id);
+		ImageView homeIcon = (ImageView) findViewById(android.R.id.home);
+		homeIcon.setPadding(15, 0, 15, 0);
 		actionBar.setDisplayHomeAsUpEnabled(true);
 
 	}
@@ -259,7 +270,6 @@ public class AddEditActivity extends FragmentActivity implements OnTabChangeList
 			public void onClick(DialogInterface dialog, int which) {
 
 				Intent sendIntent = new Intent(AddEditActivity.this, CardsViewPager.class);
-				sendIntent.putExtra(Constant.DECK_NAME, deckName);
 				sendIntent.putExtra(Constant.DECK_ID, deckID);
 				sendIntent.putExtra(Constant.INDEX, index);
 				sendIntent.putExtra(Constant.POSITION_COLOR, positionColor);
@@ -284,23 +294,47 @@ public class AddEditActivity extends FragmentActivity implements OnTabChangeList
 		boolean isContentEmpty = false;
 
 		saveCard();
+		
 		AlertDialog.Builder saveDialog = new AlertDialog.Builder(AddEditActivity.this);
 		saveDialog
 		.setTitle("Save confirmation")
-		.setMessage("Do you want to save and exit?")
 		.setIcon(android.R.drawable.ic_dialog_info);
+		
+		LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+		View view = inflater.inflate(R.layout.add_card_custom_dialog, null);
+		
+		TextView savingMessageTextView = (TextView) view.findViewById(R.id.savingMessageTextView);
+		savingMessageTextView.setText("Do you want to save and exit?");
+		
+		ImageView frontTabImageView = (ImageView) view.findViewById(R.id.frontTabImageView);
+		ImageView backTabImageView = (ImageView) view.findViewById(R.id.backTabImageView);
+		
+		TextView specifyBackTextView = (TextView) view.findViewById(R.id.specifyBackTextView);
+		TextView specifyFrontTextView = (TextView) view.findViewById(R.id.specifyFrontTextView);
 
 		if(cardBackString.isEmpty()) {
 			isContentEmpty = true;
-			saveDialog.setMessage("Please add back card content");
+			backTabImageView.setVisibility(View.GONE);
+			savingMessageTextView.setText("Please add back card content");
+			
+			specifyBackTextView.setText("Empty");
 		}
-
+		
 		if(cardFrontString.isEmpty()) {
 			isContentEmpty = true;
-			saveDialog.setMessage("Please add front card content");
+			frontTabImageView.setVisibility(View.GONE);
+			savingMessageTextView.setText("Please add front card content");
+			specifyFrontTextView.setText("Empty");
 		} 
-
+		
 		if(isContentEmpty == false) {
+			
+			Type frontType = getType(Side.FRONT);
+			Type backType = getType(Side.BACK);
+			
+			setTabImageViewForCustomDialog(frontType, frontTabImageView, specifyFrontTextView);
+			setTabImageViewForCustomDialog(backType, backTabImageView, specifyBackTextView);
+			
 			saveDialog
 			.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
 				public void onClick(DialogInterface dialog, int which) {
@@ -313,7 +347,6 @@ public class AddEditActivity extends FragmentActivity implements OnTabChangeList
 					}
 
 					Intent sendIntent = new Intent(AddEditActivity.this, CardsViewPager.class);
-					sendIntent.putExtra(Constant.DECK_NAME, deckName);
 					sendIntent.putExtra(Constant.DECK_ID, deckID);
 					sendIntent.putExtra(Constant.POSITION_COLOR, positionColor);
 					if(newEdit == false)
@@ -341,8 +374,31 @@ public class AddEditActivity extends FragmentActivity implements OnTabChangeList
 			});
 		}
 
+		saveDialog.setCustomTitle(view);
 		AlertDialog dialog = saveDialog.create();
 		dialog.show();
+	}
+
+	private void setTabImageViewForCustomDialog(Type type,
+			ImageView tabImageView, TextView specifyTextView) {
+		switch(type) {
+			case TEXT:
+				tabImageView.setImageResource(R.drawable.text_24);
+				specifyTextView.setText("(text)");
+				break;
+			case DOODLE:
+				tabImageView.setImageResource(R.drawable.edit_24);
+				specifyTextView.setText("(doodle)");
+				break;
+			case IMAGE:
+				tabImageView.setImageResource(R.drawable.gallery_24);
+				specifyTextView.setText("(gallery)");
+				break;
+			case CAMERA:
+				tabImageView.setImageResource(R.drawable.camera_24);
+				specifyTextView.setText("(camera)");
+				break;
+		}
 	}
 
 	private void saveCard() {

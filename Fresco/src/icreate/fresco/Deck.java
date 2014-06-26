@@ -9,6 +9,12 @@ public class Deck {
 	int _deckID;
 	String _deckIcon;
 	
+	public Deck() {
+		_name = "";
+		_cards = new ArrayList<Card>();
+		_deckIcon = "";
+	}
+	
 	public Deck(String name){
 		_name = name;
 		_cards = new ArrayList<Card>();
@@ -28,6 +34,10 @@ public class Deck {
 	
 	public void setDeckID(int id) {
 		_deckID = id;
+	}
+	
+	public void setDeckName(String name) {
+		_name = name;
 	}
 	
 	public String getDeckName() {

@@ -9,6 +9,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
+import android.util.Log;
 
 public class CardsViewPager extends FragmentActivity {
 	
@@ -30,23 +31,24 @@ public class CardsViewPager extends FragmentActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		database = FrescoMain.getDatabase();
 		setContentView(R.layout.activity_cards);
+		database = FrescoMain.getDatabase();
 		
 		Intent intent = getIntent();
-		String deckName = intent.getStringExtra(Constant.DECK_NAME);
 		int deckID = intent.getIntExtra(Constant.DECK_ID, 0);
 		index = intent.getIntExtra(Constant.INDEX, -1);
 		positionColor = intent.getIntExtra(Constant.POSITION_COLOR, 0);
 		
-		deck = database.getDeck(deckID, deckName);
+		deck = database.getCards(deckID);
+		Log.d("CardsViewPager", deck.getDeckIcon());
 		
 		FragmentManager manager = getSupportFragmentManager();
 		
 		if(deck.getCardCount() == 0){
 			
 			if(findViewById(R.id.FrameLayout1) != null) {
-				NoCardsFragment fragment = NoCardsFragment.createFragment(deckID);
+				NoCardsFragment fragment = new NoCardsFragment();
+				
 				manager.beginTransaction().add(R.id.FrameLayout1, fragment).commit();
 			}
 			

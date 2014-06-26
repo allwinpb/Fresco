@@ -98,32 +98,20 @@ public class SqliteHelper extends SQLiteOpenHelper {
 		return listDeck;
 	}
 
-	public void insertDeck(String deckName, String iconName) {
+	public void insertDeck(Deck deck) {
 		SQLiteDatabase database = this.getWritableDatabase();
 
 		ContentValues values = new ContentValues();
 
-		values.put(DECK_NAME, deckName);
-		values.put(DECK_ICON_NAME, iconName);
+		values.put(DECK_NAME, deck.getDeckName());
+		values.put(DECK_ICON_NAME, deck.getDeckIcon());
 
 		database.insert(TABLE_DECK, null, values);
 		database.close();
 		Log.d("SqliteHelper", "Deck saved");
-		
-		if(deckName.isEmpty()) {
-			Log.d("SqliteHelper", "DeckName empty");
-		}
-		
-		if(iconName.isEmpty()) {
-			Log.d("SqliteHelper", "IconName empty");
-		}
-		
-		if(values.size() == 0) {
-			Log.d("SqliteHelper", "Values empty");
-		}
 	}
 
-	public int updateDeckName(Deck deck) {
+	public int updateDeck(Deck deck) {
 		SQLiteDatabase database = this.getWritableDatabase();
 
 		ContentValues values = new ContentValues();
@@ -152,13 +140,38 @@ public class SqliteHelper extends SQLiteOpenHelper {
 		database.close();
 
 	}
+	
+	public Deck getDeck(int deckID) {
+		SQLiteDatabase database = this.getReadableDatabase();
+		Cursor cursor = database.rawQuery(TABLE_DECK_LOAD, null);
+		Deck deck = new Deck();
+		deck.setDeckID(deckID);
 
-	public Deck getDeck(int deckID, String deckName) {
+		if(cursor.moveToFirst()) {
+			do {
+				int deckId = Integer.parseInt(cursor.getString(0));
+				if(deckId == deckID) {
+					
+					String deckName = cursor.getString(1);
+					String iconName = cursor.getString(2);
+					
+					deck.setDeckName(deckName);
+					deck.setDeckIcon(iconName);
+				}
+
+			} while(cursor.moveToNext());
+		}
+
+		database.close();
+
+		return deck;
+	}
+
+	public Deck getCards(int deckID) {	
+		Deck deck = getDeck(deckID); 		
+	
 		SQLiteDatabase database = this.getReadableDatabase();
 		Cursor cursor = database.rawQuery(TABLE_CARD_LOAD, null);
-
-		Deck deck = new Deck(deckName);
-		deck.setDeckID(deckID);
 
 		if(cursor.moveToFirst()) {
 			do {
