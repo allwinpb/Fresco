@@ -357,6 +357,7 @@ public class CardsFragment extends Fragment {
 		intent.putExtra(Constant.CARD_ID, -1);
 		intent.putExtra(Constant.INDEX, cardsCount);
 		intent.putExtra(Constant.POSITION_COLOR, ((CardsViewPager)getActivity()).getPositionColor());
+		intent.putExtra(Constant.SIDE, true);
 		startActivity(intent);
 		getActivity().finish();
 	}
@@ -399,6 +400,7 @@ public class CardsFragment extends Fragment {
 		intent.putExtra(Constant.DECK_ID, deck.getDeckID());
 		intent.putExtra(Constant.CARD_ID, cardID);
 		intent.putExtra(Constant.INDEX, index);
+		intent.putExtra(Constant.SIDE, isFrontCard);
 		intent.putExtra(Constant.POSITION_COLOR, ((CardsViewPager)getActivity()).getPositionColor());
 		
 		startActivity(intent);
