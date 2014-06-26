@@ -12,6 +12,7 @@
 	    android:layout_marginTop="10dp"
 	    android:layout_marginBottom="10dp"
 	    android:padding="5dp"
+	    android:layout_marginLeft="@dimen/list_deck_margin_left_right"
 	    android:layout_gravity="center_vertical"
 	    android:src="@drawable/book"/>
 
@@ -36,6 +37,7 @@
 	    android:layout_marginTop="10dp"
 	    android:layout_marginBottom="10dp"
 	    android:padding="5dp"
+	    android:layout_marginRight="@dimen/list_deck_margin_left_right"
 	    android:layout_gravity="center_vertical"
 	    android:src="@drawable/arrow_forward"/>
     
