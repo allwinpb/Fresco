@@ -19,9 +19,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.SeekBar;
 import android.widget.TabHost;
 import android.widget.TabHost.OnTabChangeListener;
 import android.widget.TabHost.TabSpec;
@@ -296,9 +294,6 @@ public class AddEditActivity extends FragmentActivity implements OnTabChangeList
 		saveCard();
 		
 		AlertDialog.Builder saveDialog = new AlertDialog.Builder(AddEditActivity.this);
-		saveDialog
-		.setTitle("Save confirmation")
-		.setIcon(android.R.drawable.ic_dialog_info);
 		
 		LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		View view = inflater.inflate(R.layout.add_card_custom_dialog, null);
@@ -316,8 +311,11 @@ public class AddEditActivity extends FragmentActivity implements OnTabChangeList
 			isContentEmpty = true;
 			backTabImageView.setVisibility(View.GONE);
 			savingMessageTextView.setText("Please add back card content");
-			
 			specifyBackTextView.setText("Empty");
+			
+		} else {
+			Type backType = getType(Side.BACK);
+			setTabImageViewForCustomDialog(backType, backTabImageView, specifyBackTextView);
 		}
 		
 		if(cardFrontString.isEmpty()) {
@@ -325,15 +323,13 @@ public class AddEditActivity extends FragmentActivity implements OnTabChangeList
 			frontTabImageView.setVisibility(View.GONE);
 			savingMessageTextView.setText("Please add front card content");
 			specifyFrontTextView.setText("Empty");
-		} 
+			
+		} else {
+			Type frontType = getType(Side.FRONT);
+			setTabImageViewForCustomDialog(frontType, frontTabImageView, specifyFrontTextView);
+		}
 		
 		if(isContentEmpty == false) {
-			
-			Type frontType = getType(Side.FRONT);
-			Type backType = getType(Side.BACK);
-			
-			setTabImageViewForCustomDialog(frontType, frontTabImageView, specifyFrontTextView);
-			setTabImageViewForCustomDialog(backType, backTabImageView, specifyBackTextView);
 			
 			saveDialog
 			.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
@@ -375,6 +371,9 @@ public class AddEditActivity extends FragmentActivity implements OnTabChangeList
 		}
 
 		saveDialog.setCustomTitle(view);
+		saveDialog
+		.setTitle("Save confirmation")
+		.setIcon(android.R.drawable.ic_dialog_info);
 		AlertDialog dialog = saveDialog.create();
 		dialog.show();
 	}

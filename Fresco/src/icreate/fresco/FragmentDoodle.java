@@ -178,7 +178,8 @@ public class FragmentDoodle extends Fragment {
 					break;
 				
 				case R.id.clearAllImageButton:
-					showClearAllDialog();
+					if(!doodle.isEmpty())
+						showClearAllDialog();
 					break;
 					
 				default:

@@ -7,6 +7,7 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnFocusChangeListener;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
@@ -34,13 +35,22 @@ public class FragmentText extends Fragment {
 		
 		editText = (EditText) view.findViewById(R.id.cardEditText);
 		editText.setText(content);
+		
+		InputMethodManager inputMethodManager = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+	    editText.requestFocus();
+	    inputMethodManager.showSoftInput(editText, 0);
+		
 		int position = editText.length();
 		editText.setSelection(position);
-		
-		InputMethodManager imm = (InputMethodManager) getActivity()
-				.getSystemService(Context.INPUT_METHOD_SERVICE);
-		imm.hideSoftInputFromWindow(editText.getWindowToken(),
-				0);
+		editText.setOnFocusChangeListener(new OnFocusChangeListener() {
+				@Override
+				public void onFocusChange(View v, boolean hasFocus) {
+					if(!hasFocus) {
+						InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+						imm.hideSoftInputFromWindow(editText.getWindowToken(), 0);
+					}
+				}
+        });
 		
 		editText.addTextChangedListener(new TextWatcher(){
 

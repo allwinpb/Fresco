@@ -38,6 +38,7 @@ public class EditDeck extends Activity implements OnClickListener {
 		delete = (Button)findViewById(R.id.delete);
 		done = (Button)findViewById(R.id.done);
 		et = (EditText)findViewById(R.id.deck);
+		et.requestFocus();
 		people = (ImageButton)findViewById(R.id.people);
 		hammer = (ImageButton)findViewById(R.id.hammer);
 		cat    = (ImageButton)findViewById(R.id.cat);

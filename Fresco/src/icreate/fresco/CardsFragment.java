@@ -384,8 +384,10 @@ public class CardsFragment extends Fragment {
 			}
 		};
 		
-		
-		builder.setMessage("Are you sure you want to delete this card");
+		builder
+		.setTitle("Delete confirmation")
+		.setIcon(android.R.drawable.ic_dialog_alert);
+		builder.setMessage("Are you sure you want to delete this card?");
 		builder.setCancelable(false);
 		builder.setPositiveButton("Yes" , popListener);
 		builder.setNegativeButton("No", popListener);

@@ -313,11 +313,6 @@ public class FrontBackCardFragment extends Fragment implements TabHost.OnTabChan
 //		}
 	}
 	
-	
-	
-	
-	
-	
 	private int getIntType(Type type) {
 		switch(type) {
 			case TEXT:

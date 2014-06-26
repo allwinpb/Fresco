@@ -142,6 +142,9 @@ public class DoodleView extends View {
 	}*/
 	
 	public String getContent() {
+		if(isEmpty())
+			return "";
+		
 		return convertFromImageToJSON(bitmap);
 	}
 	
