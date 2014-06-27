@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/deckLayout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/add_deck" >
+    android:layout_height="match_parent" >
 
     <TextView
         android:id="@+id/tvDeck"
@@ -58,7 +58,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/image_margin_top"
                 android:layout_marginTop="@dimen/image_margin_top"
-                android:background="@color/add_deck"
+                android:background="@android:color/transparent"
                 android:contentDescription="@string/icon_image"
                 android:padding="@dimen/image_padding"
                 android:src="@drawable/people" />
@@ -69,7 +69,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/image_margin_top"
                 android:layout_marginTop="@dimen/image_margin_top"
-                android:background="@color/add_deck"
+                android:background="@android:color/transparent"
                 android:contentDescription="@string/icon_image"
                 android:padding="@dimen/image_padding"
                 android:src="@drawable/hammer" />
@@ -80,7 +80,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/image_margin_top"
                 android:layout_marginTop="@dimen/image_margin_top"
-                android:background="@color/add_deck"
+               	android:background="@android:color/transparent"
                 android:contentDescription="@string/icon_image"
                 android:padding="@dimen/image_padding"
                 android:src="@drawable/cat" />
@@ -91,7 +91,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/image_margin_top"
                 android:layout_marginTop="@dimen/image_margin_top"
-                android:background="@color/add_deck"
+                android:background="@android:color/transparent"
                 android:contentDescription="@string/icon_image"
                 android:padding="@dimen/image_padding"
                 android:src="@drawable/number" />
@@ -113,7 +113,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/image_margin_top"
                 android:layout_marginTop="@dimen/image_margin_top"
-                android:background="@color/add_deck"
+                android:background="@android:color/transparent"
                 android:contentDescription="@string/icon_image"
                 android:padding="@dimen/image_padding"
                 android:src="@drawable/german" />
@@ -124,7 +124,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/image_margin_top"
                 android:layout_marginTop="@dimen/image_margin_top"
-                android:background="@color/add_deck"
+                android:background="@android:color/transparent"
                 android:contentDescription="@string/icon_image"
                 android:padding="@dimen/image_padding"
                 android:src="@drawable/film" />
@@ -135,7 +135,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/image_margin_top"
                 android:layout_marginTop="@dimen/image_margin_top"
-                android:background="@color/add_deck"
+                android:background="@android:color/transparent"
                 android:contentDescription="@string/icon_image"
                 android:padding="@dimen/image_padding"
                 android:src="@drawable/talk" />
@@ -146,7 +146,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/image_margin_top"
                 android:layout_marginTop="@dimen/image_margin_top"
-                android:background="@color/add_deck"
+                android:background="@android:color/transparent"
                 android:contentDescription="@string/icon_image"
                 android:padding="@dimen/image_padding"
                 android:src="@drawable/key" />
@@ -168,7 +168,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/image_margin_top"
                 android:layout_marginTop="@dimen/image_margin_top"
-                android:background="@color/add_deck"
+                android:background="@android:color/transparent"
                 android:contentDescription="@string/icon_image"
                 android:padding="@dimen/image_padding"
                 android:src="@drawable/home" />
@@ -179,7 +179,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/image_margin_top"
                 android:layout_marginTop="@dimen/image_margin_top"
-                android:background="@color/add_deck"
+                android:background="@android:color/transparent"
                 android:contentDescription="@string/icon_image"
                 android:padding="@dimen/image_padding"
                 android:src="@drawable/book" />
@@ -190,7 +190,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/image_margin_top"
                 android:layout_marginTop="@dimen/image_margin_top"
-                android:background="@color/add_deck"
+                android:background="@android:color/transparent"
                 android:contentDescription="@string/icon_image"
                 android:padding="@dimen/image_padding"
                 android:src="@drawable/picture" />
@@ -201,7 +201,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/image_margin_top"
                 android:layout_marginTop="@dimen/image_margin_top"
-                android:background="@color/add_deck"
+                android:background="@android:color/transparent"
                 android:contentDescription="@string/icon_image"
                 android:padding="@dimen/image_padding"
                 android:src="@drawable/christmas" />
@@ -223,7 +223,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/image_margin_top"
                 android:layout_marginTop="@dimen/image_margin_top"
-                android:background="@color/add_deck"
+                android:background="@android:color/transparent"
                 android:contentDescription="@string/icon_image"
                 android:padding="@dimen/image_padding"
                 android:src="@drawable/newspaper" />
@@ -234,7 +234,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/image_margin_top"
                 android:layout_marginTop="@dimen/image_margin_top"
-                android:background="@color/add_deck"
+                android:background="@android:color/transparent"
                 android:contentDescription="@string/icon_image"
                 android:padding="@dimen/image_padding"
                 android:src="@drawable/basketball" />
@@ -245,7 +245,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/image_margin_top"
                 android:layout_marginTop="@dimen/image_margin_top"
-                android:background="@color/add_deck"
+                android:background="@android:color/transparent"
                 android:contentDescription="@string/icon_image"
                 android:padding="@dimen/image_padding"
                 android:src="@drawable/musics" />
@@ -256,7 +256,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/image_margin_top"
                 android:layout_marginTop="@dimen/image_margin_top"
-                android:background="@color/add_deck"
+                android:background="@android:color/transparent"
                 android:contentDescription="@string/icon_image"
                 android:padding="@dimen/image_padding"
                 android:src="@drawable/hamburger" />
@@ -267,7 +267,9 @@
         android:id="@+id/done"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
+        android:background="@drawable/button_pressed"
         android:layout_alignParentBottom="true"
+        android:textColor="@android:color/white"
         android:text="@string/done" />
 
 </RelativeLayout>

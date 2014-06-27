@@ -14,7 +14,7 @@ import android.widget.TabHost.TabSpec;
 
 public class FrontBackCardFragment extends Fragment implements TabHost.OnTabChangeListener{
 	
-	public static final int GREEN  = 0xFF27AE60;
+	public static final int GREEN  = 0xFF16A085;
 	public static final int ORANGE = 0xFFD35400;
 	
 	private static final String TEXT = "Text";

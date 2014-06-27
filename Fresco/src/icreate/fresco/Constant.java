@@ -25,4 +25,16 @@ public class Constant {
 	public static final String FRONT_TYPE = "icreate.fresco.front_type";
 	public static final String BACK_CONTENT = "icreate.fresco.back_content";
 	public static final String BACK_TYPE = "icreate.fresco.back_type";
+	
+	public static final int color[][] = {
+		{142, 68 , 173},
+		{231, 76, 60},
+		{41, 128, 185},
+		{211, 84, 0},
+		{44, 62, 80},
+		{230, 126, 34}
+	};
+	
+	public static final int COLOR_NUMBER = color.length;
+	public static final String POSITION = "icreate.fresco.position";
 }

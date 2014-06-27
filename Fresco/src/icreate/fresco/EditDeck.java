@@ -1,5 +1,6 @@
 package icreate.fresco;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -17,6 +18,8 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
 
 public class EditDeck extends Activity implements OnClickListener {
 	EditText et;
@@ -33,7 +36,6 @@ public class EditDeck extends Activity implements OnClickListener {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.edit_deck);
-
 
 		delete = (Button)findViewById(R.id.delete);
 		done = (Button)findViewById(R.id.done);
@@ -75,7 +77,18 @@ public class EditDeck extends Activity implements OnClickListener {
 		hamburger.setOnClickListener(this);
 		done.setOnClickListener(this);
 		delete.setOnClickListener(this);
+		
+		RelativeLayout view = (RelativeLayout) findViewById(R.id.deckLayout);
+		int positionColor = getIntent().getIntExtra(Constant.POSITION_COLOR, 0);
+		view.setBackgroundColor(Color.argb(255, Constant.color[positionColor%Constant.COLOR_NUMBER][0], 
+				Constant.color[positionColor%Constant.COLOR_NUMBER][1], 
+				Constant.color[positionColor%Constant.COLOR_NUMBER][2]));
 
+		ActionBar actionBar = getActionBar();
+		ImageView homeIcon = (ImageView) findViewById(android.R.id.home);
+		homeIcon.setPadding(15, 0, 15, 0);
+		actionBar.setDisplayHomeAsUpEnabled(true);
+		
 		retrieveDeck();
 
 
@@ -87,7 +100,7 @@ public class EditDeck extends Activity implements OnClickListener {
 		String name = receiveIntent.getStringExtra(Constant.DECK_NAME); 
 		et.setText(name);
 		et.setSelection(name.length());
-		pos = receiveIntent.getIntExtra(Constant.POSITION_COLOR, 0);
+		pos = receiveIntent.getIntExtra(Constant.POSITION, 0);
 		icon = receiveIntent.getStringExtra(Constant.DECK_ICON);
 		switch(icon){
 		case "people":
@@ -193,6 +206,8 @@ public class EditDeck extends Activity implements OnClickListener {
 		.setMessage("Changes not saved will be discarded")
 		.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog, int which) {
+				Intent intent = new Intent(EditDeck.this, FrescoMain.class);
+				startActivity(intent);
 				finish();
 			}
 		});
@@ -365,8 +380,7 @@ public class EditDeck extends Activity implements OnClickListener {
 			});
 			dialogBuilder.setPositiveButton("Yes", new DialogInterface.OnClickListener(){
 				public void onClick(DialogInterface dialog, int which){
-					Intent i = getIntent();
-					pos = i.getIntExtra(Constant.POSITION_COLOR, 0);
+					Intent i = new Intent(EditDeck.this, FrescoMain.class);
 					i.putExtra("position", pos);
 					setResult(0, i);
 					finish();	
@@ -379,22 +393,22 @@ public class EditDeck extends Activity implements OnClickListener {
 		}
 	}
 	public void setDefaultColor(){
-		people.setBackgroundColor(Color.rgb(255, 23, 108));
-		hammer.setBackgroundColor(Color.rgb(255, 23, 108));
-		cat.setBackgroundColor(Color.rgb(255, 23, 108));
-		number.setBackgroundColor(Color.rgb(255, 23, 108));
-		german.setBackgroundColor(Color.rgb(255, 23, 108));
-		film.setBackgroundColor(Color.rgb(255, 23, 108));
-		talk.setBackgroundColor(Color.rgb(255, 23, 108));
-		key.setBackgroundColor(Color.rgb(255, 23, 108));
-		home.setBackgroundColor(Color.rgb(255, 23, 108));
-		book.setBackgroundColor(Color.rgb(255, 23, 108));
-		picture.setBackgroundColor(Color.rgb(255, 23, 108));
-		christmas.setBackgroundColor(Color.rgb(255, 23, 108));
-		newspaper.setBackgroundColor(Color.rgb(255, 23, 108));
-		basketball.setBackgroundColor(Color.rgb(255, 23, 108));
-		musics.setBackgroundColor(Color.rgb(255, 23, 108));
-		hamburger.setBackgroundColor(Color.rgb(255, 23, 108));
+		people.setBackgroundColor(Color.TRANSPARENT);
+		hammer.setBackgroundColor(Color.TRANSPARENT);
+		cat.setBackgroundColor(Color.TRANSPARENT);
+		number.setBackgroundColor(Color.TRANSPARENT);
+		german.setBackgroundColor(Color.TRANSPARENT);
+		film.setBackgroundColor(Color.TRANSPARENT);
+		talk.setBackgroundColor(Color.TRANSPARENT);
+		key.setBackgroundColor(Color.TRANSPARENT);
+		home.setBackgroundColor(Color.TRANSPARENT);
+		book.setBackgroundColor(Color.TRANSPARENT);
+		picture.setBackgroundColor(Color.TRANSPARENT);
+		christmas.setBackgroundColor(Color.TRANSPARENT);
+		newspaper.setBackgroundColor(Color.TRANSPARENT);
+		basketball.setBackgroundColor(Color.TRANSPARENT);
+		musics.setBackgroundColor(Color.TRANSPARENT);
+		hamburger.setBackgroundColor(Color.TRANSPARENT);
 	}
 	public int dpToPx(double dp) {
 		DisplayMetrics displayMetrics = getBaseContext().getResources().getDisplayMetrics();

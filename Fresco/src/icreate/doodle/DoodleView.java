@@ -59,7 +59,8 @@ public class DoodleView extends View {
 	}
 	
 	public void setBitmap(String jsonString) {
-		bitmap = convertToMutable(convertFromJSONToImage(jsonString));
+		Bitmap workingBitmap = Bitmap.createBitmap(convertFromJSONToImage(jsonString));
+		bitmap = workingBitmap.copy(Bitmap.Config.ARGB_8888, true);
 		bitmapCanvas = new Canvas(bitmap);
 	}
 	

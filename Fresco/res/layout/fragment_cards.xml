@@ -47,30 +47,30 @@
     	    android:layout_weight="1"
     	    android:orientation="vertical" >
     	    
-	         <LinearLayout
-	            android:id="@+id/card_face"
-	            android:layout_width="match_parent"
-	            android:layout_height="match_parent"
-	            android:background="@drawable/background"
-	            android:clickable="true"
-	            android:longClickable="true"
-	            android:gravity="center"
-	            android:orientation="vertical"
-	            android:padding="5dp" >
-	        </LinearLayout>
-	        
-	        <LinearLayout
-				android:id="@+id/card_back"
-				android:layout_width="match_parent"
-				android:layout_height="match_parent"
-				android:orientation="vertical" 
-				android:gravity="center"
-				android:clickable="true"
-				android:longClickable="true"
-				android:background="@drawable/background"
-				android:padding="5dp" 
-				android:visibility="gone">
-			</LinearLayout>
+		        <LinearLayout
+		            android:id="@+id/card_face"
+		            android:layout_width="match_parent"
+		            android:layout_height="match_parent"
+		            android:background="@drawable/background"
+		            android:clickable="true"
+		            android:longClickable="true"
+		            android:gravity="center"
+		            android:orientation="vertical"
+		            android:padding="5dp" >
+		        </LinearLayout>
+	 		        
+		        <LinearLayout
+					android:id="@+id/card_back"
+					android:layout_width="match_parent"
+					android:layout_height="match_parent"
+					android:orientation="vertical" 
+					android:gravity="center"
+					android:clickable="true"
+					android:longClickable="true"
+					android:background="@drawable/background"
+					android:padding="5dp" 
+					android:visibility="gone">
+				</LinearLayout>
 		
         </LinearLayout>
 		

@@ -10,7 +10,12 @@
     <color name="black">#ff000000</color>
     <color name="menuButtonColor">#ffea8e44</color>
      <color name="green_sea">#ff16a085</color>
-    <color name="green_sea_focused">#ff3498db</color>
+    <color name="green_sea_focused">#ff27ae60</color>
    <color name="add_deck">#FF176C</color>
    <color name="list_deck_background">#8e44ad</color>
+   <color name="delete">#e74c3c</color>
+   <color name="delete_focused">#c0392b</color>
+   <color name="nephitris">#27ae60</color>
+   <color name="belize_hole">#2980b9</color>
+   <color name="midnight_blue">#2c3e50</color>
 </resources>

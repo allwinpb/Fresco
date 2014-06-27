@@ -110,6 +110,31 @@ public class SqliteHelper extends SQLiteOpenHelper {
 		database.close();
 		Log.d("SqliteHelper", "Deck saved");
 	}
+	
+	public int getDeckID(Deck deck) {
+		SQLiteDatabase database = this.getReadableDatabase();
+		Cursor cursor = database.rawQuery(TABLE_DECK_LOAD, null);
+		
+		int deckID = 0;
+		
+		if(cursor.moveToFirst()) {
+			do {
+			
+				int deckId = Integer.parseInt(cursor.getString(0));
+				String deckName = cursor.getString(1);
+				String iconName = cursor.getString(2);
+				
+				if(deck.getDeckName().equals(deckName) && deck.getDeckIcon().equals(iconName)) {
+					deckID = deckId;
+				}
+				
+			} while(cursor.moveToNext());
+		}
+
+		database.close();
+		
+		return deckID;
+	}
 
 	public int updateDeck(Deck deck) {
 		SQLiteDatabase database = this.getWritableDatabase();

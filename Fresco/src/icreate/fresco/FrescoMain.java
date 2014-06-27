@@ -2,33 +2,24 @@ package icreate.fresco;
 
 import java.util.ArrayList;
 
-import android.os.Handler;
-import android.os.Message;
 import android.annotation.SuppressLint;
 import android.app.ListActivity;
-import android.content.DialogInterface;
-import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ImageView;
+import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ListView;
-import android.app.AlertDialog;
 
 public class FrescoMain extends ListActivity {
 	private ArrayList<Deck> listDeck = new ArrayList<Deck>();
 
-	public static final int color[][] = {
-		{142, 68 , 173},
-		{192, 57, 43},
-		{41, 128, 185},
-		{211, 84, 0},
-		{44, 62, 80},
-		{230, 126, 34}}; 
 	public static final String icon[]={"people", "hammer", "cat", "number", "german", "film", "talk", "key", "home",
 		"book", "picture", "christmas", "newspaper",  "basketball", "musics", "hamburger"};
 	//private ArrayAdapter<String> adapter;
@@ -45,7 +36,9 @@ public class FrescoMain extends ListActivity {
 		listDeck = database.getDecks();
 		m_adapter = new ItemAdapter(this, R.layout.list_deck, listDeck);
 		setListAdapter(m_adapter);
-
+		
+		ImageView homeIcon = (ImageView) findViewById(android.R.id.home);
+		homeIcon.setPadding(5, 0, 15, 0);
 
 		this.getListView().setLongClickable(true);
 		this.getListView().setOnItemLongClickListener(new OnItemLongClickListener() {
@@ -56,6 +49,7 @@ public class FrescoMain extends ListActivity {
 				intent.putExtra(Constant.DECK_ID, deck.getDeckID());
 				intent.putExtra(Constant.DECK_NAME, deck.getDeckName());
 				intent.putExtra(Constant.DECK_ICON, deck.getDeckIcon());
+				intent.putExtra(Constant.POSITION, position);
 				intent.putExtra(Constant.POSITION_COLOR, position);
 				startActivityForResult(intent, 2);
 				return true;
@@ -113,7 +107,7 @@ public class FrescoMain extends ListActivity {
 		Deck deck = listDeck.get(position);
 		intent.putExtra(Constant.DECK_ID, deck.getDeckID());
 		intent.putExtra(Constant.POSITION_COLOR, position);
-		startActivityForResult(intent, 1);
+		startActivity(intent);
 
 	}
 	public static SqliteHelper getDatabase() {
@@ -138,6 +132,7 @@ public class FrescoMain extends ListActivity {
 		switch(item.getItemId()){
 		case R.id.add_icon:
 			Intent i = new Intent(this, AddDeck.class);
+			i.putExtra(Constant.POSITION_COLOR, (listDeck.size()));
 			startActivityForResult(i, 1);
 			break;
 		case R.id.search_icon:
@@ -156,6 +151,7 @@ public class FrescoMain extends ListActivity {
 				Deck tmp = new Deck(data.getStringExtra("deck"));
 				tmp.setDeckIcon(data.getStringExtra("icon"));
 				database.insertDeck(tmp);
+				tmp.setDeckID(database.getDeckID(tmp));
 				listDeck.add(tmp);
 				m_adapter.notifyDataSetChanged();
 
@@ -177,7 +173,8 @@ public class FrescoMain extends ListActivity {
 
 			}
 			else{
-
+				database.deleteDeck(tmp.getDeckID());
+				listDeck.remove(tmp);
 				m_adapter.notifyDataSetChanged();
 
 			}

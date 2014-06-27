@@ -14,14 +14,6 @@ import android.widget.TextView;
 public class ItemAdapter extends ArrayAdapter<Deck> {
 	private ArrayList<Deck> objects;
 	
-	public static final int color[][] = {
-		{142, 68 , 173},
-		{192, 57, 43},
-		{41, 128, 185},
-		{211, 84, 0},
-		{44, 62, 80},
-		{230, 126, 34}};
-	
 	public ItemAdapter(Context context, int textViewResourceId, ArrayList<Deck> objects) {
 		super(context, textViewResourceId, objects);
 		this.objects = objects;
@@ -58,7 +50,7 @@ public class ItemAdapter extends ArrayAdapter<Deck> {
 			
 		}
 		// the view must be returned to our activity
-		v.setBackgroundColor(Color.argb(255, color[position%6][0], color[position%6][1], color[position%6][2]));
+		v.setBackgroundColor(Color.argb(255, Constant.color[position%Constant.COLOR_NUMBER][0], Constant.color[position%Constant.COLOR_NUMBER][1], Constant.color[position%Constant.COLOR_NUMBER][2]));
 		return v;
 	}
 }

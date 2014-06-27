@@ -28,6 +28,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 public class CardsFragment extends Fragment {
@@ -155,7 +156,9 @@ public class CardsFragment extends Fragment {
 	    cardBack = (LinearLayout) view.findViewById(R.id.card_back);
 	    
 	    View front = setUpTextImageView(currentCard.getContent(Side.FRONT), currentCard.getType(Side.FRONT));
+	    front.setPadding(15, 15, 15, 15);
 	    View back = setUpTextImageView(currentCard.getContent(Side.BACK), currentCard.getType(Side.BACK));
+	    back.setPadding(15, 15, 15, 15);
 	    
 	    LayoutParams lp = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT, 1);
 	    cardFace.addView(front, lp);
@@ -208,7 +211,15 @@ public class CardsFragment extends Fragment {
 		Log.d("CardsFragment", "addText");
 		TextView textView = new TextView(this.getActivity());
 		textView.setText(text);
-		textView.setTextSize(25);
+		
+		if(text.length() <= 50)
+			textView.setTextSize(25);
+		else if(text.length() <= 150)
+			textView.setTextSize(20);
+		else 
+			textView.setTextSize(15);
+		
+		textView.setPadding(10, 10, 10, 10);
 		textView.setTextColor(Color.WHITE);
 		textView.setGravity(Gravity.CENTER);
 		

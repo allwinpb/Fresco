@@ -370,7 +370,7 @@ public class FragmentDoodle extends Fragment {
 		paint.setStrokeCap(Paint.Cap.ROUND);
 		
 		bitmap.eraseColor(Color.argb(255, 39, 174, 96));
-		canvas.drawLine(50, 50, 370, 50, paint);
+		canvas.drawLine(50, 50, 350, 50, paint);
 		
 		imageView.setImageBitmap(bitmap);
 		

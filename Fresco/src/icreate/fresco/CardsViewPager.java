@@ -12,14 +12,6 @@ import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.util.Log;
 
 public class CardsViewPager extends FragmentActivity {
-	
-	public static final int color[][] = {
-		{142, 68 , 173},
-		{192, 57, 43},
-		{41, 128, 185},
-		{211, 84, 0},
-		{44, 62, 80},
-		{230, 126, 34}};
 
 	private static Deck deck;
 	private ViewPager viewPager;
@@ -101,7 +93,7 @@ public class CardsViewPager extends FragmentActivity {
 	}	
 	
 	public int getColor() {
-		return Color.argb(255, color[positionColor%6][0], color[positionColor%6][1], color[positionColor%6][2]);
+		return Color.argb(255, Constant.color[positionColor%Constant.COLOR_NUMBER][0], Constant.color[positionColor%Constant.COLOR_NUMBER][1], Constant.color[positionColor%Constant.COLOR_NUMBER][2]);
 	}
 	
 	public int getPositionColor() {
