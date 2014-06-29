@@ -2,7 +2,6 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    
     android:background="@color/add_deck"
     android:padding="20dp" >
 
@@ -25,24 +24,24 @@
             android:layout_width="@dimen/game_card_bar"
             android:layout_height="@dimen/game_card_size"
             android:layout_weight="1"
-            android:contentDescription="@string/front_bar_left" 
-            android:background="@drawable/background_bar"/>
+            android:background="@drawable/background_bar"
+            android:contentDescription="@string/front_bar_left" />
 
         <ImageView
             android:id="@+id/frontBarLeft3"
             android:layout_width="@dimen/game_card_bar"
             android:layout_height="@dimen/game_card_size"
-            android:layout_weight="1" 
-            android:contentDescription="@string/front_bar_left"
-            android:background="@drawable/background_bar"/>
+            android:layout_weight="1"
+            android:background="@drawable/background_bar"
+            android:contentDescription="@string/front_bar_left" />
 
         <ImageView
             android:id="@+id/frontBarLeft4"
             android:layout_width="@dimen/game_card_bar"
             android:layout_height="@dimen/game_card_size"
-            android:layout_weight="1" 
-            android:contentDescription="@string/front_bar_left"
-            android:background="@drawable/background_bar"/>
+            android:layout_weight="1"
+            android:background="@drawable/background_bar"
+            android:contentDescription="@string/front_bar_left" />
     </LinearLayout>
 
     <LinearLayout
@@ -54,122 +53,161 @@
         android:layout_toRightOf="@+id/frontBarLeft"
         android:orientation="vertical" >
 
-        <ImageButton
-            android:id="@+id/cardFront1"
-            android:layout_width="@dimen/game_card_size"
-            android:layout_height="@dimen/game_card_size"
-            android:layout_weight="1"
-            android:background="@drawable/background"
-            android:src="@drawable/key" 
-            android:contentDescription="@string/card_front"/>
+       <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:layout_weight="1" >
 
-        <ImageButton
-            android:id="@+id/cardFront2"
-            android:layout_width="@dimen/game_card_size"
-            android:layout_height="@dimen/game_card_size"
-            android:layout_weight="1"
-            android:background="@drawable/background"
-            android:padding="10dp"
-            android:src="@drawable/cat" 
-            android:contentDescription="@string/card_front"/>
+            <ImageButton
+                android:id="@+id/cardImageFront1"
+                android:layout_width="@dimen/game_card_size"
+                android:layout_height="fill_parent"
+                android:background="@drawable/background"
+                android:contentDescription="@string/card_front"
+                android:src="@drawable/key" />
 
-        <ImageButton
-            android:id="@+id/cardFront3"
-            android:layout_width="@dimen/game_card_size"
-            android:layout_height="@dimen/game_card_size"
-            android:layout_weight="1"
-            android:src="@drawable/german" 
-            android:background="@drawable/background"
-            android:contentDescription="@string/card_front"/>
+            <Button
+                android:id="@+id/cardFront1"
+                android:layout_width="@dimen/game_card_size"
+                android:layout_height="fill_parent" />
+        </RelativeLayout>
 
-        <ImageButton
-            android:id="@+id/cardFront4"
-            android:layout_width="@dimen/game_card_size"
-            android:layout_height="@dimen/game_card_size"
-            android:layout_weight="1"
-            android:background="@drawable/background"
-            android:src="@drawable/basketball" 
-            android:contentDescription="@string/card_front"/>
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:layout_weight="1" >
+
+            <ImageButton
+                android:id="@+id/cardImageFront2"
+                android:layout_width="@dimen/game_card_size"
+                android:layout_height="fill_parent"
+                android:background="@drawable/background"
+                android:contentDescription="@string/card_front"
+                android:src="@drawable/cat" />
+
+            <Button
+                android:id="@+id/cardFront2"
+                android:layout_width="@dimen/game_card_size"
+                android:layout_height="fill_parent" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:layout_weight="1" >
+
+            <ImageButton
+                android:id="@+id/cardImageFront3"
+                android:layout_width="@dimen/game_card_size"
+                android:layout_height="fill_parent"
+                android:background="@drawable/background"
+                android:contentDescription="@string/card_front"
+                android:src="@drawable/german" />
+
+            <Button
+                android:id="@+id/cardFront3"
+                android:layout_width="@dimen/game_card_size"
+                android:layout_height="fill_parent" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:layout_weight="1" >
+
+            <ImageButton
+                android:id="@+id/cardImageFront4"
+                android:layout_width="@dimen/game_card_size"
+                android:layout_height="fill_parent"
+                android:background="@drawable/background"
+                android:contentDescription="@string/card_front"
+                android:src="@drawable/basketball" />
+
+            <Button
+                android:id="@+id/cardFront4"
+                android:layout_width="@dimen/game_card_size"
+                android:layout_height="fill_parent" />
+        </RelativeLayout>
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/frontBarRight"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_toRightOf="@+id/cardFront"
-        android:orientation="vertical"
-        android:id="@+id/frontBarRight" >
+        android:orientation="vertical" >
 
         <ImageView
             android:id="@+id/frontBarRight1"
             android:layout_width="@dimen/game_card_bar"
             android:layout_height="@dimen/game_card_size"
             android:layout_weight="1"
-            android:contentDescription="@string/front_bar_right" 
-            android:background="@drawable/background_bar"/>
+            android:background="@drawable/background_bar"
+            android:contentDescription="@string/front_bar_right" />
 
         <ImageView
             android:id="@+id/frontBarRight2"
             android:layout_width="@dimen/game_card_bar"
             android:layout_height="@dimen/game_card_size"
-            android:layout_weight="1" 
-            android:contentDescription="@string/front_bar_right"
-            android:background="@drawable/background_bar"/>
+            android:layout_weight="1"
+            android:background="@drawable/background_bar"
+            android:contentDescription="@string/front_bar_right" />
 
         <ImageView
             android:id="@+id/frontBarRight3"
             android:layout_width="@dimen/game_card_bar"
             android:layout_height="@dimen/game_card_size"
-            android:layout_weight="1" 
-            android:contentDescription="@string/front_bar_right"
-            android:background="@drawable/background_bar"/>
+            android:layout_weight="1"
+            android:background="@drawable/background_bar"
+            android:contentDescription="@string/front_bar_right" />
 
         <ImageView
             android:id="@+id/frontBarRight4"
             android:layout_width="@dimen/game_card_bar"
             android:layout_height="@dimen/game_card_size"
-            android:layout_weight="1" 
-            android:contentDescription="@string/front_bar_right"
-            android:background="@drawable/background_bar"/>
+            android:layout_weight="1"
+            android:background="@drawable/background_bar"
+            android:contentDescription="@string/front_bar_right" />
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/backBarLeft"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_toLeftOf="@+id/cardBack"
-        android:orientation="vertical" 
-        android:id="@+id/backBarLeft">
+        android:orientation="vertical" >
 
         <ImageView
             android:id="@+id/backBarLeft1"
             android:layout_width="@dimen/game_card_bar"
             android:layout_height="@dimen/game_card_size"
-            android:layout_weight="1" 
-            android:contentDescription="@string/back_bar_left"
-            android:background="@drawable/background_bar"/>
+            android:layout_weight="1"
+            android:background="@drawable/background_bar"
+            android:contentDescription="@string/back_bar_left" />
 
         <ImageView
             android:id="@+id/backBarLeft2"
             android:layout_width="@dimen/game_card_bar"
             android:layout_height="@dimen/game_card_size"
-            android:layout_weight="1" 
-            android:contentDescription="@string/back_bar_left"
-            android:background="@drawable/background_bar"/>
+            android:layout_weight="1"
+            android:background="@drawable/background_bar"
+            android:contentDescription="@string/back_bar_left" />
 
         <ImageView
             android:id="@+id/backBarLeft3"
             android:layout_width="@dimen/game_card_bar"
             android:layout_height="@dimen/game_card_size"
-            android:layout_weight="1" 
-            android:contentDescription="@string/back_bar_left"
-            android:background="@drawable/background_bar"/>
+            android:layout_weight="1"
+            android:background="@drawable/background_bar"
+            android:contentDescription="@string/back_bar_left" />
 
         <ImageView
             android:id="@+id/backBarLeft4"
             android:layout_width="@dimen/game_card_bar"
             android:layout_height="@dimen/game_card_size"
-            android:layout_weight="1"  
-            android:contentDescription="@string/back_bar_left"
-            android:background="@drawable/background_bar"/>
+            android:layout_weight="1"
+            android:background="@drawable/background_bar"
+            android:contentDescription="@string/back_bar_left" />
     </LinearLayout>
 
     <LinearLayout
@@ -179,41 +217,81 @@
         android:layout_toLeftOf="@+id/backBarRight"
         android:orientation="vertical" >
 
-        <ImageButton
-            android:id="@+id/cardBack1"
-            android:layout_width="@dimen/game_card_size"
-            android:layout_height="@dimen/game_card_size"
-            android:layout_weight="1"
-            android:src="@drawable/key" 
-            android:background="@drawable/background"
-            android:contentDescription="@string/card_back"/>
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:layout_weight="1" >
 
-        <ImageButton
-            android:id="@+id/cardBack2"
-            android:layout_width="@dimen/game_card_size"
-            android:layout_height="@dimen/game_card_size"
-            android:layout_weight="1"
-            android:src="@drawable/cat" 
-            android:background="@drawable/background"
-            android:contentDescription="@string/card_back"/>
+            <ImageButton
+                android:id="@+id/cardImageBack1"
+                android:layout_width="@dimen/game_card_size"
+                android:layout_height="fill_parent"
+                android:background="@drawable/background"
+                android:contentDescription="@string/card_back"
+                android:src="@drawable/key" />
 
-        <ImageButton
-            android:id="@+id/cardBack3"
-            android:layout_width="@dimen/game_card_size"
-            android:layout_height="@dimen/game_card_size"
-            android:layout_weight="1"
-            android:background="@drawable/background"
-            android:src="@drawable/german" 
-            android:contentDescription="@string/card_back"/>
+            <Button
+                android:id="@+id/cardBack1"
+                android:layout_width="@dimen/game_card_size"
+                android:layout_height="fill_parent" />
+        </RelativeLayout>
 
-        <ImageButton
-            android:id="@+id/cardBack4"
-            android:layout_width="@dimen/game_card_size"
-            android:layout_height="@dimen/game_card_size"
-            android:layout_weight="1"
-            android:background="@drawable/background"
-            android:src="@drawable/basketball" 
-            android:contentDescription="@string/card_back"/>
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:layout_weight="1" >
+
+            <ImageButton
+                android:id="@+id/cardImageBack2"
+                android:layout_width="@dimen/game_card_size"
+                android:layout_height="fill_parent"
+                android:background="@drawable/background"
+                android:contentDescription="@string/card_back"
+                android:src="@drawable/cat" />
+
+            <Button
+                android:id="@+id/cardBack2"
+                android:layout_width="@dimen/game_card_size"
+                android:layout_height="fill_parent" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:layout_weight="1" >
+
+            <ImageButton
+                android:id="@+id/cardImageBack3"
+                android:layout_width="@dimen/game_card_size"
+                android:layout_height="fill_parent"
+                android:background="@drawable/background"
+                android:contentDescription="@string/card_back"
+                android:src="@drawable/german" />
+
+            <Button
+                android:id="@+id/cardBack3"
+                android:layout_width="@dimen/game_card_size"
+                android:layout_height="fill_parent" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:layout_weight="1" >
+
+            <ImageButton
+                android:id="@+id/cardImageBack4"
+                android:layout_width="@dimen/game_card_size"
+                android:layout_height="fill_parent"
+                android:background="@drawable/background"
+                android:contentDescription="@string/card_back"
+                android:src="@drawable/basketball" />
+
+            <Button
+                android:id="@+id/cardBack4"
+                android:layout_width="@dimen/game_card_size"
+                android:layout_height="fill_parent" />
+        </RelativeLayout>
     </LinearLayout>
 
     <LinearLayout
@@ -227,33 +305,33 @@
             android:id="@+id/backBarRight1"
             android:layout_width="@dimen/game_card_bar"
             android:layout_height="@dimen/game_card_size"
-            android:layout_weight="1" 
-            android:contentDescription="@string/back_bar_right"
-            android:background="@drawable/background_bar"/>
+            android:layout_weight="1"
+            android:background="@drawable/background_bar"
+            android:contentDescription="@string/back_bar_right" />
 
         <ImageView
             android:id="@+id/backBarRight2"
             android:layout_width="@dimen/game_card_bar"
             android:layout_height="@dimen/game_card_size"
-            android:layout_weight="1" 
-            android:contentDescription="@string/back_bar_right"
-            android:background="@drawable/background_bar"/>
+            android:layout_weight="1"
+            android:background="@drawable/background_bar"
+            android:contentDescription="@string/back_bar_right" />
 
         <ImageView
             android:id="@+id/backBarRight3"
             android:layout_width="@dimen/game_card_bar"
             android:layout_height="@dimen/game_card_size"
-            android:layout_weight="1" 
-            android:contentDescription="@string/back_bar_right"
-            android:background="@drawable/background_bar"/>
+            android:layout_weight="1"
+            android:background="@drawable/background_bar"
+            android:contentDescription="@string/back_bar_right" />
 
         <ImageView
             android:id="@+id/backBarRight4"
             android:layout_width="@dimen/game_card_bar"
             android:layout_height="@dimen/game_card_size"
-            android:layout_weight="1" 
-            android:contentDescription="@string/back_bar_right"
-            android:background="@drawable/background_bar"/>
+            android:layout_weight="1"
+            android:background="@drawable/background_bar"
+            android:contentDescription="@string/back_bar_right" />
     </LinearLayout>
 
     <ImageButton
@@ -261,8 +339,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/frontBarRight"
-        android:layout_toRightOf="@+id/frontBarRight"
         android:layout_toLeftOf="@+id/backBarLeft"
+        android:layout_toRightOf="@+id/frontBarRight"
         android:background="@drawable/background_button"
         android:contentDescription="@string/match"
         android:padding="8dp"
