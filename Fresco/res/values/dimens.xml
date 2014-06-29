@@ -9,4 +9,6 @@
     <dimen name="image_margin_top">10dp</dimen>
     <dimen name="image_padding">10dp</dimen>
     <dimen name="list_deck_margin_left_right">15dp</dimen>
+    <dimen name="game_card_bar">15dp</dimen>
+    <dimen name="game_card_size">80dp</dimen>
 </resources>

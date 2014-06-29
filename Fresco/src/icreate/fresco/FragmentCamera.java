@@ -61,10 +61,17 @@ public class FragmentCamera extends Fragment {
 				isUploaded = true;
 				Intent image = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 				getParentFragment().startActivityForResult(image, cameraData);
+				
 			}
 		});
 		return view;
 	}
+	
+	
+	
+	
+	
+	
 	@Override
 	public void onSaveInstanceState(Bundle outState) {
 		outState.putParcelable("camera", bmp);

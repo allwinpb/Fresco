@@ -46,5 +46,12 @@
     <string name="icon_image">Image1</string>
     <string name="no_icon">Select an Icon</string>
     <string name="delete">Delete this deck</string>
+    <string name="front_bar_left">Front bar left</string>
+    <string name="front_bar_right">Front bar right</string>
+    <string name="back_bar_left">Back bar left</string>
+    <string name="back_bar_right">Back bar right</string>
+    <string name="card_front">Card front</string>
+    <string name="card_back">Card back</string>
+    <string name="match">M</string>
 
 </resources>

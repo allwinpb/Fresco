@@ -1,0 +1,271 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    
+    android:background="@color/add_deck"
+    android:padding="20dp" >
+
+    <LinearLayout
+        android:id="@+id/frontBarLeft"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:orientation="vertical" >
+
+        <ImageView
+            android:id="@+id/frontBarLeft1"
+            android:layout_width="@dimen/game_card_bar"
+            android:layout_height="@dimen/game_card_size"
+            android:layout_weight="1"
+            android:background="@drawable/background_bar"
+            android:contentDescription="@string/front_bar_left" />
+
+        <ImageView
+            android:id="@+id/frontBarLeft2"
+            android:layout_width="@dimen/game_card_bar"
+            android:layout_height="@dimen/game_card_size"
+            android:layout_weight="1"
+            android:contentDescription="@string/front_bar_left" 
+            android:background="@drawable/background_bar"/>
+
+        <ImageView
+            android:id="@+id/frontBarLeft3"
+            android:layout_width="@dimen/game_card_bar"
+            android:layout_height="@dimen/game_card_size"
+            android:layout_weight="1" 
+            android:contentDescription="@string/front_bar_left"
+            android:background="@drawable/background_bar"/>
+
+        <ImageView
+            android:id="@+id/frontBarLeft4"
+            android:layout_width="@dimen/game_card_bar"
+            android:layout_height="@dimen/game_card_size"
+            android:layout_weight="1" 
+            android:contentDescription="@string/front_bar_left"
+            android:background="@drawable/background_bar"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/cardFront"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentTop="true"
+        android:layout_toRightOf="@+id/frontBarLeft"
+        android:orientation="vertical" >
+
+        <ImageButton
+            android:id="@+id/cardFront1"
+            android:layout_width="@dimen/game_card_size"
+            android:layout_height="@dimen/game_card_size"
+            android:layout_weight="1"
+            android:background="@drawable/background"
+            android:src="@drawable/key" 
+            android:contentDescription="@string/card_front"/>
+
+        <ImageButton
+            android:id="@+id/cardFront2"
+            android:layout_width="@dimen/game_card_size"
+            android:layout_height="@dimen/game_card_size"
+            android:layout_weight="1"
+            android:background="@drawable/background"
+            android:padding="10dp"
+            android:src="@drawable/cat" 
+            android:contentDescription="@string/card_front"/>
+
+        <ImageButton
+            android:id="@+id/cardFront3"
+            android:layout_width="@dimen/game_card_size"
+            android:layout_height="@dimen/game_card_size"
+            android:layout_weight="1"
+            android:src="@drawable/german" 
+            android:background="@drawable/background"
+            android:contentDescription="@string/card_front"/>
+
+        <ImageButton
+            android:id="@+id/cardFront4"
+            android:layout_width="@dimen/game_card_size"
+            android:layout_height="@dimen/game_card_size"
+            android:layout_weight="1"
+            android:background="@drawable/background"
+            android:src="@drawable/basketball" 
+            android:contentDescription="@string/card_front"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_toRightOf="@+id/cardFront"
+        android:orientation="vertical"
+        android:id="@+id/frontBarRight" >
+
+        <ImageView
+            android:id="@+id/frontBarRight1"
+            android:layout_width="@dimen/game_card_bar"
+            android:layout_height="@dimen/game_card_size"
+            android:layout_weight="1"
+            android:contentDescription="@string/front_bar_right" 
+            android:background="@drawable/background_bar"/>
+
+        <ImageView
+            android:id="@+id/frontBarRight2"
+            android:layout_width="@dimen/game_card_bar"
+            android:layout_height="@dimen/game_card_size"
+            android:layout_weight="1" 
+            android:contentDescription="@string/front_bar_right"
+            android:background="@drawable/background_bar"/>
+
+        <ImageView
+            android:id="@+id/frontBarRight3"
+            android:layout_width="@dimen/game_card_bar"
+            android:layout_height="@dimen/game_card_size"
+            android:layout_weight="1" 
+            android:contentDescription="@string/front_bar_right"
+            android:background="@drawable/background_bar"/>
+
+        <ImageView
+            android:id="@+id/frontBarRight4"
+            android:layout_width="@dimen/game_card_bar"
+            android:layout_height="@dimen/game_card_size"
+            android:layout_weight="1" 
+            android:contentDescription="@string/front_bar_right"
+            android:background="@drawable/background_bar"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_toLeftOf="@+id/cardBack"
+        android:orientation="vertical" 
+        android:id="@+id/backBarLeft">
+
+        <ImageView
+            android:id="@+id/backBarLeft1"
+            android:layout_width="@dimen/game_card_bar"
+            android:layout_height="@dimen/game_card_size"
+            android:layout_weight="1" 
+            android:contentDescription="@string/back_bar_left"
+            android:background="@drawable/background_bar"/>
+
+        <ImageView
+            android:id="@+id/backBarLeft2"
+            android:layout_width="@dimen/game_card_bar"
+            android:layout_height="@dimen/game_card_size"
+            android:layout_weight="1" 
+            android:contentDescription="@string/back_bar_left"
+            android:background="@drawable/background_bar"/>
+
+        <ImageView
+            android:id="@+id/backBarLeft3"
+            android:layout_width="@dimen/game_card_bar"
+            android:layout_height="@dimen/game_card_size"
+            android:layout_weight="1" 
+            android:contentDescription="@string/back_bar_left"
+            android:background="@drawable/background_bar"/>
+
+        <ImageView
+            android:id="@+id/backBarLeft4"
+            android:layout_width="@dimen/game_card_bar"
+            android:layout_height="@dimen/game_card_size"
+            android:layout_weight="1"  
+            android:contentDescription="@string/back_bar_left"
+            android:background="@drawable/background_bar"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/cardBack"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_toLeftOf="@+id/backBarRight"
+        android:orientation="vertical" >
+
+        <ImageButton
+            android:id="@+id/cardBack1"
+            android:layout_width="@dimen/game_card_size"
+            android:layout_height="@dimen/game_card_size"
+            android:layout_weight="1"
+            android:src="@drawable/key" 
+            android:background="@drawable/background"
+            android:contentDescription="@string/card_back"/>
+
+        <ImageButton
+            android:id="@+id/cardBack2"
+            android:layout_width="@dimen/game_card_size"
+            android:layout_height="@dimen/game_card_size"
+            android:layout_weight="1"
+            android:src="@drawable/cat" 
+            android:background="@drawable/background"
+            android:contentDescription="@string/card_back"/>
+
+        <ImageButton
+            android:id="@+id/cardBack3"
+            android:layout_width="@dimen/game_card_size"
+            android:layout_height="@dimen/game_card_size"
+            android:layout_weight="1"
+            android:background="@drawable/background"
+            android:src="@drawable/german" 
+            android:contentDescription="@string/card_back"/>
+
+        <ImageButton
+            android:id="@+id/cardBack4"
+            android:layout_width="@dimen/game_card_size"
+            android:layout_height="@dimen/game_card_size"
+            android:layout_weight="1"
+            android:background="@drawable/background"
+            android:src="@drawable/basketball" 
+            android:contentDescription="@string/card_back"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/backBarRight"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_alignParentRight="true"
+        android:orientation="vertical" >
+
+        <ImageView
+            android:id="@+id/backBarRight1"
+            android:layout_width="@dimen/game_card_bar"
+            android:layout_height="@dimen/game_card_size"
+            android:layout_weight="1" 
+            android:contentDescription="@string/back_bar_right"
+            android:background="@drawable/background_bar"/>
+
+        <ImageView
+            android:id="@+id/backBarRight2"
+            android:layout_width="@dimen/game_card_bar"
+            android:layout_height="@dimen/game_card_size"
+            android:layout_weight="1" 
+            android:contentDescription="@string/back_bar_right"
+            android:background="@drawable/background_bar"/>
+
+        <ImageView
+            android:id="@+id/backBarRight3"
+            android:layout_width="@dimen/game_card_bar"
+            android:layout_height="@dimen/game_card_size"
+            android:layout_weight="1" 
+            android:contentDescription="@string/back_bar_right"
+            android:background="@drawable/background_bar"/>
+
+        <ImageView
+            android:id="@+id/backBarRight4"
+            android:layout_width="@dimen/game_card_bar"
+            android:layout_height="@dimen/game_card_size"
+            android:layout_weight="1" 
+            android:contentDescription="@string/back_bar_right"
+            android:background="@drawable/background_bar"/>
+    </LinearLayout>
+
+    <ImageButton
+        android:id="@+id/match"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/frontBarRight"
+        android:layout_toRightOf="@+id/frontBarRight"
+        android:layout_toLeftOf="@+id/backBarLeft"
+        android:background="@drawable/background_button"
+        android:contentDescription="@string/match"
+        android:padding="8dp"
+        android:src="@drawable/sun" />
+
+</RelativeLayout>
