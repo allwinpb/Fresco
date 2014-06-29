@@ -117,9 +117,9 @@ public class FragmentDoodle extends Fragment {
 		sizeImageButton.setOnClickListener(listener);
 		clearAllImageButton.setOnClickListener(listener);
 		
-		/*if(!jsonString.isEmpty()) {
-			doodle.setBitmap(jsonString);
-		}*/
+		if(!jsonString.isEmpty()) {
+			doodle.setBackgroundOfPreviousDoodle(jsonString);
+		}
         
         return view;
     }
@@ -347,13 +347,11 @@ public class FragmentDoodle extends Fragment {
 
 		@Override
 		public void onStartTrackingTouch(SeekBar seekBar) {
-			// TODO Auto-generated method stub
 			
 		}
 
 		@Override
 		public void onStopTrackingTouch(SeekBar seekBar) {
-			// TODO Auto-generated method stub
 			
 		}
 	};
@@ -383,7 +381,5 @@ public class FragmentDoodle extends Fragment {
 	public boolean isEmpty() {
 		return doodle.isEmpty();
 	}
-
-	
 
 }
