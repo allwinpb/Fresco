@@ -1,5 +1,8 @@
 package icreate.fresco;
 
+import java.util.List;
+
+import android.R.integer;
 import android.app.Activity;
 import android.graphics.Bitmap;
 import android.os.Bundle;
@@ -22,6 +25,9 @@ public class MatchingGame extends Activity {
 	
 	
 	private Card one, two, three, four;
+	
+	List<integer> origin;
+	List<integer> copy;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub

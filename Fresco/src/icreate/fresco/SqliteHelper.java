@@ -36,6 +36,7 @@ public class SqliteHelper extends SQLiteOpenHelper {
 			DECK_ID + " integer primary key autoincrement, " + 
 			DECK_NAME + " text not null, "+
 			DECK_ICON_NAME + " text not null);";
+	
 	private static final String TABLE_CARD_CREATE = "create table "
 			+ TABLE_CARD + "(" + 
 			CARD_ID + " integer primary key autoincrement, " + 

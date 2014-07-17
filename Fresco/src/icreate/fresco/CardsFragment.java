@@ -370,7 +370,7 @@ public class CardsFragment extends Fragment {
 		intent.putExtra(Constant.POSITION_COLOR, ((CardsViewPager)getActivity()).getPositionColor());
 		intent.putExtra(Constant.SIDE, true);
 		startActivity(intent);
-		getActivity().finish();
+		//getActivity().finish();
 	}
 	
 	private void deleteCard(Card currentCard) {

@@ -53,5 +53,14 @@
     <string name="card_front">Card front</string>
     <string name="card_back">Card back</string>
     <string name="match">M</string>
+    <string name="game">Game</string>
+    <string name="facebook">Facebook</string>
+    <string name="get_a_deck">Get a Deck</string>
+    <string name="challenge">Challenge a friend</string>
+    <string name="what_new">News</string>
+    <string name="face">Face</string>
+    <string name="name">Name</string>
+    <string name="drawer_open">Open navigation drawer</string>
+    <string name="drawer_close">Close navigation drawer</string>
 
 </resources>

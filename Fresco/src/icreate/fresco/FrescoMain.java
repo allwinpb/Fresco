@@ -1,14 +1,15 @@
 package icreate.fresco;
 
 import java.util.ArrayList;
-
 import android.annotation.SuppressLint;
+import android.app.ActionBar;
 import android.app.ListActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.util.Log;
+import android.support.v4.app.ActionBarDrawerToggle;
+import android.support.v4.widget.DrawerLayout;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -27,6 +28,9 @@ public class FrescoMain extends ListActivity {
 	private Runnable viewParts;
 	private ItemAdapter m_adapter;
 	private static SqliteHelper database;
+	
+	//private DrawerLayout drawerlayout;
+	//private ActionBarDrawerToggle ABDToggle;
 	MenuItem searchItem;
 
 	@Override
@@ -36,8 +40,15 @@ public class FrescoMain extends ListActivity {
 		listDeck = database.getDecks();
 		m_adapter = new ItemAdapter(this, R.layout.list_deck, listDeck);
 		setListAdapter(m_adapter);
-		
+		/*
+		ActionBar actionBar = getActionBar();
+		actionBar.setDisplayHomeAsUpEnabled(true);
+
+		*/
 		ImageView homeIcon = (ImageView) findViewById(android.R.id.home);
+		
+		//drawerlayout = (DrawerLayout)findViewById(R.id.drawer_layout);
+		
 		homeIcon.setPadding(5, 0, 15, 0);
 
 		this.getListView().setLongClickable(true);
@@ -55,8 +66,26 @@ public class FrescoMain extends ListActivity {
 				return true;
 			}	
 		});
+		/*
+		
+		 ABDToggle = new ActionBarDrawerToggle(
+	                this,                  
+	               drawerlayout,         
+	                R.drawable.ic_action_overflow, 
+	                R.string.drawer_open, 
+	                R.string.drawer_close  
+	                ) {
+	            public void onDrawerClosed(View view) {
+	             
+	                invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
+	            }
 
-
+	            public void onDrawerOpened(View drawerView) {
+	                invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
+	            }
+	        };
+	        drawerlayout.setDrawerListener(ABDToggle);
+	        */
 
 		viewParts = new Runnable(){
 			public void run(){
@@ -99,6 +128,13 @@ public class FrescoMain extends ListActivity {
 		listDeck.add(deck1);
 
 	}*/
+	
+	/*
+	public boolean onPrepareOptionsMenu(Menu menu) {
+		
+		 return super.onPrepareOptionsMenu(menu);
+	};
+	*/
 	@Override
 	protected void onListItemClick(ListView l, View v, int position, long id) {
 		// TODO Auto-generated method stub
@@ -129,6 +165,9 @@ public class FrescoMain extends ListActivity {
 		// Handle action bar item clicks here. The action bar will
 		// automatically handle clicks on the Home/Up button, so long
 		// as you specify a parent activity in AndroidManifest.xml.
+		/*if (ABDToggle.onOptionsItemSelected(item)) {
+            return true;
+        }*/
 		switch(item.getItemId()){
 		case R.id.add_icon:
 			Intent i = new Intent(this, AddDeck.class);
