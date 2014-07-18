@@ -58,21 +58,10 @@ public class DoodleView extends View {
 	}
 	
 	public void setBackgroundOfPreviousDoodle(String jsonString) {
-		//Bitmap previousDoodle = convertFromJSONToImage(previousDoodleContent);
-		//setBackground(new BitmapDrawable(getResources(), previousDoodle));
-		Log.d("DoodleView", "setBackgroundOfPreviousDoodle");
-		
 		previousDoodleContent = jsonString;
-		changeBitmap();
-	}
-	
-	private void changeBitmap() {
-		if(!previousDoodleContent.isEmpty()) {
-			Bitmap previousDoodle = convertFromJSONToImage(previousDoodleContent);
-			bitmap = Bitmap.createBitmap(previousDoodle);
-			bitmapCanvas.drawBitmap(bitmap, 0, 0, paintScreen);
-			invalidate();
-		}
+		Bitmap previousDoodle = convertFromJSONToImage(previousDoodleContent);
+		setBackground(new BitmapDrawable(getResources(), previousDoodle));
+		Log.d("DoodleView", "setBackgroundOfPreviousDoodle");
 	}
 	
 	private Bitmap convertFromJSONToImage(String jsonString) {
@@ -94,8 +83,8 @@ public class DoodleView extends View {
 	
 		bitmap = Bitmap.createBitmap(getWidth(), getHeight(), Bitmap.Config.ARGB_8888);
 		bitmapCanvas = new Canvas(bitmap);
-		bitmap.eraseColor(Color.argb(255, 39, 174, 96));
-		//bitmap.eraseColor(Color.TRANSPARENT);
+		//bitmap.eraseColor(Color.argb(255, 39, 174, 96));
+		bitmap.eraseColor(Color.TRANSPARENT);
 	}
 	
 	public void clear() {
@@ -123,11 +112,6 @@ public class DoodleView extends View {
 
 	@Override
 	protected void onDraw(Canvas canvas) {
-		
-		if(!previousDoodleContent.isEmpty()) {
-			changeBitmap();
-		}
-		
 		canvas.drawBitmap(bitmap, 0, 0, paintScreen);
 		
 		for(Integer key: pathMap.keySet()) 
