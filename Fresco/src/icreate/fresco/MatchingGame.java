@@ -87,7 +87,7 @@ public class MatchingGame extends Activity {
 		ArrayList<Card> cardList = database.getCards(cardIndexList);
 		for(int i = 0; i < 4; i++){
 			Card card = new Card();
-			card = cardList.get(0);
+			card = cardList.get(i);
 			cardList.add(card);
 		}
 		setCardFront();
@@ -103,7 +103,7 @@ public class MatchingGame extends Activity {
 
 		for(int i = 0; i < 4; i++){
 			Card card = new Card();
-			card = cardList.get(0);
+			card = cardList.get(i);
 			cardList.add(card);
 		}
 		setCardFront();
@@ -135,10 +135,10 @@ public class MatchingGame extends Activity {
 	public void setCardBack(){
 		for(int i = 0; i < 4; i++){
 			if(cardList.get(i).getType(Side.BACK) == Type.TEXT){
-				frontList[i] = cardList.get(list.get(i)).getContent(Side.BACK);
+				backList[i] = cardList.get(list.get(i)).getContent(Side.BACK);
 			}
 			else{
-				bmpFrontList[i] = convertFromJSONToImage(cardList.get(list.get(i)).getContent(Side.BACK));
+				bmpBackList[i] = convertFromJSONToImage(cardList.get(list.get(i)).getContent(Side.BACK));
 			}
 		}
 		setBackCardsContent();
