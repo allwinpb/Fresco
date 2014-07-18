@@ -1,8 +1,12 @@
 package icreate.fresco;
 
+<<<<<<< HEAD
 import icreate.fresco.Card.Side;
 import icreate.fresco.Card.Type;
 
+=======
+import java.util.ArrayList;
+>>>>>>> origin/master
 import java.util.List;
 import java.util.Random;
 
@@ -26,7 +30,7 @@ public class MatchingGame extends Activity {
 	private String front1 = "", front2 = "", front3 = "", front4 = "";//For text content in the card
 	private String back1 = "", back2 = "", back3 = "", back4 = "";//For text content in the card
 	
-	
+	private SqliteHelper database;
 	
 	private Card one, two, three, four;
 	Random random;
@@ -42,6 +46,15 @@ public class MatchingGame extends Activity {
 		random = new Random();
 		initializingImageButtons();
 		initializingButtons();
+		
+		int deckID = getIntent().getIntExtra(Constant.DECK_ID, -1);
+		if(deckID != -1) {
+			getCardFromADeck(deckID);
+		} else {
+			getCards();
+		}
+		
+		database = FrescoMain.getDatabase();
 	}
 	private void initializingButtons() {
 		// TODO Auto-generated method stub
@@ -55,6 +68,7 @@ public class MatchingGame extends Activity {
 		buttonBack3  = (Button)findViewById(R.id.cardBack3);
 		buttonBack4  = (Button)findViewById(R.id.cardBack4);
 	}
+	
 	private void initializingImageButtons() {
 		// TODO Auto-generated method stub
 		imageButtonFront1 = (ImageButton)findViewById(R.id.cardImageFront1);
@@ -67,15 +81,34 @@ public class MatchingGame extends Activity {
 		imageButtonBack3  = (ImageButton)findViewById(R.id.cardImageBack3);
 		imageButtonBack4  = (ImageButton)findViewById(R.id.cardImageBack4);
 	}
+	
 	public void getCards(){
-		//Get random four cards from all the decks
+		int size = database.getNumberOfCards();
+		ArrayList<Integer> cardIndexList = getRandomList(size);
+		ArrayList<Card> cardList = database.getCards(cardIndexList);
 		
-		
+<<<<<<< HEAD
 		
 	}
 	public void getCardFromADeck(int deckID){
 		//Get four cards randomly front a specific deck
+=======
+		one = cardList.get(0);
+		two = cardList.get(1);
+		three = cardList.get(2);
+		four = cardList.get(3);
+	}
+	
+	public void getCardFromADeck(int deckID){
+		int sizeDeck = database.getNumberOfCards(deckID);
+		ArrayList<Integer> cardIndexList = getRandomList(sizeDeck);
+		ArrayList<Card> cardList = database.getCards(deckID, cardIndexList);
+>>>>>>> origin/master
 		
+		one = cardList.get(0);
+		two = cardList.get(1);
+		three = cardList.get(2);
+		four = cardList.get(3);
 		
 	}
 	
@@ -85,7 +118,12 @@ public class MatchingGame extends Activity {
 		
 		return 0;
 	}
+	public void setFront(){
+		
+		
+	}
 	
+<<<<<<< HEAD
 	public void getCardFront(){
 		
 		
@@ -94,9 +132,15 @@ public class MatchingGame extends Activity {
 	}
 	
 	public void setCardBack(){
+=======
+	public void setBack(){
+		
+	}
+	public void setBackCardsContent(){
+>>>>>>> origin/master
 		//Display the cards' back on the game layout
 		if(bmpBack1 != null)
-			imageButtonBack1.setImageBitmap(bmpBack1);
+			imageButtonBack1.setImageBitmap(bmpBack1); 
 		if(bmpBack2 != null)
 			imageButtonBack2.setImageBitmap(bmpBack2);
 		if(bmpBack3 != null)
@@ -115,7 +159,7 @@ public class MatchingGame extends Activity {
 		
 	}
 	
-	public void setCardFront(){
+	public void setFrontCardsContent(){
 		//Display the cards' front on the game layout
 		if(bmpFront1 != null)
 			imageButtonFront1.setImageBitmap(bmpFront1);
@@ -142,6 +186,19 @@ public class MatchingGame extends Activity {
 		
 		
 		
+	}
+	
+	private ArrayList<Integer> getRandomList(int size) {
+		
+		ArrayList<Integer> integerList = new ArrayList<Integer>();
+		Random random = new Random();
+		
+		for(int i=0; i<4; i++){
+			int integer = random.nextInt(size-1);
+			integerList.add(integer);
+		}
+		
+		return integerList;
 	}
 
 }

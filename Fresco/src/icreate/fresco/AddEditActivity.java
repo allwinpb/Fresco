@@ -7,13 +7,10 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -178,19 +175,50 @@ public class AddEditActivity extends FragmentActivity implements OnTabChangeList
 
 	private TabSpec newTab(String tag, String tagLabel, int contentId) {
 		TabSpec tabSpec = tabHost.newTabSpec(tag);
-
-		TextView text = new TextView(this);
-		text.setText(tagLabel);
-		text.setTypeface(null, Typeface.BOLD_ITALIC);
-		text.setTextColor(Color.WHITE);
-		text.setTextSize(20);
-		text.setGravity(Gravity.CENTER);
-		text.setHeight(100);
 		
-		tabSpec.setIndicator(text);
+		View tabTitle = getTabTitleView(tagLabel);
+		
+		tabSpec.setIndicator(tabTitle);
 		tabSpec.setContent(contentId);
 		return tabSpec;
 
+	}
+
+	private View getTabTitleView(String tagLabel) {
+		LayoutInflater inflater = (LayoutInflater) 
+				getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+		View tabTitle = inflater.inflate(R.layout.tab_title_layout, null);
+		
+		TextView tabTitleTextView = (TextView) tabTitle.findViewById(R.id.tabTitleTextView);
+		tabTitleTextView.setText(tagLabel);
+		
+		ImageView tabTitleImageView = (ImageView) tabTitle.findViewById(R.id.tabTitleImageView);
+		Side side = Side.FRONT;
+		
+		switch(tagLabel.toUpperCase()) {
+			case "FRONT":
+				side = Side.FRONT;
+				break;
+			case "BACK":
+				side = Side.BACK;
+				break;
+		}
+		
+		setTabImageViewForCustomDialog(getType(side), tabTitleImageView);
+		return tabTitle;
+	}
+	
+	public View getTabTitleView() {
+		
+		View tabTitleView = tabHost.getTabWidget().getChildAt(0);
+		
+		if(side == Side.BACK) {
+			tabTitleView = tabHost.getTabWidget().getChildAt(1);
+		}
+		
+		Log.d("getTabTitleView ", String.valueOf(tabHost.getChildCount()));
+		
+		return tabTitleView;
 	}
 
 	private int getIntType(Type type) {
@@ -223,14 +251,14 @@ public class AddEditActivity extends FragmentActivity implements OnTabChangeList
 		}
 		
 		switch(tabId) {
-		case FRONT:	
-			side = Side.FRONT;
-			updateTabs(FRONT);
-			break;
-		case BACK:
-			side = Side.BACK;
-			updateTabs(BACK);
-			break;
+			case FRONT:	
+				side = Side.FRONT;
+				updateTabs(FRONT);
+				break;
+			case BACK:
+				side = Side.BACK;
+				updateTabs(BACK);
+				break;
 		}
 	}
 
@@ -396,6 +424,24 @@ public class AddEditActivity extends FragmentActivity implements OnTabChangeList
 			case CAMERA:
 				tabImageView.setImageResource(R.drawable.camera_24);
 				specifyTextView.setText("(camera)");
+				break;
+		}
+	}
+	
+	private void setTabImageViewForCustomDialog(Type type,
+			ImageView tabImageView) {
+		switch(type) {
+			case TEXT:
+				tabImageView.setImageResource(R.drawable.text_24_white);
+				break;
+			case DOODLE:
+				tabImageView.setImageResource(R.drawable.edit_24_white);
+				break;
+			case IMAGE:
+				tabImageView.setImageResource(R.drawable.gallery_24_white);
+				break;
+			case CAMERA:
+				tabImageView.setImageResource(R.drawable.camera_24_white);
 				break;
 		}
 	}
