@@ -38,6 +38,13 @@ public class MatchingGame extends Activity {
 		initializingImageButtons();
 		initializingButtons();
 		
+		int deckID = getIntent().getIntExtra(Constant.DECK_ID, -1);
+		if(deckID != -1) {
+			getCardFromADeck(deckID);
+		} else {
+			getCards();
+		}
+		
 		database = FrescoMain.getDatabase();
 	}
 	private void initializingButtons() {
@@ -52,6 +59,7 @@ public class MatchingGame extends Activity {
 		buttonBack3  = (Button)findViewById(R.id.cardBack3);
 		buttonBack4  = (Button)findViewById(R.id.cardBack4);
 	}
+	
 	private void initializingImageButtons() {
 		// TODO Auto-generated method stub
 		imageButtonFront1 = (ImageButton)findViewById(R.id.cardImageFront1);
@@ -76,9 +84,15 @@ public class MatchingGame extends Activity {
 		four = cardList.get(3);
 	}
 	
-	public void getCardFromADeck(Deck deck){
-		//Get four cards randomly front a specific deck
+	public void getCardFromADeck(int deckID){
+		int sizeDeck = database.getNumberOfCards(deckID);
+		ArrayList<Integer> cardIndexList = getRandomList(sizeDeck);
+		ArrayList<Card> cardList = database.getCards(deckID, cardIndexList);
 		
+		one = cardList.get(0);
+		two = cardList.get(1);
+		three = cardList.get(2);
+		four = cardList.get(3);
 		
 	}
 	
@@ -88,11 +102,18 @@ public class MatchingGame extends Activity {
 		
 		return 0;
 	}
+	public void setFront(){
+		
+		
+	}
 	
-	public void setCardBack(){
+	public void setBack(){
+		
+	}
+	public void setBackCardsContent(){
 		//Display the cards' back on the game layout
 		if(bmpBack1 != null)
-			imageButtonBack1.setImageBitmap(bmpBack1);
+			imageButtonBack1.setImageBitmap(bmpBack1); 
 		if(bmpBack2 != null)
 			imageButtonBack2.setImageBitmap(bmpBack2);
 		if(bmpBack3 != null)
@@ -111,7 +132,7 @@ public class MatchingGame extends Activity {
 		
 	}
 	
-	public void setCardFront(){
+	public void setFrontCardsContent(){
 		//Display the cards' front on the game layout
 		if(bmpFront1 != null)
 			imageButtonFront1.setImageBitmap(bmpFront1);

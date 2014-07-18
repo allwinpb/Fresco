@@ -211,6 +211,28 @@ public class SqliteHelper extends SQLiteOpenHelper {
 		return index;
 	}
 	
+	public int getNumberOfCards(int deckID) {
+		int index = 0;
+		
+		SQLiteDatabase database = this.getReadableDatabase();
+		Cursor cursor = database.rawQuery(TABLE_CARD_LOAD, null);
+		
+		if(cursor.moveToFirst()) {
+			do {	
+				int id = Integer.parseInt(cursor.getString(5));
+
+				if(id == deckID) {
+					index++;
+				}
+				
+			} while(cursor.moveToNext());
+		}
+
+		database.close();
+
+		return index;
+	}
+	
 	public ArrayList<Card> getCards(ArrayList<Integer> cardIndexList) {
 		
 		ArrayList<Card> cardList = new ArrayList<Card>();
@@ -245,6 +267,55 @@ public class SqliteHelper extends SQLiteOpenHelper {
 				}
 				
 				index++;
+
+			} while(cursor.moveToNext());
+		}
+
+		database.close();
+
+		return cardList;
+	}
+	
+	public ArrayList<Card> getCards(int deckID, ArrayList<Integer> cardIndexList) {
+		
+		ArrayList<Card> cardList = new ArrayList<Card>();
+		int index = 0;
+		
+		SQLiteDatabase database = this.getReadableDatabase();
+		Cursor cursor = database.rawQuery(TABLE_CARD_LOAD, null);
+		
+		if(cursor.moveToFirst()) {
+			do {
+				
+				int id = Integer.parseInt(cursor.getString(5));
+
+				if(id == deckID) {
+				
+					boolean isIDChosen = false;
+					
+					for(Integer cardIndex : cardIndexList) {
+						if(index == cardIndex) {
+							isIDChosen = true;
+							break;
+						}
+					}
+	
+					if(isIDChosen) {
+					
+						Card card = new Card();
+		
+						card.setCardID(Integer.parseInt(cursor.getString(0)));
+						card.setType(Side.FRONT, getType(cursor.getString(1)));
+						card.setContent(Side.FRONT, cursor.getString(2));
+						card.setType(Side.BACK, getType(cursor.getString(3)));
+						card.setContent(Side.BACK, cursor.getString(4));
+		
+						cardList.add(card);
+					}
+					
+					index++;
+					
+				}
 
 			} while(cursor.moveToNext());
 		}
