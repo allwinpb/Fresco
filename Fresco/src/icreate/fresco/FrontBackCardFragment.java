@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TabHost;
 import android.widget.TabHost.TabSpec;
 
@@ -28,7 +29,6 @@ public class FrontBackCardFragment extends Fragment implements TabHost.OnTabChan
 	private FragmentCamera cameraFragment;
 	
 	private TabHost tabHost;
-	private boolean isFront;
 	
 	String textContent = "";
 	String doodleContent = "";
@@ -53,7 +53,6 @@ public class FrontBackCardFragment extends Fragment implements TabHost.OnTabChan
 		super.onCreate(savedInstanceState);
 		Log.d("FrontBackCard", "Oncreate");
 		type = getType(getArguments().getInt(Constant.TYPE));
-		isFront = getArguments().getBoolean(Constant.SIDE);
 		switch(type) {
 			case TEXT:
 				textContent = getArguments().getString(Constant.CONTENT);
@@ -173,7 +172,7 @@ public class FrontBackCardFragment extends Fragment implements TabHost.OnTabChan
 		return Type.TEXT;
 	}
 	
-	private String getStringType(Type type) {
+	/*private String getStringType(Type type) {
 		switch(type) {
 			case TEXT:
 				return "Text";
@@ -185,7 +184,7 @@ public class FrontBackCardFragment extends Fragment implements TabHost.OnTabChan
 				return "Camera";
 		}
 		return "Text";
-	}
+	}*/
 	
 
 	@Override
@@ -198,7 +197,8 @@ public class FrontBackCardFragment extends Fragment implements TabHost.OnTabChan
 			case TEXT:
 				isContentEmpty = textFragment.isEmpty();
 				if(!isContentEmpty)
-					textContent = textFragment.getContent();			
+					textContent = textFragment.getContent();	
+				
 				break;
 				
 			case DOODLE:
@@ -221,6 +221,9 @@ public class FrontBackCardFragment extends Fragment implements TabHost.OnTabChan
 		}
 		
 		changeTabColor(tag);
+		View tabTitle = ((AddEditActivity) getActivity()).getTabTitleView();
+		
+		ImageView tabTitleImageView = (ImageView) tabTitle.findViewById(R.id.tabTitleImageView);
 		switch(tag) {
 			case TEXT:
 				type = Type.TEXT;	
@@ -228,6 +231,7 @@ public class FrontBackCardFragment extends Fragment implements TabHost.OnTabChan
 				if(!isContentEmpty)
 					((AddEditActivity)getActivity()).setContent(textContent);
 				updateTab(TEXT);
+				tabTitleImageView.setImageResource(R.drawable.text_24_white);
 				break;
 			case DOODLE:
 				type = Type.DOODLE;
@@ -235,6 +239,7 @@ public class FrontBackCardFragment extends Fragment implements TabHost.OnTabChan
 				if(!isContentEmpty)
 					((AddEditActivity)getActivity()).setContent(doodleContent);
 				updateTab(DOODLE);
+				tabTitleImageView.setImageResource(R.drawable.edit_24_white);
 				break;
 			case GALLERY:
 				type = Type.IMAGE;
@@ -242,6 +247,7 @@ public class FrontBackCardFragment extends Fragment implements TabHost.OnTabChan
 				if(!isContentEmpty)
 					((AddEditActivity)getActivity()).setContent(galleryContent);
 				updateTab(GALLERY);
+				tabTitleImageView.setImageResource(R.drawable.gallery_24_white);
 				break;
 			case CAMERA:
 				type = Type.CAMERA;
@@ -249,6 +255,7 @@ public class FrontBackCardFragment extends Fragment implements TabHost.OnTabChan
 				if(!isContentEmpty)
 					((AddEditActivity)getActivity()).setContent(cameraContent);
 				updateTab(CAMERA);
+				tabTitleImageView.setImageResource(R.drawable.camera_24_white);
 				break;
 		}
 	}
@@ -313,7 +320,7 @@ public class FrontBackCardFragment extends Fragment implements TabHost.OnTabChan
 //		}
 	}
 	
-	private int getIntType(Type type) {
+	/*private int getIntType(Type type) {
 		switch(type) {
 			case TEXT:
 				return 0;
@@ -326,7 +333,7 @@ public class FrontBackCardFragment extends Fragment implements TabHost.OnTabChan
 		}
 
 		return 0;
-	}
+	}*/
 	
 	
 	

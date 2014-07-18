@@ -37,8 +37,8 @@ public class ItemAdapter extends ArrayAdapter<Deck> {
 			TextView deck = (TextView) v.findViewById(R.id.deck);
 			if (deck != null){
 				String name = i.getDeckName();
-				if(name.length() > 12) {
-					name = name.substring(0, 10) + "...";
+				if(name.length() > 20) {
+					name = name.substring(0, 20) + "...";
 				}
 				deck.setText(name);
 			}

@@ -1,6 +1,8 @@
 package icreate.fresco;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import android.R.integer;
 import android.app.Activity;
@@ -22,7 +24,7 @@ public class MatchingGame extends Activity {
 	private String front1 = "", front2 = "", front3 = "", front4 = "";
 	private String back1 = "", back2 = "", back3 = "", back4 = "";
 	
-	
+	private SqliteHelper database;
 	
 	private Card one, two, three, four;
 	
@@ -35,6 +37,8 @@ public class MatchingGame extends Activity {
 		setContentView(R.layout.game);
 		initializingImageButtons();
 		initializingButtons();
+		
+		database = FrescoMain.getDatabase();
 	}
 	private void initializingButtons() {
 		// TODO Auto-generated method stub
@@ -60,11 +64,18 @@ public class MatchingGame extends Activity {
 		imageButtonBack3  = (ImageButton)findViewById(R.id.cardImageBack3);
 		imageButtonBack4  = (ImageButton)findViewById(R.id.cardImageBack4);
 	}
+	
 	public void getCards(){
-		//Get random four cards from all the decks
+		int size = database.getNumberOfCards();
+		ArrayList<Integer> cardIndexList = getRandomList(size);
+		ArrayList<Card> cardList = database.getCards(cardIndexList);
 		
-		
+		one = cardList.get(0);
+		two = cardList.get(1);
+		three = cardList.get(2);
+		four = cardList.get(3);
 	}
+	
 	public void getCardFromADeck(Deck deck){
 		//Get four cards randomly front a specific deck
 		
@@ -127,6 +138,19 @@ public class MatchingGame extends Activity {
 		
 		
 		
+	}
+	
+	private ArrayList<Integer> getRandomList(int size) {
+		
+		ArrayList<Integer> integerList = new ArrayList<Integer>();
+		Random random = new Random();
+		
+		for(int i=0; i<4; i++){
+			int integer = random.nextInt(size-1);
+			integerList.add(integer);
+		}
+		
+		return integerList;
 	}
 
 }
