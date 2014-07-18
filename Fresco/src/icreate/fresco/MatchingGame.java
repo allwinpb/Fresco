@@ -1,6 +1,10 @@
 package icreate.fresco;
 
+import icreate.fresco.Card.Side;
+import icreate.fresco.Card.Type;
+
 import java.util.List;
+import java.util.Random;
 
 import android.R.integer;
 import android.app.Activity;
@@ -10,22 +14,23 @@ import android.widget.Button;
 import android.widget.ImageButton;
 
 public class MatchingGame extends Activity {
-	private ImageButton imageButtonFront1, imageButtonFront2, imageButtonFront3, imageButtonFront4;
-	private ImageButton imageButtonBack1, imageButtonBack2, imageButtonBack3, imageButtonBack4;
+	private ImageButton imageButtonFront1, imageButtonFront2, imageButtonFront3, imageButtonFront4;//For image content in the card
+	private ImageButton imageButtonBack1, imageButtonBack2, imageButtonBack3, imageButtonBack4;//For image content in the card
 	
-	private Button buttonFront1, buttonFront2, buttonFront3, buttonFront4;
-	private Button buttonBack1, buttonBack2, buttonBack3, buttonBack4;
+	private Button buttonFront1, buttonFront2, buttonFront3, buttonFront4;//For text content in the card
+	private Button buttonBack1, buttonBack2, buttonBack3, buttonBack4;//For text content in the card
 	
-	private Bitmap bmpFront1 = null, bmpFront2 = null, bmpFront3 = null, bmpFront4 = null; 
-	private Bitmap bmpBack1 = null, bmpBack2 = null, bmpBack3 = null, bmpBack4 = null;
+	private Bitmap bmpFront1 = null, bmpFront2 = null, bmpFront3 = null, bmpFront4 = null;//For image content in the card 
+	private Bitmap bmpBack1 = null, bmpBack2 = null, bmpBack3 = null, bmpBack4 = null;//For image content in the card
 	
-	private String front1 = "", front2 = "", front3 = "", front4 = "";
-	private String back1 = "", back2 = "", back3 = "", back4 = "";
+	private String front1 = "", front2 = "", front3 = "", front4 = "";//For text content in the card
+	private String back1 = "", back2 = "", back3 = "", back4 = "";//For text content in the card
 	
 	
 	
 	private Card one, two, three, four;
-	
+	Random random;
+	private SqliteHelper database;
 	List<integer> origin;
 	List<integer> copy;
 	@Override
@@ -33,6 +38,8 @@ public class MatchingGame extends Activity {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.game);
+		database = FrescoMain.getDatabase();
+		random = new Random();
 		initializingImageButtons();
 		initializingButtons();
 	}
@@ -64,8 +71,9 @@ public class MatchingGame extends Activity {
 		//Get random four cards from all the decks
 		
 		
+		
 	}
-	public void getCardFromADeck(Deck deck){
+	public void getCardFromADeck(int deckID){
 		//Get four cards randomly front a specific deck
 		
 		
@@ -76,6 +84,13 @@ public class MatchingGame extends Activity {
 		//match the card's fronts and back and give the results out of 4
 		
 		return 0;
+	}
+	
+	public void getCardFront(){
+		
+		
+		
+		
 	}
 	
 	public void setCardBack(){
