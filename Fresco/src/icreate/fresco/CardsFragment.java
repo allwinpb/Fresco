@@ -422,6 +422,9 @@ public class CardsFragment extends Fragment {
 	
 	private void reviewDeck() {
 		//TODO
+		Intent intent = new Intent(getActivity(), MatchingGame.class);
+		intent.putExtra(Constant.DECK_ID, deck.getDeckID());
+		startActivity(intent);
 	}
 	
 	private void returnBack() {

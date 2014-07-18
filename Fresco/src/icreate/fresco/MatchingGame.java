@@ -1,51 +1,50 @@
 package icreate.fresco;
 
-<<<<<<< HEAD
 import icreate.fresco.Card.Side;
 import icreate.fresco.Card.Type;
 
-=======
 import java.util.ArrayList;
->>>>>>> origin/master
 import java.util.List;
 import java.util.Random;
 
-import android.R.integer;
 import android.app.Activity;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.util.Base64;
 import android.widget.Button;
 import android.widget.ImageButton;
 
 public class MatchingGame extends Activity {
-	private ImageButton imageButtonFront1, imageButtonFront2, imageButtonFront3, imageButtonFront4;//For image content in the card
-	private ImageButton imageButtonBack1, imageButtonBack2, imageButtonBack3, imageButtonBack4;//For image content in the card
-	
-	private Button buttonFront1, buttonFront2, buttonFront3, buttonFront4;//For text content in the card
-	private Button buttonBack1, buttonBack2, buttonBack3, buttonBack4;//For text content in the card
-	
-	private Bitmap bmpFront1 = null, bmpFront2 = null, bmpFront3 = null, bmpFront4 = null;//For image content in the card 
-	private Bitmap bmpBack1 = null, bmpBack2 = null, bmpBack3 = null, bmpBack4 = null;//For image content in the card
-	
-	private String front1 = "", front2 = "", front3 = "", front4 = "";//For text content in the card
-	private String back1 = "", back2 = "", back3 = "", back4 = "";//For text content in the card
-	
+	private ImageButton imageButtonFrontList[] = new ImageButton[4];//For image content in the card
+	private ImageButton imageButtonBackList[] = new ImageButton[4];//For image content in the card
+
+	private Button buttonFrontList[] = new Button[4];//For text content in the card
+	private Button buttonBackList[] = new Button[4];//For text content in the card
+
+	private Bitmap bmpFrontList[] = new Bitmap[4];//For image content in the card 
+	private Bitmap bmpBackList[] = new Bitmap[4];//For image content in the card
+
+	private String frontList[] = new String[4];//For text content in the card
+	private String backList[] = new String[4];//For text content in the card
+
+	private List<Card> cardList = new ArrayList<Card>(4);
 	private SqliteHelper database;
-	
-	private Card one, two, three, four;
+	ArrayList<Integer> list = new ArrayList<Integer>();
 	Random random;
-	private SqliteHelper database;
-	List<integer> origin;
-	List<integer> copy;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.game);
+		
 		database = FrescoMain.getDatabase();
 		random = new Random();
+		
 		initializingImageButtons();
 		initializingButtons();
+		shuffle();
 		
 		int deckID = getIntent().getIntExtra(Constant.DECK_ID, -1);
 		if(deckID != -1) {
@@ -53,151 +52,162 @@ public class MatchingGame extends Activity {
 		} else {
 			getCards();
 		}
-		
+
 		database = FrescoMain.getDatabase();
 	}
 	private void initializingButtons() {
 		// TODO Auto-generated method stub
-		buttonFront1 = (Button)findViewById(R.id.cardFront1);
-		buttonFront2 = (Button)findViewById(R.id.cardFront2);
-		buttonFront3 = (Button)findViewById(R.id.cardFront3);
-		buttonFront4 = (Button)findViewById(R.id.cardFront4);
-		
-		buttonBack1  = (Button)findViewById(R.id.cardBack1);
-		buttonBack2  = (Button)findViewById(R.id.cardBack2);
-		buttonBack3  = (Button)findViewById(R.id.cardBack3);
-		buttonBack4  = (Button)findViewById(R.id.cardBack4);
+		buttonFrontList[0] = (Button)findViewById(R.id.cardFront1);
+		buttonFrontList[1] = (Button)findViewById(R.id.cardFront2);
+		buttonFrontList[2] = (Button)findViewById(R.id.cardFront3);
+		buttonFrontList[3] = (Button)findViewById(R.id.cardFront4);
+
+		buttonBackList[0]  = (Button)findViewById(R.id.cardBack1);
+		buttonBackList[1]  = (Button)findViewById(R.id.cardBack2);
+		buttonBackList[2]  = (Button)findViewById(R.id.cardBack3);
+		buttonBackList[3]  = (Button)findViewById(R.id.cardBack4);
 	}
-	
+
 	private void initializingImageButtons() {
 		// TODO Auto-generated method stub
-		imageButtonFront1 = (ImageButton)findViewById(R.id.cardImageFront1);
-		imageButtonFront2 = (ImageButton)findViewById(R.id.cardImageFront2);
-		imageButtonFront3 = (ImageButton)findViewById(R.id.cardImageFront3);
-		imageButtonFront4 = (ImageButton)findViewById(R.id.cardImageFront4);
-		
-		imageButtonBack1  = (ImageButton)findViewById(R.id.cardImageBack1);
-		imageButtonBack2  = (ImageButton)findViewById(R.id.cardImageBack2);
-		imageButtonBack3  = (ImageButton)findViewById(R.id.cardImageBack3);
-		imageButtonBack4  = (ImageButton)findViewById(R.id.cardImageBack4);
+		imageButtonFrontList[0] = (ImageButton)findViewById(R.id.cardImageFront1);
+		imageButtonFrontList[1] = (ImageButton)findViewById(R.id.cardImageFront2);
+		imageButtonFrontList[2] = (ImageButton)findViewById(R.id.cardImageFront3);
+		imageButtonFrontList[3] = (ImageButton)findViewById(R.id.cardImageFront4);
+
+		imageButtonBackList[0]  = (ImageButton)findViewById(R.id.cardImageBack1);
+		imageButtonBackList[1]  = (ImageButton)findViewById(R.id.cardImageBack2);
+		imageButtonBackList[2]  = (ImageButton)findViewById(R.id.cardImageBack3);
+		imageButtonBackList[3]  = (ImageButton)findViewById(R.id.cardImageBack4);
 	}
-	
+
 	public void getCards(){
 		int size = database.getNumberOfCards();
 		ArrayList<Integer> cardIndexList = getRandomList(size);
 		ArrayList<Card> cardList = database.getCards(cardIndexList);
-		
-<<<<<<< HEAD
-		
+		for(int i = 0; i < 4; i++){
+			Card card = new Card();
+			card = cardList.get(0);
+			cardList.add(card);
+		}
+		setCardFront();
+		setCardBack();
+
 	}
+
 	public void getCardFromADeck(int deckID){
 		//Get four cards randomly front a specific deck
-=======
-		one = cardList.get(0);
-		two = cardList.get(1);
-		three = cardList.get(2);
-		four = cardList.get(3);
-	}
-	
-	public void getCardFromADeck(int deckID){
 		int sizeDeck = database.getNumberOfCards(deckID);
 		ArrayList<Integer> cardIndexList = getRandomList(sizeDeck);
 		ArrayList<Card> cardList = database.getCards(deckID, cardIndexList);
->>>>>>> origin/master
-		
-		one = cardList.get(0);
-		two = cardList.get(1);
-		three = cardList.get(2);
-		four = cardList.get(3);
-		
+
+		for(int i = 0; i < 4; i++){
+			Card card = new Card();
+			card = cardList.get(0);
+			cardList.add(card);
+		}
+		setCardFront();
+		setCardBack();
 	}
-	
+
 	public int matchCards(){
-		
+
 		//match the card's fronts and back and give the results out of 4
-		
+
+
 		return 0;
 	}
-	public void setFront(){
-		
-		
+
+	public void setCardFront(){
+		for(int i = 0; i < 4; i++){
+			if(cardList.get(i).getType(Side.FRONT) == Type.TEXT){
+				frontList[i] = cardList.get(i).getContent(Side.FRONT);
+			}
+			else{
+				bmpFrontList[i] = convertFromJSONToImage(cardList.get(i).getContent(Side.FRONT));
+			}
+		}
+
+		setFrontCardsContent();
+
 	}
-	
-<<<<<<< HEAD
-	public void getCardFront(){
-		
-		
-		
-		
-	}
-	
+
 	public void setCardBack(){
-=======
-	public void setBack(){
-		
+		for(int i = 0; i < 4; i++){
+			if(cardList.get(i).getType(Side.BACK) == Type.TEXT){
+				frontList[i] = cardList.get(list.get(i)).getContent(Side.BACK);
+			}
+			else{
+				bmpFrontList[i] = convertFromJSONToImage(cardList.get(list.get(i)).getContent(Side.BACK));
+			}
+		}
+		setBackCardsContent();
 	}
+
 	public void setBackCardsContent(){
->>>>>>> origin/master
 		//Display the cards' back on the game layout
-		if(bmpBack1 != null)
-			imageButtonBack1.setImageBitmap(bmpBack1); 
-		if(bmpBack2 != null)
-			imageButtonBack2.setImageBitmap(bmpBack2);
-		if(bmpBack3 != null)
-			imageButtonBack3.setImageBitmap(bmpBack3);
-		if(bmpBack4 != null)
-			imageButtonBack4.setImageBitmap(bmpBack4);
-		
-		if(back1 != "")
-			buttonBack1.setText(back1);
-		if(back2 != "")
-			buttonBack2.setText(back2);
-		if(back3 != "")
-			buttonBack3.setText(back3);
-		if(back4 != "")
-			buttonBack4.setText(back4);
-		
+		for(int i = 0; i < 4; i++){
+			if(bmpBackList[i] != null){
+				imageButtonBackList[i].setImageBitmap(bmpBackList[i]); 
+			}
+			else{
+				buttonBackList[i].setText(backList[i]);
+			}
+		}
 	}
-	
+
 	public void setFrontCardsContent(){
 		//Display the cards' front on the game layout
-		if(bmpFront1 != null)
-			imageButtonFront1.setImageBitmap(bmpFront1);
-		if(bmpFront2 != null)
-			imageButtonFront2.setImageBitmap(bmpFront2);
-		if(bmpFront3 != null)
-			imageButtonFront3.setImageBitmap(bmpFront3);
-		if(bmpFront4 != null)
-			imageButtonFront4.setImageBitmap(bmpFront4);
-		
-		if(front1 != "")
-			buttonFront1.setText(front1);
-		if(front2 != "")
-			buttonFront2.setText(front2);
-		if(front3 != "")
-			buttonFront3.setText(front3);
-		if(front4 != "")
-			buttonFront4.setText(front4);
-			
+		for(int i = 0; i < 4; i++){
+			if(bmpFrontList[i] != null){
+				imageButtonFrontList[i].setImageBitmap(bmpFrontList[i]);
+			}
+			else{
+				buttonFrontList[i].setText(frontList[i]);
+			}
+		}
+
 	}
-	
+
 	public void shuffle(){
 		//Shuffle the four cards' back randomly
-		
-		
-		
+		int count = 0;
+		while(count<4){
+			int value = random.nextInt(4);
+			if(count == 0){
+				list.add(value);
+				count++;
+			}else{
+				if(!list.contains(value)){
+					list.add(value);
+					count++;
+				}
+			}
+		}
 	}
-	
+
+	private Bitmap convertFromJSONToImage(String jsonString) {
+		try {
+			byte[] encodeByte = Base64.decode(jsonString, Base64.DEFAULT);
+			Bitmap bitmap = BitmapFactory.decodeByteArray(encodeByte, 0,
+					encodeByte.length);
+			return bitmap;
+		} catch (Exception e) {
+			e.getMessage(); 
+			return null;
+		}
+	}
+
 	private ArrayList<Integer> getRandomList(int size) {
-		
+
 		ArrayList<Integer> integerList = new ArrayList<Integer>();
 		Random random = new Random();
-		
+
 		for(int i=0; i<4; i++){
 			int integer = random.nextInt(size-1);
 			integerList.add(integer);
 		}
-		
+
 		return integerList;
 	}
 

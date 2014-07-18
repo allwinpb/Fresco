@@ -67,11 +67,6 @@ public class FragmentCamera extends Fragment {
 		return view;
 	}
 	
-	
-	
-	
-	
-	
 	@Override
 	public void onSaveInstanceState(Bundle outState) {
 		outState.putParcelable("camera", bmp);
