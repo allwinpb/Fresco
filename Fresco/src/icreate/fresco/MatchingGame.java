@@ -4,16 +4,22 @@ import icreate.fresco.Card.Side;
 import icreate.fresco.Card.Type;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
+import android.app.ActionBar;
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.util.Base64;
+import android.util.Log;
+import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 
 public class MatchingGame extends Activity {
 	private ImageButton imageButtonFrontList[] = new ImageButton[4];//For image content in the card
@@ -31,7 +37,9 @@ public class MatchingGame extends Activity {
 	private List<Card> cardList = new ArrayList<Card>(4);
 	private SqliteHelper database;
 	ArrayList<Integer> list = new ArrayList<Integer>();
-	Random random;
+	
+	int deckID;
+	int positionColor;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -40,21 +48,34 @@ public class MatchingGame extends Activity {
 		setContentView(R.layout.game);
 		
 		database = FrescoMain.getDatabase();
-		random = new Random();
 		
 		initializingImageButtons();
 		initializingButtons();
 		shuffle();
 		
-		int deckID = getIntent().getIntExtra(Constant.DECK_ID, -1);
+		Intent intent = getIntent();
+		deckID = intent.getIntExtra(Constant.DECK_ID, -1);
+		positionColor = intent.getIntExtra(Constant.POSITION_COLOR, 0);
 		if(deckID != -1) {
+			setUpIconofDeckName(deckID);
 			getCardFromADeck(deckID);
 		} else {
 			getCards();
 		}
-
-		database = FrescoMain.getDatabase();
 	}
+	
+	private void setUpIconofDeckName(int deckID) {
+		Deck deck = database.getDeck(deckID);
+		
+		ActionBar actionBar = getActionBar();
+		actionBar.setTitle(deck.getDeckName());
+		int id = getResources().getIdentifier(deck.getDeckIcon(), "drawable", getPackageName());
+		actionBar.setIcon(id);
+		ImageView homeIcon = (ImageView) findViewById(android.R.id.home);
+		homeIcon.setPadding(15, 0, 15, 0);
+		actionBar.setDisplayHomeAsUpEnabled(true);
+	}
+	
 	private void initializingButtons() {
 		// TODO Auto-generated method stub
 		buttonFrontList[0] = (Button)findViewById(R.id.cardFront1);
@@ -84,28 +105,40 @@ public class MatchingGame extends Activity {
 	public void getCards(){
 		int size = database.getNumberOfCards();
 		ArrayList<Integer> cardIndexList = getRandomList(size);
-		ArrayList<Card> cardList = database.getCards(cardIndexList);
-		for(int i = 0; i < 4; i++){
-			Card card = new Card();
-			card = cardList.get(i);
-			cardList.add(card);
-		}
+		cardList = database.getCards(cardIndexList);
+		
 		setCardFront();
 		setCardBack();
 
+	}
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch(item.getItemId()) {
+			case android.R.id.home:
+				returnBack();
+				return true;
+			default:
+				return super.onOptionsItemSelected(item);
+		}
+	}
+	
+	private void returnBack() {
+		Intent intent = new Intent(this, CardsViewPager.class);
+		intent.putExtra(Constant.DECK_ID, deckID);
+		intent.putExtra(Constant.POSITION_COLOR, positionColor);
+		startActivity(intent);
+		finish();
 	}
 
 	public void getCardFromADeck(int deckID){
 		//Get four cards randomly front a specific deck
 		int sizeDeck = database.getNumberOfCards(deckID);
 		ArrayList<Integer> cardIndexList = getRandomList(sizeDeck);
-		ArrayList<Card> cardList = database.getCards(deckID, cardIndexList);
+		cardList = database.getCards(deckID, cardIndexList);
+		
+		Log.d("getCardFromADeck", String.valueOf(cardList.size()));
 
-		for(int i = 0; i < 4; i++){
-			Card card = new Card();
-			card = cardList.get(i);
-			cardList.add(card);
-		}
 		setCardFront();
 		setCardBack();
 	}
@@ -120,25 +153,26 @@ public class MatchingGame extends Activity {
 
 	public void setCardFront(){
 		for(int i = 0; i < 4; i++){
+			String content = cardList.get(i).getContent(Side.FRONT);
 			if(cardList.get(i).getType(Side.FRONT) == Type.TEXT){
-				frontList[i] = cardList.get(i).getContent(Side.FRONT);
+				frontList[i] = content;
 			}
 			else{
-				bmpFrontList[i] = convertFromJSONToImage(cardList.get(i).getContent(Side.FRONT));
+				bmpFrontList[i] = convertFromJSONToImage(content);
 			}
 		}
 
 		setFrontCardsContent();
-
 	}
 
 	public void setCardBack(){
 		for(int i = 0; i < 4; i++){
+			String content = cardList.get(list.get(i)).getContent(Side.BACK);
 			if(cardList.get(i).getType(Side.BACK) == Type.TEXT){
-				backList[i] = cardList.get(list.get(i)).getContent(Side.BACK);
+				backList[i] = content;
 			}
 			else{
-				bmpBackList[i] = convertFromJSONToImage(cardList.get(list.get(i)).getContent(Side.BACK));
+				bmpBackList[i] = convertFromJSONToImage(content);
 			}
 		}
 		setBackCardsContent();
@@ -172,6 +206,7 @@ public class MatchingGame extends Activity {
 	public void shuffle(){
 		//Shuffle the four cards' back randomly
 		int count = 0;
+		Random random = new Random();
 		while(count<4){
 			int value = random.nextInt(4);
 			if(count == 0){
@@ -201,13 +236,15 @@ public class MatchingGame extends Activity {
 	private ArrayList<Integer> getRandomList(int size) {
 
 		ArrayList<Integer> integerList = new ArrayList<Integer>();
-		Random random = new Random();
-
-		for(int i=0; i<4; i++){
-			int integer = random.nextInt(size-1);
-			integerList.add(integer);
-		}
-
+		
+		ArrayList<Integer> list = new ArrayList<Integer>();
+		for(int i=0; i<size; i++)
+			list.add(i);
+		Collections.shuffle(list);
+		
+		for(int i=0; i<4; i++)
+			integerList.add(list.get(i));
+		
 		return integerList;
 	}
 

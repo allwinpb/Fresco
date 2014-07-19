@@ -13,6 +13,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.text.method.ScrollingMovementMethod;
 import android.util.Base64;
 import android.util.Log;
 import android.view.Gravity;
@@ -28,7 +29,6 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
-import android.widget.ScrollView;
 import android.widget.TextView;
 
 public class CardsFragment extends Fragment {
@@ -216,8 +216,11 @@ public class CardsFragment extends Fragment {
 			textView.setTextSize(25);
 		else if(text.length() <= 150)
 			textView.setTextSize(20);
-		else 
+		else {
 			textView.setTextSize(15);
+			 if(text.length() > 500)
+				 textView.setText(text.substring(500) + "...");
+		}
 		
 		textView.setPadding(10, 10, 10, 10);
 		textView.setTextColor(Color.WHITE);
@@ -421,10 +424,30 @@ public class CardsFragment extends Fragment {
 	}
 	
 	private void reviewDeck() {
-		//TODO
-		Intent intent = new Intent(getActivity(), MatchingGame.class);
-		intent.putExtra(Constant.DECK_ID, deck.getDeckID());
-		startActivity(intent);
+		
+		int size = database.getNumberOfCards(deck.getDeckID());
+		
+		if(size >= 4) { 
+			Intent intent = new Intent(getActivity(), MatchingGame.class);
+			intent.putExtra(Constant.DECK_ID, deck.getDeckID());
+			intent.putExtra(Constant.POSITION_COLOR, ((CardsViewPager)getActivity()).getPositionColor());
+			startActivity(intent);
+		} else {
+			AlertDialog.Builder builder = new AlertDialog.Builder(getActivity())
+					.setTitle("Matchmaking Card Game")
+					.setIcon(android.R.drawable.ic_dialog_alert)
+					.setMessage("Matchmaking Card Game requires the deck to have at least four cards. Please " +
+							"add more cards")
+					.setPositiveButton("Okay", new DialogInterface.OnClickListener() {
+						
+						@Override
+						public void onClick(DialogInterface dialog, int which) {
+							dialog.cancel();
+						}
+					});
+			
+			builder.create().show();
+		}
 	}
 	
 	private void returnBack() {

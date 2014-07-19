@@ -47,6 +47,15 @@
                 android:value="icreate.fresco.FrescoMain" />
         </activity>
         <activity
+            android:name="icreate.fresco.MatchingGame"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait"
+            android:parentActivityName="icreate.fresco.CardsViewPager" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="icreate.fresco.CardsViewPager" />
+        </activity>
+        <activity
             android:name="icreate.fresco.AddEditActivity"
             android:label="@string/app_name"
             android:parentActivityName="icreate.fresco.CardsViewPager"
@@ -62,11 +71,6 @@
         </activity>
         <activity
             android:name="icreate.fresco.EditDeck"
-            android:label="@string/app_name"
-            android:screenOrientation="portrait" >
-        </activity>
-        <activity
-            android:name="icreate.fresco.MatchingGame"
             android:label="@string/app_name"
             android:screenOrientation="portrait" >
         </activity>

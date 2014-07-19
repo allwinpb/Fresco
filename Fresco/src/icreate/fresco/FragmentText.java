@@ -1,5 +1,6 @@
 package icreate.fresco;
 
+import icreate.textview.LineEditText;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -10,11 +11,10 @@ import android.view.View;
 import android.view.View.OnFocusChangeListener;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.EditText;
 
 public class FragmentText extends Fragment {
 	
-	EditText editText;
+	LineEditText editText;
 	
 	public static FragmentText createFragment(String content) {
 		Bundle bundle = new Bundle();
@@ -33,7 +33,7 @@ public class FragmentText extends Fragment {
 		
 		String content = this.getArguments().getString(Constant.CONTENT);
 		
-		editText = (EditText) view.findViewById(R.id.cardEditText);
+		editText = (LineEditText) view.findViewById(R.id.cardEditText);
 		editText.setText(content);
 		
 		InputMethodManager inputMethodManager = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
