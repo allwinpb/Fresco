@@ -13,7 +13,7 @@
         android:padding="18.5dp"
         android:text="@string/NewDeck"
         android:textColor="@color/white"
-        android:textSize="20sp" />
+        android:textSize="@dimen/text" />
 
     <EditText
         android:id="@+id/deck"
@@ -22,6 +22,8 @@
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/tvDeck"
         android:background="#C0C0C0"
+        android:textSize="@dimen/text"
+        android:maxLength="30"
         android:ems="10"
         android:gravity="center"
         android:hint="@string/hint"

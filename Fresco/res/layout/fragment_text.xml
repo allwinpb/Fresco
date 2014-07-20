@@ -22,7 +22,8 @@
 	    android:textCursorDrawable="@drawable/cursor_style"
 	    android:textColor="@android:color/white"
 	    android:imeOptions="actionDone"
-	    android:textSize="22sp" >
+	    android:textSize="@dimen/text"
+	    android:maxLength="80" >
 	
 	    <requestFocus />
 	</icreate.textview.LineEditText>

@@ -17,6 +17,7 @@ import android.os.Bundle;
 import android.util.Base64;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -56,14 +57,20 @@ public class MatchingGame extends Activity {
 		Intent intent = getIntent();
 		deckID = intent.getIntExtra(Constant.DECK_ID, -1);
 		positionColor = intent.getIntExtra(Constant.POSITION_COLOR, 0);
+		selectCards();
+	}
+	private void selectCards(){
 		if(deckID != -1) {
 			setUpIconofDeckName(deckID);
 			getCardFromADeck(deckID);
 		} else {
 			getCards();
 		}
+		
 	}
-	
+	public void reset(View v){
+		selectCards();
+	}
 	private void setUpIconofDeckName(int deckID) {
 		Deck deck = database.getDeck(deckID);
 		
@@ -182,10 +189,14 @@ public class MatchingGame extends Activity {
 		//Display the cards' back on the game layout
 		for(int i = 0; i < 4; i++){
 			if(bmpBackList[i] != null){
-				imageButtonBackList[i].setImageBitmap(bmpBackList[i]); 
+				imageButtonBackList[i].setImageBitmap(bmpBackList[i]);
+				imageButtonBackList[i].setVisibility(View.VISIBLE);
+				buttonBackList[i].setVisibility(View.GONE);
 			}
 			else{
 				buttonBackList[i].setText(backList[i]);
+				buttonBackList[i].setVisibility(View.VISIBLE);
+				imageButtonBackList[i].setVisibility(View.GONE);
 			}
 		}
 	}
@@ -195,9 +206,13 @@ public class MatchingGame extends Activity {
 		for(int i = 0; i < 4; i++){
 			if(bmpFrontList[i] != null){
 				imageButtonFrontList[i].setImageBitmap(bmpFrontList[i]);
+				imageButtonFrontList[i].setVisibility(View.VISIBLE);
+				buttonFrontList[i].setVisibility(View.GONE);
 			}
 			else{
 				buttonFrontList[i].setText(frontList[i]);
+				buttonFrontList[i].setVisibility(View.VISIBLE);
+				imageButtonFrontList[i].setVisibility(View.GONE);
 			}
 		}
 

@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/add_deck"
-    android:padding="20dp" >
+    android:padding="10dp" >
 
     <LinearLayout
         android:id="@+id/frontBarLeft"
@@ -69,7 +69,10 @@
             <Button
                 android:id="@+id/cardFront1"
                 android:layout_width="@dimen/game_card_size"
-                android:layout_height="fill_parent" />
+                android:background="@drawable/background"
+                android:layout_height="fill_parent"
+                android:padding="@dimen/card_text_padding"
+                android:textSize="@dimen/card_content_size" />
         </RelativeLayout>
 
         <RelativeLayout
@@ -88,7 +91,10 @@
             <Button
                 android:id="@+id/cardFront2"
                 android:layout_width="@dimen/game_card_size"
-                android:layout_height="fill_parent" />
+                android:background="@drawable/background"
+                android:layout_height="fill_parent" 
+                android:padding="@dimen/card_text_padding"
+                android:textSize="@dimen/card_content_size"/>
         </RelativeLayout>
 
         <RelativeLayout
@@ -107,7 +113,10 @@
             <Button
                 android:id="@+id/cardFront3"
                 android:layout_width="@dimen/game_card_size"
-                android:layout_height="fill_parent" />
+                android:background="@drawable/background"
+                android:layout_height="fill_parent"
+                android:padding="@dimen/card_text_padding"
+                android:textSize="@dimen/card_content_size" />
         </RelativeLayout>
 
         <RelativeLayout
@@ -126,7 +135,10 @@
             <Button
                 android:id="@+id/cardFront4"
                 android:layout_width="@dimen/game_card_size"
-                android:layout_height="fill_parent" />
+                android:background="@drawable/background"
+                android:layout_height="fill_parent"
+                android:padding="@dimen/card_text_padding" 
+                android:textSize="@dimen/card_content_size"/>
         </RelativeLayout>
     </LinearLayout>
 
@@ -233,7 +245,10 @@
             <Button
                 android:id="@+id/cardBack1"
                 android:layout_width="@dimen/game_card_size"
-                android:layout_height="fill_parent" />
+                android:background="@drawable/background"
+                android:layout_height="fill_parent"
+                android:padding="@dimen/card_text_padding" 
+                android:textSize="@dimen/card_content_size"/>
         </RelativeLayout>
 
         <RelativeLayout
@@ -252,7 +267,10 @@
             <Button
                 android:id="@+id/cardBack2"
                 android:layout_width="@dimen/game_card_size"
-                android:layout_height="fill_parent" />
+                android:background="@drawable/background"
+                android:layout_height="fill_parent"
+                android:padding="@dimen/card_text_padding"
+                android:textSize="@dimen/card_content_size" />
         </RelativeLayout>
 
         <RelativeLayout
@@ -271,7 +289,10 @@
             <Button
                 android:id="@+id/cardBack3"
                 android:layout_width="@dimen/game_card_size"
-                android:layout_height="fill_parent" />
+                android:background="@drawable/background"
+                android:layout_height="fill_parent" 
+                android:padding="@dimen/card_text_padding"
+                android:textSize="@dimen/card_content_size"/>
         </RelativeLayout>
 
         <RelativeLayout
@@ -290,7 +311,10 @@
             <Button
                 android:id="@+id/cardBack4"
                 android:layout_width="@dimen/game_card_size"
-                android:layout_height="fill_parent" />
+                android:background="@drawable/background"
+                android:layout_height="fill_parent" 
+                android:padding="@dimen/card_text_padding"
+                android:textSize="@dimen/card_content_size"/>
         </RelativeLayout>
     </LinearLayout>
 
@@ -345,5 +369,17 @@
         android:contentDescription="@string/match"
         android:padding="8dp"
         android:src="@drawable/sun" />
+    <ImageButton
+        android:id="@+id/reset"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/frontBarRight"
+        android:layout_toLeftOf="@+id/backBarLeft"
+        android:layout_toRightOf="@+id/frontBarRight"
+        android:background="@drawable/background_button"
+        android:contentDescription="@string/match"
+        android:padding="8dp"
+        android:src="@drawable/reset"
+        android:onClick="reset"/>
 
 </RelativeLayout>
