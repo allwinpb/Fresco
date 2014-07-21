@@ -62,5 +62,8 @@
     <string name="name">Name</string>
     <string name="drawer_open">Open navigation drawer</string>
     <string name="drawer_close">Close navigation drawer</string>
+     <string name="matching_result">Match result</string>
+     <string name="next_set">Next Set</string>
+     <string name="show_answer">Show Answer</string>
 
 </resources>

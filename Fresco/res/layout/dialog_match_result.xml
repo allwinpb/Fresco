@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="@string/matching_result"
+        android:layout_margin="@dimen/margin"
+        android:id="@+id/result" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal" >
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/next_set" 
+            android:layout_weight="1"
+            android:id="@+id/reset"
+            android:background="@drawable/background"/>
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" 
+            android:text="@string/show_answer"
+            android:layout_weight="1"
+            android:id="@+id/answer"
+            android:background="@drawable/background"/>
+    </LinearLayout>
+
+</LinearLayout>

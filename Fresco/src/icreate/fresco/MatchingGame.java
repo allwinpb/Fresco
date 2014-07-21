@@ -10,6 +10,8 @@ import java.util.Random;
 
 import android.app.ActionBar;
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -17,12 +19,14 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Base64;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 public class MatchingGame extends Activity implements OnClickListener {
 	private ImageButton imageButtonFrontList[] = new ImageButton[4];//For image content in the card
@@ -47,8 +51,9 @@ public class MatchingGame extends Activity implements OnClickListener {
 	private List<Card> cardList = new ArrayList<Card>(4);
 	private SqliteHelper database;
 	ArrayList<Integer> list = new ArrayList<Integer>();
+	int order[] = new int[4];
 	
-	int match;
+	int match;//To keep track of which front card is chosen to match the back card 
 	int deckID;
 	int positionColor;
 
@@ -82,7 +87,7 @@ public class MatchingGame extends Activity implements OnClickListener {
 		initializingImageButtons();
 		initializingButtons();
 		shuffle();
-		match = 0;
+		match = 0;//Originally no front card is selected
 		
 		
 		for(int i = 0; i < 4; i++){
@@ -136,25 +141,30 @@ public class MatchingGame extends Activity implements OnClickListener {
 		case R.id.cardBack1:
 		case R.id.cardImageBack1:
 			matchColor(match, 0);
+			order[match-1] = 0;
 			match = 0;
 			break;
 		case R.id.cardBack2:
 		case R.id.cardImageBack2:
 			matchColor(match, 1);
+			order[match-1] = 1;
 			match = 0;
 			break;
 		case R.id.cardBack3:
 		case R.id.cardImageBack3:
 			matchColor(match, 2);
+			order[match-1] = 2;
 			match = 0;
 			break;
 		case R.id.cardBack4:
 		case R.id.cardImageBack4:
 			matchColor(match, 3);
+			order[match-1] = 3;
 			match = 0;
 			break;
 		}
 	}
+	
 	public void matchColor(int match, int pos){
 		switch(match){
 		case 1:
@@ -267,14 +277,64 @@ public class MatchingGame extends Activity implements OnClickListener {
 		setCardBack();
 	}
 
-	public int matchCards(){
+	public int matchCards(){//Return the number of correct matchings, between 0 and 4
 
 		//match the card's fronts and back and give the results out of 4
+		int count = 0;
+		for(int i = 0; i < 4; i++){
+			if(list.get(i)==order[i])
+				count++;
+		}
 
-
-		return 0;
+		return count;
 	}
+	public void match(View view){
+		showDialog(1, null);
+	}
+	
+	@Override
+	protected Dialog onCreateDialog(int id) {
+		// TODO Auto-generated method stub
+		AlertDialog dialogDetails = null;
+		LayoutInflater inflater = LayoutInflater.from(this);
+		View dialogview = null;
+		if(id == 1){
+			dialogview = inflater.inflate(R.layout.dialog_match_result, null);
+		}
+		AlertDialog.Builder dialogbuilder = new AlertDialog.Builder(this);
+		dialogbuilder.setView(dialogview);
+		dialogDetails = dialogbuilder.create();
+		return dialogDetails;
+	}
+	
+	@Override
+	protected void onPrepareDialog(int id, Dialog dialog) {
+		// TODO Auto-generated method stub
+		final AlertDialog alertDialog = (AlertDialog) dialog;
+		TextView result = (TextView)findViewById(R.id.result);
+		Button reset = (Button) alertDialog.findViewById(R.id.reset);
+		Button showAnswer = (Button)findViewById(R.id.answer); 
+		
+		result.setText("You've got "+matchCards()+" matchings correct!");
+		
+		reset.setOnClickListener(new View.OnClickListener() {
 
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				selectCards();
+			}
+		});
+		
+		showAnswer.setOnClickListener(new View.OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
+	}
 	public void setCardFront(){
 		for(int i = 0; i < 4; i++){
 			String content = cardList.get(i).getContent(Side.FRONT);
@@ -337,20 +397,10 @@ public class MatchingGame extends Activity implements OnClickListener {
 
 	public void shuffle(){
 		//Shuffle the four cards' back randomly
-		int count = 0;
-		Random random = new Random();
-		while(count<4){
-			int value = random.nextInt(4);
-			if(count == 0){
-				list.add(value);
-				count++;
-			}else{
-				if(!list.contains(value)){
-					list.add(value);
-					count++;
-				}
-			}
+		for(int i = 0; i < 4; i++){
+			list.add(i);
 		}
+		Collections.shuffle(list);
 	}
 
 	private Bitmap convertFromJSONToImage(String jsonString) {
