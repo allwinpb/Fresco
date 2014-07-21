@@ -11,6 +11,7 @@ import android.graphics.Matrix;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.provider.MediaStore.MediaColumns;
 import android.support.v4.app.Fragment;
 import android.util.Base64;
 import android.view.LayoutInflater;
@@ -56,8 +57,11 @@ public class FragmentGallery extends Fragment{
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				Intent i = new Intent(Intent.ACTION_PICK,android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-				startActivityForResult(i, RESULT_LOAD_IMAGE);
+				Intent intent = new Intent(Intent.ACTION_PICK,android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                intent.setType("image/*");
+                startActivityForResult(Intent.createChooser(intent, "Select File"),RESULT_LOAD_IMAGE);
+				//Intent i = new Intent(Intent.ACTION_PICK,android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+				//startActivityForResult(i, RESULT_LOAD_IMAGE);
 				isUploaded = true;
 			}
 		});
@@ -68,6 +72,7 @@ public class FragmentGallery extends Fragment{
 		// TODO Auto-generated method stub
 		super.onActivityResult(requestCode, resultCode, data);
 		if (resultCode == Activity.RESULT_OK) {
+			
 			selectedImage = data.getData();
 			String[] filePathColumn = { MediaStore.Images.Media.DATA };
 			Cursor cursor = getActivity().getContentResolver().query(selectedImage,filePathColumn, null, null, null);
@@ -103,7 +108,8 @@ public class FragmentGallery extends Fragment{
 				// Release image resources
 				scaledBmp.recycle();
 				scaledBmp = null;
-			}	
+			}
+			bmp.recycle();
 			//iv.setImageBitmap(resultBmp);
 		}
 	}
@@ -128,6 +134,16 @@ public class FragmentGallery extends Fragment{
            Gallery = savedInstanceState.getString("Gallery");            
         }
 	}*/
+	
+	
+	public String getPath(Uri uri, Activity activity) {
+        String[] projection = { MediaColumns.DATA };
+        Cursor cursor = activity.managedQuery(uri, projection, null, null, null);
+        int column_index = cursor.getColumnIndexOrThrow(MediaColumns.DATA);
+        cursor.moveToFirst();
+        return cursor.getString(column_index);
+    }
+	
 	public String getContent(){
 		if(bmp != null) {
 			ByteArrayOutputStream baos = new ByteArrayOutputStream();  

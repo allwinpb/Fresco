@@ -13,4 +13,5 @@
     <dimen name="game_card_size">112dp</dimen>
     <dimen name="card_content_size">16dp</dimen>
     <dimen name="card_text_padding">5dp</dimen>
+    <dimen name="card_image_padding">30dp</dimen>
 </resources>
