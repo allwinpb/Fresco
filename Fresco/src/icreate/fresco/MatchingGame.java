@@ -16,7 +16,6 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
-import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.util.Base64;
 import android.util.Log;
@@ -48,6 +47,7 @@ public class MatchingGame extends Activity implements OnClickListener {
 	private ImageView backBarLeft[] = new ImageView[4];
 	private ImageView backBarRight[] = new ImageView[4];
 	
+
 	private List<Card> cardList = new ArrayList<Card>(4);
 	private SqliteHelper database;
 	ArrayList<Integer> list = new ArrayList<Integer>();
@@ -69,8 +69,6 @@ public class MatchingGame extends Activity implements OnClickListener {
 		frontBarLeft[2] = (ImageView)findViewById(R.id.frontBarLeft3);
 		frontBarLeft[3] = (ImageView)findViewById(R.id.frontBarLeft4);
 		
-		
-		
 		frontBarRight[0] = (ImageView)findViewById(R.id.frontBarRight1);
 		frontBarRight[1] = (ImageView)findViewById(R.id.frontBarRight2);
 		frontBarRight[2] = (ImageView)findViewById(R.id.frontBarRight3);
@@ -85,7 +83,6 @@ public class MatchingGame extends Activity implements OnClickListener {
 		backBarRight[1] = (ImageView)findViewById(R.id.backBarRight2);
 		backBarRight[2] = (ImageView)findViewById(R.id.backBarRight3);
 		backBarRight[3] = (ImageView)findViewById(R.id.backBarRight4);
-		
 		
 		initializingImageButtons();
 		initializingButtons();
@@ -114,24 +111,28 @@ public class MatchingGame extends Activity implements OnClickListener {
 		//Front press
 		case R.id.cardFront1:
 		case R.id.cardImageFront1:
-			
+			frontBarLeft[0].setBackgroundColor(Color.RED);
+			frontBarLeft[0].setBackgroundColor(Color.RED);
 			match = 1;
 			break;
 		case R.id.cardFront2:
 		case R.id.cardImageFront2:
-			
+			frontBarLeft[1].setBackgroundColor(Color.RED);
+			frontBarLeft[1].setBackgroundColor(Color.RED);
 			match = 2;
 			break;
 			
 		case R.id.cardFront3:
 		case R.id.cardImageFront3:
-			
+			frontBarLeft[2].setBackgroundColor(Color.RED);
+			frontBarLeft[2].setBackgroundColor(Color.RED);
 			match = 3;
 			break;
 			
 		case R.id.cardFront4:
 		case R.id.cardImageFront4:
-
+			frontBarLeft[3].setBackgroundColor(Color.RED);
+			frontBarLeft[3].setBackgroundColor(Color.RED);
 			match = 4;
 			break;
 			
@@ -168,19 +169,19 @@ public class MatchingGame extends Activity implements OnClickListener {
 		switch(match){
 		case 1:
 			backBarLeft[pos].setBackgroundColor(Color.RED);
-			backBarRight[pos].setBackgroundColor(Color.RED);
+			backBarLeft[pos].setBackgroundColor(Color.RED);
 			break;
 		case 2:
 			backBarLeft[pos].setBackgroundColor(Color.BLUE);
-			backBarRight[pos].setBackgroundColor(Color.BLUE);
+			backBarLeft[pos].setBackgroundColor(Color.BLUE);
 			break;
 		case 3:
 			backBarLeft[pos].setBackgroundColor(Color.YELLOW);
-			backBarRight[pos].setBackgroundColor(Color.YELLOW);
+			backBarLeft[pos].setBackgroundColor(Color.YELLOW);
 			break;
 		case 4:
 			backBarLeft[pos].setBackgroundColor(Color.GRAY);
-			backBarRight[pos].setBackgroundColor(Color.GRAY);
+			backBarLeft[pos].setBackgroundColor(Color.GRAY);
 			break;
 		default:
 		}
@@ -287,9 +288,8 @@ public class MatchingGame extends Activity implements OnClickListener {
 
 		return count;
 	}
-	@SuppressWarnings("deprecation")
 	public void match(View view){
-		this.showDialog(1);
+		showDialog(1, null);
 	}
 	
 	@Override

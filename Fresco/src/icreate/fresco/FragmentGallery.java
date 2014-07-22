@@ -92,11 +92,13 @@ public class FragmentGallery extends Fragment{
 			if (!rotated) {
 				bmp = Bitmap.createScaledBitmap(b, w, h, true);
 				iv.setImageBitmap(bmp);
+				b.recycle();
 				b = null;
 
 				// If rotated, scale it by switching width and height and then rotated it
 			} else {
 				Bitmap scaledBmp = Bitmap.createScaledBitmap(b, h, w, true);
+				b.recycle();
 				b = null;
 
 				Matrix mat = new Matrix();
@@ -104,8 +106,10 @@ public class FragmentGallery extends Fragment{
 				bmp = Bitmap.createBitmap(scaledBmp, 0, 0, h, w, mat, true);
 				iv.setImageBitmap(bmp);
 				// Release image resources
+				scaledBmp.recycle();
 				scaledBmp = null;
 			}
+			bmp.recycle();
 			//iv.setImageBitmap(resultBmp);
 		}
 	}
