@@ -6,7 +6,9 @@ import icreate.fresco.Card.Type;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Random;
+
+import com.sonyericsson.util.ScalingUtilities;
+import com.sonyericsson.util.ScalingUtilities.ScalingLogic;
 
 import android.app.ActionBar;
 import android.app.Activity;
@@ -56,6 +58,11 @@ public class MatchingGame extends Activity implements OnClickListener {
 	int match;//To keep track of which front card is chosen to match the back card 
 	int deckID;
 	int positionColor;
+	int size;
+	
+	private int mDstWidth;
+	private int mDstHeight;
+	
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -88,6 +95,9 @@ public class MatchingGame extends Activity implements OnClickListener {
 		initializingButtons();
 		shuffle();
 		match = 0;//Originally no front card is selected
+		
+		mDstWidth = getResources().getDimensionPixelSize(R.dimen.game_card_size);
+        mDstHeight = getResources().getDimensionPixelSize(R.dimen.game_card_size);
 		
 		
 		for(int i = 0; i < 4; i++){
@@ -187,6 +197,7 @@ public class MatchingGame extends Activity implements OnClickListener {
 		}
 	}
 	private void selectCards(){
+		shuffle();
 		if(deckID != -1) {
 			setUpIconofDeckName(deckID);
 			getCardFromADeck(deckID);
@@ -342,7 +353,13 @@ public class MatchingGame extends Activity implements OnClickListener {
 				frontList[i] = content;
 			}
 			else{
-				bmpFrontList[i] = convertFromJSONToImage(content);
+				Bitmap unscaledBitmap = convertFromJSONToImage(content);
+
+		        // Part 2: Scale image
+				bmpFrontList[i] = ScalingUtilities.createScaledBitmap(unscaledBitmap, mDstWidth,
+		                mDstHeight, ScalingLogic.FIT);
+		        unscaledBitmap.recycle();
+				
 			}
 		}
 
@@ -352,11 +369,17 @@ public class MatchingGame extends Activity implements OnClickListener {
 	public void setCardBack(){
 		for(int i = 0; i < 4; i++){
 			String content = cardList.get(list.get(i)).getContent(Side.BACK);
-			if(cardList.get(i).getType(Side.BACK) == Type.TEXT){
+			if(cardList.get(list.get(i)).getType(Side.BACK) == Type.TEXT){
 				backList[i] = content;
 			}
 			else{
-				bmpBackList[i] = convertFromJSONToImage(content);
+				Bitmap unscaledBitmap = convertFromJSONToImage(content);
+
+		        // Part 2: Scale image
+				bmpBackList[i] = ScalingUtilities.createScaledBitmap(unscaledBitmap, mDstWidth,
+		                mDstHeight, ScalingLogic.FIT);
+		        unscaledBitmap.recycle();
+
 			}
 		}
 		setBackCardsContent();
@@ -397,10 +420,7 @@ public class MatchingGame extends Activity implements OnClickListener {
 
 	public void shuffle(){
 		//Shuffle the four cards' back randomly
-		for(int i = 0; i < 4; i++){
-			list.add(i);
-		}
-		Collections.shuffle(list);
+		list = getRandomList(4);
 	}
 
 	private Bitmap convertFromJSONToImage(String jsonString) {
@@ -424,11 +444,11 @@ public class MatchingGame extends Activity implements OnClickListener {
 			list.add(i);
 		Collections.shuffle(list);
 		
-		for(int i=0; i<4; i++)
+		for(int i=0; i<4; i++) {
 			integerList.add(list.get(i));
+			Log.d("getRandomList", String.valueOf(list.get(i)));
+		}
 		
 		return integerList;
 	}
-	
-
 }
