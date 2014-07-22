@@ -311,6 +311,9 @@ public class SqliteHelper extends SQLiteOpenHelper {
 						card.setContent(Side.BACK, cursor.getString(4));
 		
 						cardList.add(card);
+						
+						Log.d("getCardsFromDeck: Front ", cursor.getString(1));
+						Log.d("getCardsFromDeck: Back ", cursor.getString(3));
 					}
 					
 					index++;

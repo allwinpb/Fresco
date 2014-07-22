@@ -60,10 +60,12 @@
 
             <ImageButton
                 android:id="@+id/cardImageFront1"
-                android:layout_width="@dimen/game_card_size"
-                android:layout_height="fill_parent"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:background="@drawable/background"
                 android:contentDescription="@string/card_front"
+                android:adjustViewBounds="true"
+				android:scaleType="centerCrop"
                 android:src="@drawable/key" />
 
             <Button

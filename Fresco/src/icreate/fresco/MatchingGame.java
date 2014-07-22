@@ -10,17 +10,22 @@ import java.util.Random;
 
 import android.app.ActionBar;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Base64;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 public class MatchingGame extends Activity {
 	private ImageButton imageButtonFrontList[] = new ImageButton[4];//For image content in the card
@@ -41,6 +46,7 @@ public class MatchingGame extends Activity {
 	
 	int deckID;
 	int positionColor;
+	int size;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -52,7 +58,6 @@ public class MatchingGame extends Activity {
 		
 		initializingImageButtons();
 		initializingButtons();
-		shuffle();
 		
 		Intent intent = getIntent();
 		deckID = intent.getIntExtra(Constant.DECK_ID, -1);
@@ -60,6 +65,7 @@ public class MatchingGame extends Activity {
 		selectCards();
 	}
 	private void selectCards(){
+		shuffle();
 		if(deckID != -1) {
 			setUpIconofDeckName(deckID);
 			getCardFromADeck(deckID);
@@ -220,20 +226,7 @@ public class MatchingGame extends Activity {
 
 	public void shuffle(){
 		//Shuffle the four cards' back randomly
-		int count = 0;
-		Random random = new Random();
-		while(count<4){
-			int value = random.nextInt(4);
-			if(count == 0){
-				list.add(value);
-				count++;
-			}else{
-				if(!list.contains(value)){
-					list.add(value);
-					count++;
-				}
-			}
-		}
+		list = getRandomList(4);
 	}
 
 	private Bitmap convertFromJSONToImage(String jsonString) {
@@ -257,10 +250,12 @@ public class MatchingGame extends Activity {
 			list.add(i);
 		Collections.shuffle(list);
 		
-		for(int i=0; i<4; i++)
+		for(int i=0; i<4; i++) {
 			integerList.add(list.get(i));
+			Log.d("getRandomList", String.valueOf(list.get(i)));
+		}
 		
 		return integerList;
-	}
+	}	 
 
 }
