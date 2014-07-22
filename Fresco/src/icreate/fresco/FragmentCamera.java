@@ -47,7 +47,7 @@ public class FragmentCamera extends Fragment {
 			isUploaded = true;
 			bmp = convertFromJSONToImage(content);
 			iv.setImageBitmap(bmp);
-			bmp.recycle();
+			//bmp.recycle();
 		}
 		
 
@@ -86,12 +86,12 @@ public class FragmentCamera extends Fragment {
 		// TODO Auto-generated method stub
 		super.onActivityResult(requestCode, resultCode, data);
 		if (resultCode == Activity.RESULT_OK) {
-			bmp.recycle();
-			bmp = null;
+			//bmp.recycle();
+			//bmp = null;
 			Bundle extras = data.getExtras();
 			bmp = (Bitmap)extras.get("data");
 			iv.setImageBitmap(bmp);
-			bmp.recycle();
+			//bmp.recycle();
 		}
 	}
 	/*

@@ -109,7 +109,7 @@ public class FragmentGallery extends Fragment{
 				scaledBmp.recycle();
 				scaledBmp = null;
 			}
-			bmp.recycle();
+			//bmp.recycle();
 			//iv.setImageBitmap(resultBmp);
 		}
 	}

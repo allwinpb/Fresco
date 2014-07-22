@@ -61,11 +61,11 @@
             <ImageButton
                 android:id="@+id/cardImageFront1"
                 android:layout_width="@dimen/game_card_size"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:background="@drawable/background"
                 android:contentDescription="@string/card_front"
+                android:scaleType="center"
                 android:adjustViewBounds="true"
-				android:scaleType="centerCrop"
                 android:src="@drawable/key" 
                 android:padding="@dimen/card_image_padding"/>
 
@@ -86,9 +86,11 @@
             <ImageButton
                 android:id="@+id/cardImageFront2"
                 android:layout_width="@dimen/game_card_size"
-                android:layout_height="fill_parent"
+                android:layout_height="match_parent"
                 android:background="@drawable/background"
                 android:contentDescription="@string/card_front"
+                android:adjustViewBounds="true"
+				android:scaleType="center"
                 android:src="@drawable/cat" 
                 android:padding="@dimen/card_image_padding"/>
 
@@ -112,6 +114,7 @@
                 android:layout_height="fill_parent"
                 android:background="@drawable/background"
                 android:contentDescription="@string/card_front"
+                android:scaleType="center"
                 android:src="@drawable/german"
                 android:padding="@dimen/card_image_padding" />
 
@@ -136,6 +139,7 @@
                 android:background="@drawable/background"
                 android:contentDescription="@string/card_front"
                 android:src="@drawable/basketball"
+                android:scaleType="center"
                 android:padding="@dimen/card_image_padding" />
 
             <Button
@@ -246,6 +250,7 @@
                 android:layout_height="fill_parent"
                 android:background="@drawable/background"
                 android:contentDescription="@string/card_back"
+                android:scaleType="center"
                 android:src="@drawable/key" />
 
             <Button
@@ -268,6 +273,7 @@
                 android:layout_height="fill_parent"
                 android:background="@drawable/background"
                 android:contentDescription="@string/card_back"
+                android:scaleType="center"
                 android:src="@drawable/cat" />
 
             <Button
@@ -290,6 +296,7 @@
                 android:layout_height="fill_parent"
                 android:background="@drawable/background"
                 android:contentDescription="@string/card_back"
+                android:scaleType="center"
                 android:src="@drawable/german" />
 
             <Button
@@ -312,6 +319,7 @@
                 android:layout_height="fill_parent"
                 android:background="@drawable/background"
                 android:contentDescription="@string/card_back"
+                android:scaleType="center"
                 android:src="@drawable/basketball" />
 
             <Button
