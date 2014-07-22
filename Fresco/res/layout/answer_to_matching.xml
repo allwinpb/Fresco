@@ -397,17 +397,4 @@
         android:src="@drawable/reset"
         android:onClick="reset"/>
 
-    <ImageView
-        android:id="@+id/show_answer"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:src="@drawable/arrow"
-        android:layout_toLeftOf="@+id/backBarLeft"
-        android:layout_toRightOf="@+id/frontBarRight"
-        android:background="@drawable/background_button"
-        android:contentDescription="@string/arrow"
-        android:visibility="invisible" />
-
 </RelativeLayout>

@@ -13,7 +13,7 @@ import com.sonyericsson.util.ScalingUtilities.ScalingLogic;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -21,14 +21,13 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Base64;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.TextView;
+import android.widget.Toast;
 
 public class MatchingGame extends Activity implements OnClickListener {
 	private ImageButton imageButtonFrontList[] = new ImageButton[4];//For image content in the card
@@ -48,6 +47,9 @@ public class MatchingGame extends Activity implements OnClickListener {
 	
 	private ImageView backBarLeft[] = new ImageView[4];
 	private ImageView backBarRight[] = new ImageView[4];
+	
+	private ImageView showAnswer;
+	private ImageButton submit;
 	
 
 	private List<Card> cardList = new ArrayList<Card>(4);
@@ -91,6 +93,8 @@ public class MatchingGame extends Activity implements OnClickListener {
 		backBarRight[2] = (ImageView)findViewById(R.id.backBarRight3);
 		backBarRight[3] = (ImageView)findViewById(R.id.backBarRight4);
 		
+		showAnswer = (ImageView)findViewById(R.id.show_answer);
+		submit     = (ImageButton)findViewById(R.id.match);
 		initializingImageButtons();
 		initializingButtons();
 		shuffle();
@@ -106,6 +110,8 @@ public class MatchingGame extends Activity implements OnClickListener {
 			buttonBackList[i].setOnClickListener(this);
 			imageButtonFrontList[i].setOnClickListener(this);
 			imageButtonFrontList[i].setOnClickListener(this);
+			
+			order[i] = -1;
 		}
 		
 		Intent intent = getIntent();
@@ -121,28 +127,28 @@ public class MatchingGame extends Activity implements OnClickListener {
 		//Front press
 		case R.id.cardFront1:
 		case R.id.cardImageFront1:
-			frontBarLeft[0].setBackgroundColor(Color.RED);
-			frontBarLeft[0].setBackgroundColor(Color.RED);
+			frontBarLeft[0].setBackgroundColor(Color.GREEN);
+			frontBarRight[0].setBackgroundColor(Color.GREEN);
 			match = 1;
 			break;
 		case R.id.cardFront2:
 		case R.id.cardImageFront2:
-			frontBarLeft[1].setBackgroundColor(Color.RED);
-			frontBarLeft[1].setBackgroundColor(Color.RED);
+			frontBarLeft[1].setBackgroundColor(Color.BLUE);
+			frontBarRight[1].setBackgroundColor(Color.BLUE);
 			match = 2;
 			break;
 			
 		case R.id.cardFront3:
 		case R.id.cardImageFront3:
-			frontBarLeft[2].setBackgroundColor(Color.RED);
-			frontBarLeft[2].setBackgroundColor(Color.RED);
+			frontBarLeft[2].setBackgroundColor(Color.YELLOW);
+			frontBarRight[2].setBackgroundColor(Color.YELLOW);
 			match = 3;
 			break;
 			
 		case R.id.cardFront4:
 		case R.id.cardImageFront4:
-			frontBarLeft[3].setBackgroundColor(Color.RED);
-			frontBarLeft[3].setBackgroundColor(Color.RED);
+			frontBarLeft[3].setBackgroundColor(Color.GRAY);
+			frontBarRight[3].setBackgroundColor(Color.GRAY);
 			match = 4;
 			break;
 			
@@ -152,46 +158,60 @@ public class MatchingGame extends Activity implements OnClickListener {
 		case R.id.cardImageBack1:
 			matchColor(match, 0);
 			order[match-1] = 0;
+			removeDuplicate(0, match-1);
 			match = 0;
 			break;
 		case R.id.cardBack2:
 		case R.id.cardImageBack2:
 			matchColor(match, 1);
 			order[match-1] = 1;
+			removeDuplicate(1, match-1);
 			match = 0;
 			break;
 		case R.id.cardBack3:
 		case R.id.cardImageBack3:
 			matchColor(match, 2);
 			order[match-1] = 2;
+			removeDuplicate(2, match-1);
 			match = 0;
 			break;
 		case R.id.cardBack4:
 		case R.id.cardImageBack4:
 			matchColor(match, 3);
 			order[match-1] = 3;
+			removeDuplicate(3, match-1);
 			match = 0;
 			break;
 		}
 	}
-	
+	private void removeDuplicate(int color, int currentPosition){
+		for(int i = 0; i < 4; i++){
+			if(i != currentPosition && order[i] == color){
+				order[i] = -1;
+				backBarLeft[i].setBackgroundColor(Color.WHITE);
+				backBarRight[i].setBackgroundColor(Color.WHITE);
+			}
+				
+		}
+		
+	}
 	public void matchColor(int match, int pos){
 		switch(match){
 		case 1:
-			backBarLeft[pos].setBackgroundColor(Color.RED);
-			backBarLeft[pos].setBackgroundColor(Color.RED);
+			backBarLeft[pos].setBackgroundColor(Color.GREEN);
+			backBarRight[pos].setBackgroundColor(Color.GREEN);
 			break;
 		case 2:
 			backBarLeft[pos].setBackgroundColor(Color.BLUE);
-			backBarLeft[pos].setBackgroundColor(Color.BLUE);
+			backBarRight[pos].setBackgroundColor(Color.BLUE);
 			break;
 		case 3:
 			backBarLeft[pos].setBackgroundColor(Color.YELLOW);
-			backBarLeft[pos].setBackgroundColor(Color.YELLOW);
+			backBarRight[pos].setBackgroundColor(Color.YELLOW);
 			break;
 		case 4:
 			backBarLeft[pos].setBackgroundColor(Color.GRAY);
-			backBarLeft[pos].setBackgroundColor(Color.GRAY);
+			backBarRight[pos].setBackgroundColor(Color.GRAY);
 			break;
 		default:
 		}
@@ -207,7 +227,10 @@ public class MatchingGame extends Activity implements OnClickListener {
 		
 	}
 	public void reset(View v){
+		resetSideBarColor();
 		selectCards();
+		showAnswer.setVisibility(View.INVISIBLE);
+		submit.setVisibility(View.VISIBLE);
 	}
 	private void setUpIconofDeckName(int deckID) {
 		Deck deck = database.getDeck(deckID);
@@ -293,59 +316,66 @@ public class MatchingGame extends Activity implements OnClickListener {
 		//match the card's fronts and back and give the results out of 4
 		int count = 0;
 		for(int i = 0; i < 4; i++){
-			if(list.get(i)==order[i])
+			if(list.get(i) == order[i])
 				count++;
 		}
 
 		return count;
 	}
-	public void match(View view){
-		showDialog(1, null);
-	}
-	
-	@Override
-	protected Dialog onCreateDialog(int id) {
-		// TODO Auto-generated method stub
-		AlertDialog dialogDetails = null;
-		LayoutInflater inflater = LayoutInflater.from(this);
-		View dialogview = null;
-		if(id == 1){
-			dialogview = inflater.inflate(R.layout.dialog_match_result, null);
+	private boolean hasMatchedAll(){
+		for(int i = 0; i < 4; i++){
+			if(order[i] == -1)
+				return false;
 		}
-		AlertDialog.Builder dialogbuilder = new AlertDialog.Builder(this);
-		dialogbuilder.setView(dialogview);
-		dialogDetails = dialogbuilder.create();
-		return dialogDetails;
+		return true;
+	}
+	public void match(View view){
+		//showDialog(1, null);
+		if(hasMatchedAll()){
+		AlertDialog.Builder exitDialog = new AlertDialog.Builder(MatchingGame.this);
+
+		exitDialog
+		.setTitle("Matching Result")
+		.setCancelable(true)
+		.setMessage("You've got "+matchCards()+" matchings correct!")
+		.setPositiveButton("Next Set", new DialogInterface.OnClickListener() {
+			public void onClick(DialogInterface dialog, int which) {
+				resetSideBarColor();
+				selectCards();
+			}	
+		});
+		exitDialog
+		.setNegativeButton("Show Answer", new DialogInterface.OnClickListener() {
+			public void onClick(DialogInterface dialog, int which) {
+				showAnswer();
+			}
+		})
+		.setIcon(android.R.drawable.ic_dialog_alert);
+
+		AlertDialog dialog = exitDialog.create();
+		dialog.show();
+		}
+		else{
+			Toast.makeText(this, "!!! You haven't matched all !!!", Toast.LENGTH_SHORT).show();
+		}
+	}
+	public void showAnswer(){
+		showAnswer.setVisibility(View.VISIBLE);
+		submit.setVisibility(View.INVISIBLE);
+		setCorrectCardBack();
+		setCorrectBackBarColor();
+	
+	}
+	private void resetSideBarColor() {
+		// TODO Auto-generated method stub
+		for(int i = 0; i < 4; i++){
+			frontBarLeft[i].setBackgroundColor(Color.WHITE);
+			frontBarRight[i].setBackgroundColor(Color.WHITE);
+			backBarLeft[i].setBackgroundColor(Color.WHITE);
+			backBarRight[i].setBackgroundColor(Color.WHITE);
+		}
 	}
 	
-	@Override
-	protected void onPrepareDialog(int id, Dialog dialog) {
-		// TODO Auto-generated method stub
-		final AlertDialog alertDialog = (AlertDialog) dialog;
-		TextView result = (TextView)findViewById(R.id.result);
-		Button reset = (Button) alertDialog.findViewById(R.id.reset);
-		Button showAnswer = (Button)findViewById(R.id.answer); 
-		
-		result.setText("You've got "+matchCards()+" matchings correct!");
-		
-		reset.setOnClickListener(new View.OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				selectCards();
-			}
-		});
-		
-		showAnswer.setOnClickListener(new View.OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				
-			}
-		});
-	}
 	public void setCardFront(){
 		for(int i = 0; i < 4; i++){
 			String content = cardList.get(i).getContent(Side.FRONT);
@@ -384,7 +414,38 @@ public class MatchingGame extends Activity implements OnClickListener {
 		}
 		setBackCardsContent();
 	}
+	private void setCorrectBackBarColor(){
+		backBarLeft[0].setBackgroundColor(Color.GREEN);
+		backBarRight[0].setBackgroundColor(Color.GREEN);
+		
+		backBarLeft[1].setBackgroundColor(Color.BLUE);
+		backBarRight[1].setBackgroundColor(Color.BLUE);
+		
+		backBarLeft[2].setBackgroundColor(Color.YELLOW);
+		backBarRight[2].setBackgroundColor(Color.YELLOW);
+		
+		backBarLeft[3].setBackgroundColor(Color.GRAY);
+		backBarRight[3].setBackgroundColor(Color.GRAY);
+	}
+	private void setCorrectCardBack(){
+		for(int i = 0; i < 4; i++){
+			String content = cardList.get(i).getContent(Side.FRONT);
+			if(cardList.get(i).getType(Side.FRONT) == Type.TEXT){
+				backList[i] = content;
+			}
+			else{
+				Bitmap unscaledBitmap = convertFromJSONToImage(content);
 
+		        // Part 2: Scale image
+				bmpFrontList[i] = ScalingUtilities.createScaledBitmap(unscaledBitmap, mDstWidth,
+		                mDstHeight, ScalingLogic.FIT);
+		        unscaledBitmap.recycle();
+				
+			}
+		}
+
+		setFrontCardsContent();
+	}
 	public void setBackCardsContent(){
 		//Display the cards' back on the game layout
 		for(int i = 0; i < 4; i++){
@@ -398,6 +459,7 @@ public class MatchingGame extends Activity implements OnClickListener {
 				buttonBackList[i].setVisibility(View.VISIBLE);
 				imageButtonBackList[i].setVisibility(View.GONE);
 			}
+			bmpBackList[i] = null;
 		}
 	}
 
@@ -408,12 +470,14 @@ public class MatchingGame extends Activity implements OnClickListener {
 				imageButtonFrontList[i].setImageBitmap(bmpFrontList[i]);
 				imageButtonFrontList[i].setVisibility(View.VISIBLE);
 				buttonFrontList[i].setVisibility(View.GONE);
+				frontList[i] = "";
 			}
 			else{
 				buttonFrontList[i].setText(frontList[i]);
 				buttonFrontList[i].setVisibility(View.VISIBLE);
-				imageButtonFrontList[i].setVisibility(View.GONE);
+				imageButtonFrontList[i].setVisibility(View.INVISIBLE);
 			}
+			bmpFrontList[i] = null;
 		}
 
 	}

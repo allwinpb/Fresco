@@ -65,5 +65,6 @@
      <string name="matching_result">Match result</string>
      <string name="next_set">Next Set</string>
      <string name="show_answer">Show Answer</string>
+     <string name="arrow">Arrow</string>
 
 </resources>
