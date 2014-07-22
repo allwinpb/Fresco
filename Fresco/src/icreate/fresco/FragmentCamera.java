@@ -1,7 +1,6 @@
 package icreate.fresco;
 
 import java.io.ByteArrayOutputStream;
-import java.io.InputStream;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -21,11 +20,10 @@ import android.widget.ImageView;
 
 public class FragmentCamera extends Fragment {
 	ImageView iv;
-	final static int cameraData = 0;
+	final static int REQUEST_CAMERA = 0;
 	Bitmap bmp;
 	Button takePic;
 	boolean isUploaded = false;
-	//private Uri selectedImage;
 	public static final int MEDIA_TYPE_IMAGE = 1;
 
 	public static FragmentCamera createFragment(String content) {
@@ -38,7 +36,6 @@ public class FragmentCamera extends Fragment {
 		return fragment;
 	}
 
-
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 
@@ -50,6 +47,7 @@ public class FragmentCamera extends Fragment {
 			isUploaded = true;
 			bmp = convertFromJSONToImage(content);
 			iv.setImageBitmap(bmp);
+			bmp.recycle();
 		}
 		
 
@@ -59,8 +57,8 @@ public class FragmentCamera extends Fragment {
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
 				isUploaded = true;
-				Intent image = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-				getParentFragment().startActivityForResult(image, cameraData);
+				Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+				getParentFragment().startActivityForResult(intent, REQUEST_CAMERA);
 				
 			}
 		});
@@ -81,16 +79,19 @@ public class FragmentCamera extends Fragment {
 		if(savedInstanceState != null){
 			bmp = savedInstanceState.getParcelable("camera");
 			iv.setImageBitmap(bmp);
+			
 		}
 	}
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
 		// TODO Auto-generated method stub
 		super.onActivityResult(requestCode, resultCode, data);
 		if (resultCode == Activity.RESULT_OK) {
+			bmp.recycle();
 			bmp = null;
 			Bundle extras = data.getExtras();
 			bmp = (Bitmap)extras.get("data");
 			iv.setImageBitmap(bmp);
+			bmp.recycle();
 		}
 	}
 	/*

@@ -60,13 +60,14 @@
 
             <ImageButton
                 android:id="@+id/cardImageFront1"
-                android:layout_width="match_parent"
+                android:layout_width="@dimen/game_card_size"
                 android:layout_height="wrap_content"
                 android:background="@drawable/background"
                 android:contentDescription="@string/card_front"
                 android:adjustViewBounds="true"
 				android:scaleType="centerCrop"
-                android:src="@drawable/key" />
+                android:src="@drawable/key" 
+                android:padding="@dimen/card_image_padding"/>
 
             <Button
                 android:id="@+id/cardFront1"
@@ -88,7 +89,8 @@
                 android:layout_height="fill_parent"
                 android:background="@drawable/background"
                 android:contentDescription="@string/card_front"
-                android:src="@drawable/cat" />
+                android:src="@drawable/cat" 
+                android:padding="@dimen/card_image_padding"/>
 
             <Button
                 android:id="@+id/cardFront2"
@@ -110,7 +112,8 @@
                 android:layout_height="fill_parent"
                 android:background="@drawable/background"
                 android:contentDescription="@string/card_front"
-                android:src="@drawable/german" />
+                android:src="@drawable/german"
+                android:padding="@dimen/card_image_padding" />
 
             <Button
                 android:id="@+id/cardFront3"
@@ -132,7 +135,8 @@
                 android:layout_height="fill_parent"
                 android:background="@drawable/background"
                 android:contentDescription="@string/card_front"
-                android:src="@drawable/basketball" />
+                android:src="@drawable/basketball"
+                android:padding="@dimen/card_image_padding" />
 
             <Button
                 android:id="@+id/cardFront4"
@@ -370,7 +374,8 @@
         android:background="@drawable/background_button"
         android:contentDescription="@string/match"
         android:padding="8dp"
-        android:src="@drawable/sun" />
+        android:src="@drawable/sun"
+        android:onClick="match" />
     <ImageButton
         android:id="@+id/reset"
         android:layout_width="wrap_content"
