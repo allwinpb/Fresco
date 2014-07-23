@@ -1,6 +1,7 @@
 package icreate.fresco;
 
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -21,6 +22,7 @@ import android.widget.ImageView;
 public class FragmentCamera extends Fragment {
 	ImageView iv;
 	final static int REQUEST_CAMERA = 0;
+	private CustomPicture custompicture;
 	Bitmap bmp;
 	Button takePic;
 	boolean isUploaded = false;
@@ -39,7 +41,7 @@ public class FragmentCamera extends Fragment {
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 
-		View view = inflater.inflate(R.layout.camera, container, false);
+		View view = inflater.inflate(R.layout.fragment_camera, container, false);
 		takePic = (Button)view.findViewById(R.id.takePic);
 		iv = (ImageView) view.findViewById(R.id.camera);
 		String content = this.getArguments().getString(Constant.CONTENT);
@@ -49,7 +51,7 @@ public class FragmentCamera extends Fragment {
 			iv.setImageBitmap(bmp);
 			//bmp.recycle();
 		}
-		
+
 
 		takePic.setOnClickListener(new OnClickListener() {
 
@@ -59,12 +61,12 @@ public class FragmentCamera extends Fragment {
 				isUploaded = true;
 				Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 				getParentFragment().startActivityForResult(intent, REQUEST_CAMERA);
-				
+
 			}
 		});
 		return view;
 	}
-	
+
 	@Override
 	public void onSaveInstanceState(Bundle outState) {
 		outState.putParcelable("camera", bmp);
@@ -79,22 +81,32 @@ public class FragmentCamera extends Fragment {
 		if(savedInstanceState != null){
 			bmp = savedInstanceState.getParcelable("camera");
 			iv.setImageBitmap(bmp);
-			
+
 		}
 	}
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
 		// TODO Auto-generated method stub
 		super.onActivityResult(requestCode, resultCode, data);
 		if (resultCode == Activity.RESULT_OK) {
+			custompicture = new CustomPicture(data.getData(), getActivity().getContentResolver());
+
+			try {
+				bmp = custompicture.getBitmap();
+				iv.setImageBitmap(bmp);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			//bmp.recycle();
 			//bmp = null;
+			/*
 			Bundle extras = data.getExtras();
 			bmp = (Bitmap)extras.get("data");
-			iv.setImageBitmap(bmp);
+			iv.setImageBitmap(bmp);*/
 			//bmp.recycle();
 		}
 	}
-	
+
 	public String getContent() {
 		if(bmp != null) {
 			ByteArrayOutputStream baos = new ByteArrayOutputStream();  
@@ -106,16 +118,16 @@ public class FragmentCamera extends Fragment {
 			return  "";
 		}
 	}
-	
+
 	private Bitmap convertFromJSONToImage(String jsonString) {
 		try {
-	        byte[] encodeByte = Base64.decode(jsonString, Base64.DEFAULT);
-	        Bitmap bitmap = BitmapFactory.decodeByteArray(encodeByte, 0,
-	                encodeByte.length);
-	        return bitmap;
+			byte[] encodeByte = Base64.decode(jsonString, Base64.DEFAULT);
+			Bitmap bitmap = BitmapFactory.decodeByteArray(encodeByte, 0,
+					encodeByte.length);
+			return bitmap;
 		} catch (Exception e) {
-	        e.getMessage(); 
-	        return null;
+			e.getMessage(); 
+			return null;
 		}
 	}
 
@@ -123,7 +135,7 @@ public class FragmentCamera extends Fragment {
 	public boolean isEmpty() {
 		return !isUploaded;
 	}	
-	
+
 	@Override
 	public void onDestroy() {
 		super.onDestroy();

@@ -1,6 +1,7 @@
 package icreate.fresco;
 
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -21,14 +22,16 @@ import android.widget.Button;
 import android.widget.ImageView;
 
 public class FragmentGallery extends Fragment{
+	
 	ImageView iv;
 	final static int RESULT_LOAD_IMAGE = 0;
 	Bitmap bmp;
 	Button takePic;
-	private Uri selectedImageUri;
-	private String selectedImagePath;
+	//private Uri selectedImageUri;
+	//private String selectedImagePath;
 	public static final int MEDIA_TYPE_IMAGE = 1;
 	boolean isUploaded = false;
+	private CustomPicture custompicture;
 	//private String Gallery;
 
 	public static FragmentGallery createFragment(String content) {
@@ -58,10 +61,10 @@ public class FragmentGallery extends Fragment{
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				//Intent intent = new Intent(Intent.ACTION_PICK,android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-				Intent intent = new Intent();
+				Intent intent = new Intent(Intent.ACTION_PICK,android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+				/*Intent intent = new Intent();
                 intent.setType("image/*");
-                intent.setAction(Intent.ACTION_GET_CONTENT);
+                intent.setAction(Intent.ACTION_GET_CONTENT);*/
                 startActivityForResult(Intent.createChooser(intent, "Select File"),RESULT_LOAD_IMAGE);
 				//Intent i = new Intent(Intent.ACTION_PICK,android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
 				//startActivityForResult(i, RESULT_LOAD_IMAGE);
@@ -75,14 +78,22 @@ public class FragmentGallery extends Fragment{
 		// TODO Auto-generated method stub
 		super.onActivityResult(requestCode, resultCode, data);
 		if (resultCode == Activity.RESULT_OK) {
+			custompicture = new CustomPicture(data.getData(), getActivity().getContentResolver());
 			
+			try {
+				bmp = custompicture.getBitmap();
+				iv.setImageBitmap(bmp);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			/*selectedImage = data.getData();
 			String[] filePathColumn = { MediaStore.Images.Media.DATA };
 			Cursor cursor = getActivity().getContentResolver().query(selectedImage,filePathColumn, null, null, null);
 			cursor.moveToFirst();
 			int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
 			String picturePath = cursor.getString(columnIndex);
-			cursor.close();*/
+			cursor.close();
 			selectedImageUri = data.getData();
 			
             selectedImagePath = getPath(selectedImageUri);
@@ -110,11 +121,11 @@ public class FragmentGallery extends Fragment{
 				bmp = Bitmap.createBitmap(scaledBmp, 0, 0, h, w, mat, true);
 				iv.setImageBitmap(bmp);
 				// Release image resources
-			}
+			}*/
 			
 		}
 	}
-	
+	/*
 	private String getPath(Uri uri) {
 		String selectedImagePath;
 	    //1:MEDIA GALLERY --- query from MediaStore.Images.Media.DATA
@@ -134,7 +145,7 @@ public class FragmentGallery extends Fragment{
 	    }
 	    return selectedImagePath;
     }
-	
+	*/
 	public String getContent(){
 		if(bmp != null) {
 			ByteArrayOutputStream baos = new ByteArrayOutputStream();  

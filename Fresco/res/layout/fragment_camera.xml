@@ -1,31 +1,45 @@
-<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" 
-	android:paddingRight="0dp"
-	android:gravity="center">
+    android:layout_marginBottom="15dp"
+    android:layout_marginLeft="35dp"
+    android:layout_marginRight="35dp"
+    android:layout_marginTop="15dp"
+    android:background="@drawable/background"
+    android:orientation="vertical"
+  	 >
 
-    <TableRow
+    <ImageView
+        android:id="@+id/camera"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="30dp"
-        android:layout_gravity="center_vertical"
-        android:gravity="center" >
-    
-	    <TextView 
-	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
-	        android:layout_gravity="center"
-	        android:text="@string/camera"/>
-    
-    </TableRow>
-    
-    <TableRow
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="30dp" >
-	    
-    </TableRow>
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="25dp"
+        android:layout_marginRight="25dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="2.5dp"
+        android:layout_weight="15"
+        android:src="@drawable/camera_256"
+        android:contentDescription="@string/camera"
+        android:gravity="center"
+        android:layout_gravity="center"
+         />
 
-</TableLayout>
+    <requestFocus />
+
+    <Button
+        android:id="@+id/takePic"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/take_picture"
+        android:layout_marginLeft="25dp"
+        android:layout_marginRight="25dp"
+        android:layout_marginTop="2.5dp"
+        android:layout_marginBottom="15dp"
+        android:layout_weight="1"
+        android:textColor="@android:color/white"
+        android:textSize="20sp"
+        android:background="@drawable/background"
+        android:visibility="visible" />
+
+</LinearLayout>

@@ -66,7 +66,6 @@
                 android:contentDescription="@string/card_front"
                 android:scaleType="center"
                 android:adjustViewBounds="true"
-                android:src="@drawable/key" 
                 android:padding="@dimen/card_image_padding"/>
 
             <Button
@@ -91,7 +90,6 @@
                 android:contentDescription="@string/card_front"
                 android:adjustViewBounds="true"
 				android:scaleType="center"
-                android:src="@drawable/cat" 
                 android:padding="@dimen/card_image_padding"/>
 
             <Button
@@ -115,7 +113,6 @@
                 android:background="@drawable/background"
                 android:contentDescription="@string/card_front"
                 android:scaleType="center"
-                android:src="@drawable/german"
                 android:padding="@dimen/card_image_padding" />
 
             <Button
@@ -138,7 +135,6 @@
                 android:layout_height="fill_parent"
                 android:background="@drawable/background"
                 android:contentDescription="@string/card_front"
-                android:src="@drawable/basketball"
                 android:scaleType="center"
                 android:padding="@dimen/card_image_padding" />
 
@@ -250,8 +246,7 @@
                 android:layout_height="fill_parent"
                 android:background="@drawable/background"
                 android:contentDescription="@string/card_back"
-                android:scaleType="center"
-                android:src="@drawable/key" />
+                android:scaleType="center" />
 
             <Button
                 android:id="@+id/cardBack1"
@@ -273,8 +268,7 @@
                 android:layout_height="fill_parent"
                 android:background="@drawable/background"
                 android:contentDescription="@string/card_back"
-                android:scaleType="center"
-                android:src="@drawable/cat" />
+                android:scaleType="center"/>
 
             <Button
                 android:id="@+id/cardBack2"
@@ -297,7 +291,7 @@
                 android:background="@drawable/background"
                 android:contentDescription="@string/card_back"
                 android:scaleType="center"
-                android:src="@drawable/german" />
+                />
 
             <Button
                 android:id="@+id/cardBack3"
@@ -320,7 +314,7 @@
                 android:background="@drawable/background"
                 android:contentDescription="@string/card_back"
                 android:scaleType="center"
-                android:src="@drawable/basketball" />
+                 />
 
             <Button
                 android:id="@+id/cardBack4"
