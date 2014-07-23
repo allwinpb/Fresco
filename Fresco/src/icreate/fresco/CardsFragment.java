@@ -165,7 +165,7 @@ public class CardsFragment extends Fragment {
 	    cardBack.addView(back, lp);
 	}
 	
-	public void flipCard() {	 
+	private void flipCard() {	 
 	    FlippingAnimation flipAnimation = new FlippingAnimation(cardFace, cardBack);
 	    isFrontCard = !isFrontCard;
 	 

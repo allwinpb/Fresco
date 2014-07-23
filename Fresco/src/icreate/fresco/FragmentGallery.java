@@ -25,7 +25,8 @@ public class FragmentGallery extends Fragment{
 	final static int RESULT_LOAD_IMAGE = 0;
 	Bitmap bmp;
 	Button takePic;
-	private Uri selectedImage;
+	private Uri selectedImageUri;
+	private String selectedImagePath;
 	public static final int MEDIA_TYPE_IMAGE = 1;
 	boolean isUploaded = false;
 	//private String Gallery;
@@ -57,8 +58,10 @@ public class FragmentGallery extends Fragment{
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				Intent intent = new Intent(Intent.ACTION_PICK,android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+				//Intent intent = new Intent(Intent.ACTION_PICK,android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+				Intent intent = new Intent();
                 intent.setType("image/*");
+                intent.setAction(Intent.ACTION_GET_CONTENT);
                 startActivityForResult(Intent.createChooser(intent, "Select File"),RESULT_LOAD_IMAGE);
 				//Intent i = new Intent(Intent.ACTION_PICK,android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
 				//startActivityForResult(i, RESULT_LOAD_IMAGE);
@@ -73,15 +76,19 @@ public class FragmentGallery extends Fragment{
 		super.onActivityResult(requestCode, resultCode, data);
 		if (resultCode == Activity.RESULT_OK) {
 			
-			selectedImage = data.getData();
+			/*selectedImage = data.getData();
 			String[] filePathColumn = { MediaStore.Images.Media.DATA };
 			Cursor cursor = getActivity().getContentResolver().query(selectedImage,filePathColumn, null, null, null);
 			cursor.moveToFirst();
 			int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
 			String picturePath = cursor.getString(columnIndex);
-			cursor.close();
+			cursor.close();*/
+			selectedImageUri = data.getData();
+			
+            selectedImagePath = getPath(selectedImageUri);
+			
 			int w = 300; int h = 400; // size that does not lead to OutOfMemoryException on Nexus One
-			Bitmap b = BitmapFactory.decodeFile(picturePath);
+			Bitmap b = BitmapFactory.decodeFile(selectedImagePath);
 
 			// Hack to determine whether the image is rotated
 			boolean rotated = b.getWidth() > b.getHeight();
@@ -92,13 +99,10 @@ public class FragmentGallery extends Fragment{
 			if (!rotated) {
 				bmp = Bitmap.createScaledBitmap(b, w, h, true);
 				iv.setImageBitmap(bmp);
-				b.recycle();
-				b = null;
 
 				// If rotated, scale it by switching width and height and then rotated it
 			} else {
 				Bitmap scaledBmp = Bitmap.createScaledBitmap(b, h, w, true);
-				b.recycle();
 				b = null;
 
 				Matrix mat = new Matrix();
@@ -106,42 +110,29 @@ public class FragmentGallery extends Fragment{
 				bmp = Bitmap.createBitmap(scaledBmp, 0, 0, h, w, mat, true);
 				iv.setImageBitmap(bmp);
 				// Release image resources
-				scaledBmp.recycle();
-				scaledBmp = null;
 			}
-			//bmp.recycle();
-			//iv.setImageBitmap(resultBmp);
+			
 		}
 	}
-	/*
-	@Override
-	public void onPause() {
-		// TODO Auto-generated method stub
-		super.onPause();
-		onSaveInstanceState(new Bundle());
-	}
 	
-	@Override
-	public void onSaveInstanceState(Bundle outState) {
-		// TODO Auto-generated method stub
-		super.onSaveInstanceState(outState);
-		outState.putSerializable("Gallery", Gallery);
-	}
-	
-	public void onRestoreInstanceState(Bundle savedInstanceState){
-		
-		if(savedInstanceState != null){
-           Gallery = savedInstanceState.getString("Gallery");            
-        }
-	}*/
-	
-	
-	public String getPath(Uri uri, Activity activity) {
-        String[] projection = { MediaColumns.DATA };
-        Cursor cursor = activity.managedQuery(uri, projection, null, null, null);
-        int column_index = cursor.getColumnIndexOrThrow(MediaColumns.DATA);
-        cursor.moveToFirst();
-        return cursor.getString(column_index);
+	private String getPath(Uri uri) {
+		String selectedImagePath;
+	    //1:MEDIA GALLERY --- query from MediaStore.Images.Media.DATA
+	    String[] projection = { MediaStore.Images.Media.DATA };
+	    Cursor cursor = getActivity().managedQuery(uri, projection, null, null, null);
+	    if(cursor != null){
+	        int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+	        cursor.moveToFirst();
+	        selectedImagePath = cursor.getString(column_index);
+	    }else{
+	        selectedImagePath = null;
+	    }
+
+	    if(selectedImagePath == null){
+	        //2:OI FILE Manager --- call method: uri.getPath()
+	        selectedImagePath = uri.getPath();
+	    }
+	    return selectedImagePath;
     }
 	
 	public String getContent(){

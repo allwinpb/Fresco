@@ -156,7 +156,7 @@ public class EditDeck extends Activity implements OnClickListener {
 	}
 
 	@SuppressWarnings("deprecation")
-	public void Finish(){
+	private void Finish(){
 		editText = et.getText().toString();
 		Intent i = getIntent();
 		//String msg = i.getStringExtra("numbers");
@@ -392,7 +392,7 @@ public class EditDeck extends Activity implements OnClickListener {
 			break;
 		}
 	}
-	public void setDefaultColor(){
+	private void setDefaultColor(){
 		people.setBackgroundColor(Color.TRANSPARENT);
 		hammer.setBackgroundColor(Color.TRANSPARENT);
 		cat.setBackgroundColor(Color.TRANSPARENT);

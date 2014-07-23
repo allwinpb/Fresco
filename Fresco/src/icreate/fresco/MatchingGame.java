@@ -195,7 +195,7 @@ public class MatchingGame extends Activity implements OnClickListener {
 		}
 
 	}
-	public void matchColor(int match, int pos){
+	private void matchColor(int match, int pos){
 		switch(match){
 		case 1:
 			backBarLeft[pos].setBackgroundColor(Color.GREEN);
@@ -271,7 +271,7 @@ public class MatchingGame extends Activity implements OnClickListener {
 		imageButtonBackList[3]  = (ImageButton)findViewById(R.id.cardImageBack4);
 	}
 
-	public void getCards(){
+	private void getCards(){
 		int size = database.getNumberOfCards();
 		ArrayList<Integer> cardIndexList = getRandomList(size);
 		cardList = database.getCards(cardIndexList);
@@ -300,7 +300,7 @@ public class MatchingGame extends Activity implements OnClickListener {
 		finish();
 	}
 
-	public void getCardFromADeck(int deckID){
+	private void getCardFromADeck(int deckID){
 		//Get four cards randomly front a specific deck
 		int sizeDeck = database.getNumberOfCards(deckID);
 		ArrayList<Integer> cardIndexList = getRandomList(sizeDeck);
@@ -360,7 +360,7 @@ public class MatchingGame extends Activity implements OnClickListener {
 			Toast.makeText(this, "!!! You haven't matched all !!!", Toast.LENGTH_SHORT).show();
 		}
 	}
-	public void showAnswer(){
+	private void showAnswer(){
 		showAnswer.setVisibility(View.VISIBLE);
 		submit.setVisibility(View.INVISIBLE);
 		setCorrectCardBack();
@@ -407,7 +407,7 @@ public class MatchingGame extends Activity implements OnClickListener {
 		}
 	}
 
-	public void setCardFront(){
+	private void setCardFront(){
 		for(int i = 0; i < 4; i++){
 			String content = cardList.get(i).getContent(Side.FRONT);
 			if(cardList.get(i).getType(Side.FRONT) == Type.TEXT){
@@ -427,7 +427,7 @@ public class MatchingGame extends Activity implements OnClickListener {
 		setFrontCardsContent();
 	}
 
-	public void setCardBack(){
+	private void setCardBack(){
 		for(int i = 0; i < 4; i++){
 			String content = cardList.get(list.get(i)).getContent(Side.BACK);
 			if(cardList.get(list.get(i)).getType(Side.BACK) == Type.TEXT){
@@ -477,7 +477,7 @@ public class MatchingGame extends Activity implements OnClickListener {
 
 		setBackCardsContent();
 	}
-	public void setBackCardsContent(){
+	private void setBackCardsContent(){
 		//Display the cards' back on the game layout
 		for(int i = 0; i < 4; i++){
 			if(bmpBackList[i] != null){
@@ -494,7 +494,7 @@ public class MatchingGame extends Activity implements OnClickListener {
 		}
 	}
 
-	public void setFrontCardsContent(){
+	private void setFrontCardsContent(){
 		//Display the cards' front on the game layout
 		for(int i = 0; i < 4; i++){
 			if(bmpFrontList[i] != null){
@@ -513,7 +513,7 @@ public class MatchingGame extends Activity implements OnClickListener {
 
 	}
 
-	public void shuffle(){
+	private void shuffle(){
 		//Shuffle the four cards' back randomly
 		list = getRandomList(4);
 	}

@@ -53,15 +53,6 @@ public class FragmentDoodle extends Fragment {
 	private ImageButton sizeImageButton;
 	private ImageButton clearAllImageButton;
 	private Button defaultButton;
-	
-	/*private enum CanvasTool {
-		PENCIL, ERASER
-	};*/
-	
-	//private CanvasTool canvasTool = CanvasTool.PENCIL;
-	//private int pencilWidth = 15;
-	//private int eraserWidth = 15;
-	
 	private int width = 15;
 	private static final int ACCELERATION_THRESHOLD = 10000;
 	
@@ -304,12 +295,6 @@ public class FragmentDoodle extends Fragment {
 		progressTextView = (TextView) view.findViewById(R.id.progressTextView);
 		
 		widthSeekBar.setProgress(width);
-			
-		/*cancelButton = (Button) dialog.findViewById(R.id.cancelButton);	
-		cancelButton.setOnClickListener(dialogListener);
-		
-		saveButton = (Button) dialog.findViewById(R.id.saveButton);
-		saveButton.setOnClickListener(dialogListener); */
 		
 		defaultButton = (Button) view.findViewById(R.id.defaultButton);
 		defaultButton.setOnClickListener(dialogListener);

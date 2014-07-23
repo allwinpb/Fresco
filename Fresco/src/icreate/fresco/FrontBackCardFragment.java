@@ -172,20 +172,6 @@ public class FrontBackCardFragment extends Fragment implements TabHost.OnTabChan
 		return Type.TEXT;
 	}
 	
-	/*private String getStringType(Type type) {
-		switch(type) {
-			case TEXT:
-				return "Text";
-			case DOODLE:
-				return "Doodle";
-			case IMAGE:
-				return "Gallery";
-			case CAMERA:
-				return "Camera";
-		}
-		return "Text";
-	}*/
-	
 
 	@Override
 	public void onTabChanged(String tag) {
@@ -311,30 +297,5 @@ public class FrontBackCardFragment extends Fragment implements TabHost.OnTabChan
 		super.onSaveInstanceState(outState);
 		Log.d("FrontBackCardFragment", "onSaveInstanceState");
 		
-//		if(isFront) {
-//			outState.putString(Constant.FRONT_CONTENT, getContent());
-//			outState.putInt(Constant.FRONT_TYPE, getIntType(type));
-//		} else {
-//			outState.putString(Constant.BACK_CONTENT, getContent());
-//			outState.putInt(Constant.BACK_TYPE, getIntType(type));
-//		}
 	}
-	
-	/*private int getIntType(Type type) {
-		switch(type) {
-			case TEXT:
-				return 0;
-			case DOODLE:
-				return 1;
-			case IMAGE:
-				return 2;
-			case CAMERA:
-				return 3;
-		}
-
-		return 0;
-	}*/
-	
-	
-	
 }

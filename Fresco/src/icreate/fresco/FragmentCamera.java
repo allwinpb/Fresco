@@ -94,19 +94,7 @@ public class FragmentCamera extends Fragment {
 			//bmp.recycle();
 		}
 	}
-	/*
-	@Override
-	public void onPause() {
-		// TODO Auto-generated method stub
-		super.onPause();
-		onSaveInstanceState(new Bundle());
-	}
-	@Override
-	public void onSaveInstanceState(Bundle outState) {
-		// TODO Auto-generated method stub
-		super.onSaveInstanceState(outState);
-	}*/
-
+	
 	public String getContent() {
 		if(bmp != null) {
 			ByteArrayOutputStream baos = new ByteArrayOutputStream();  
