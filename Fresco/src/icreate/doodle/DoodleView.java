@@ -1,23 +1,17 @@
 package icreate.doodle;
 
 import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.RandomAccessFile;
-import java.nio.MappedByteBuffer;
-import java.nio.channels.FileChannel;
-import java.nio.channels.FileChannel.MapMode;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.Map.Entry;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.graphics.Bitmap.Config;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -25,7 +19,6 @@ import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.Point;
 import android.graphics.drawable.BitmapDrawable;
-import android.os.Environment;
 import android.util.AttributeSet;
 import android.util.Base64;
 import android.util.Log;
@@ -202,54 +195,31 @@ public class DoodleView extends View {
 		}
 	}
 	
-	private HashMap<Integer, Point> convertPointInteger(JSONObject jsonPoint) {
-		HashMap<Integer, Point> points = new HashMap<Integer, Point>();
-		Iterator<String> iter = jsonPoint.keys();
+	private JSONArray getJSONFromPoints (HashMap<Integer, Point> pointMap) {
+		JSONArray array = new JSONArray();
 		
-		while(iter.hasNext()) {
-			String key = iter.next();
-			Point point = null;
-			JSONObject object = null;
+		Log.d("getJSONFromPoints", String.valueOf(pointMap.size()));
+		
+		for(Entry<Integer, Point> pairs : pointMap.entrySet()) {
+			JSONObject object = new JSONObject();
+			
+			Integer key = (Integer) pairs.getKey();
+			Point point = pairs.getValue();
 			
 			try {
-				object = (JSONObject) jsonPoint.get(key);
+				object.put("pointId", key);
+				object.put("x", point.x);
+				object.put("y", point.y);
 				
+				array.put(object);
 			} catch (JSONException e) {
 				e.printStackTrace();
 			}
-			
-			points.put(Integer.parseInt(key), point);
+
 		}
 		
-		return points;
+		return array;
 	}
-	
-	private Map<String, Point> convertPointString(HashMap<Integer, Point> previousPointMap) {
-		Map<String, Point> map = new HashMap<String, Point>();
-		
-		for(Map.Entry <Integer, Point> entry : previousPointMap.entrySet()) {
-			Integer key = entry.getKey();
-			Point point = entry.getValue();
-			
-			map.put(String.valueOf(key), point);
-		}
-	
-		return map;
-	}
-	
-	private Map<String, Path> convertPathString(HashMap<Integer, Path> pathMap) {
-		Map<String, Path> map = new HashMap<String, Path>();
-		
-		for(Map.Entry <Integer, Path> entry : pathMap.entrySet()) {
-			Integer key = entry.getKey();
-			Path path = entry.getValue();
-			
-			map.put(String.valueOf(key), path);
-		}
-	
-		return map;
-	}
-	
 	
 	private String convertFromImageToJSON(Bitmap bitmap) {
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();  
@@ -267,10 +237,9 @@ public class DoodleView extends View {
 		if(isEmpty())
 			return "";
 		
-		JSONObject object = new JSONObject(convertPathString(pathMap));
-		Log.d("getContent", object.toString());
-		
-		
+		JSONArray array = getJSONFromPoints(previousPointMap);
+		Log.d("getContent", array.toString());
+			
 		return convertFromImageToJSON(bitmap);
 	}
 	
