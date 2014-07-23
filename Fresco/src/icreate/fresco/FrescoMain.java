@@ -1,8 +1,11 @@
 package icreate.fresco;
 
 import java.util.ArrayList;
+
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.app.ListActivity;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -23,7 +26,6 @@ public class FrescoMain extends ListActivity {
 	private Runnable viewParts;
 	private ItemAdapter m_adapter;
 	private static SqliteHelper database;
-	MenuItem searchItem;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -32,10 +34,10 @@ public class FrescoMain extends ListActivity {
 		listDeck = database.getDecks();
 		m_adapter = new ItemAdapter(this, R.layout.list_deck, listDeck);
 		setListAdapter(m_adapter);
-		
+
 		ImageView homeIcon = (ImageView) findViewById(android.R.id.home);
-		
-		
+
+
 		homeIcon.setPadding(5, 0, 15, 0);
 
 		this.getListView().setLongClickable(true);
@@ -95,8 +97,8 @@ public class FrescoMain extends ListActivity {
 		listDeck.add(deck1);
 
 	}*/
-	
-	
+
+
 	@Override
 	protected void onListItemClick(ListView l, View v, int position, long id) {
 		// TODO Auto-generated method stub
@@ -117,7 +119,6 @@ public class FrescoMain extends ListActivity {
 
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.main, menu);
-		searchItem = menu.findItem(R.id.search_icon);
 		return super.onCreateOptionsMenu(menu);
 
 	}
@@ -127,19 +128,44 @@ public class FrescoMain extends ListActivity {
 		// Handle action bar item clicks here. The action bar will
 		// automatically handle clicks on the Home/Up button, so long
 		// as you specify a parent activity in AndroidManifest.xml.
-		
+
 		switch(item.getItemId()){
 		case R.id.add_icon:
 			Intent i = new Intent(this, AddDeck.class);
 			i.putExtra(Constant.POSITION_COLOR, (listDeck.size()));
 			startActivityForResult(i, 1);
 			break;
-		case R.id.search_icon:
-			searchItem.getActionView();
+		case R.id.review_icon:
+			reviewDeck();
 			break;
 		}
 		return super.onOptionsItemSelected(item);
 	}
+	private void reviewDeck() {
+
+		int size = database.getNumberOfCards();
+
+		if(size >= 4) { 
+			Intent intent = new Intent(this, MatchingGame.class);
+			startActivity(intent);
+		} else {
+			AlertDialog.Builder builder = new AlertDialog.Builder(this)
+			.setTitle("Matchmaking Card Game")
+			.setIcon(android.R.drawable.ic_dialog_alert)
+			.setMessage("Matchmaking Card Game requires the deck to have at least four cards. Please " +
+					"add more cards")
+					.setPositiveButton("Okay", new DialogInterface.OnClickListener() {
+
+						@Override
+						public void onClick(DialogInterface dialog, int which) {
+							dialog.cancel();
+						}
+					});
+
+			builder.create().show();
+		}
+	}
+
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		// TODO Auto-generated method stub
