@@ -20,14 +20,9 @@ public class FrescoMain extends ListActivity {
 
 	public static final String icon[]={"people", "hammer", "cat", "number", "german", "film", "talk", "key", "home",
 		"book", "picture", "christmas", "newspaper",  "basketball", "musics", "hamburger"};
-	//private ArrayAdapter<String> adapter;
-	//private static ArrayList<Deck> listDeck;
 	private Runnable viewParts;
 	private ItemAdapter m_adapter;
 	private static SqliteHelper database;
-	
-	//private DrawerLayout drawerlayout;
-	//private ActionBarDrawerToggle ABDToggle;
 	MenuItem searchItem;
 
 	@Override
@@ -37,14 +32,9 @@ public class FrescoMain extends ListActivity {
 		listDeck = database.getDecks();
 		m_adapter = new ItemAdapter(this, R.layout.list_deck, listDeck);
 		setListAdapter(m_adapter);
-		/*
-		ActionBar actionBar = getActionBar();
-		actionBar.setDisplayHomeAsUpEnabled(true);
-
-		*/
+		
 		ImageView homeIcon = (ImageView) findViewById(android.R.id.home);
 		
-		//drawerlayout = (DrawerLayout)findViewById(R.id.drawer_layout);
 		
 		homeIcon.setPadding(5, 0, 15, 0);
 

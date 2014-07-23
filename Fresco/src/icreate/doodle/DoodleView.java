@@ -1,23 +1,15 @@
 package icreate.doodle;
 
 import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.RandomAccessFile;
-import java.nio.MappedByteBuffer;
-import java.nio.channels.FileChannel;
-import java.nio.channels.FileChannel.MapMode;
 import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
+import java.util.Map.Entry;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.graphics.Bitmap.Config;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -25,7 +17,6 @@ import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.Point;
 import android.graphics.drawable.BitmapDrawable;
-import android.os.Environment;
 import android.util.AttributeSet;
 import android.util.Base64;
 import android.util.Log;
@@ -201,56 +192,7 @@ public class DoodleView extends View {
 			
 		}
 	}
-	
-	private HashMap<Integer, Point> convertPointInteger(JSONObject jsonPoint) {
-		HashMap<Integer, Point> points = new HashMap<Integer, Point>();
-		Iterator<String> iter = jsonPoint.keys();
 		
-		while(iter.hasNext()) {
-			String key = iter.next();
-			Point point = null;
-			JSONObject object = null;
-			
-			try {
-				object = (JSONObject) jsonPoint.get(key);
-				
-			} catch (JSONException e) {
-				e.printStackTrace();
-			}
-			
-			points.put(Integer.parseInt(key), point);
-		}
-		
-		return points;
-	}
-	
-	private Map<String, Point> convertPointString(HashMap<Integer, Point> previousPointMap) {
-		Map<String, Point> map = new HashMap<String, Point>();
-		
-		for(Map.Entry <Integer, Point> entry : previousPointMap.entrySet()) {
-			Integer key = entry.getKey();
-			Point point = entry.getValue();
-			
-			map.put(String.valueOf(key), point);
-		}
-	
-		return map;
-	}
-	
-	private Map<String, Path> convertPathString(HashMap<Integer, Path> pathMap) {
-		Map<String, Path> map = new HashMap<String, Path>();
-		
-		for(Map.Entry <Integer, Path> entry : pathMap.entrySet()) {
-			Integer key = entry.getKey();
-			Path path = entry.getValue();
-			
-			map.put(String.valueOf(key), path);
-		}
-	
-		return map;
-	}
-	
-	
 	private String convertFromImageToJSON(Bitmap bitmap) {
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();  
 		bitmap.compress(Bitmap.CompressFormat.PNG, 100, baos);   
@@ -266,11 +208,7 @@ public class DoodleView extends View {
 	public String getContent() {
 		if(isEmpty())
 			return "";
-		
-		JSONObject object = new JSONObject(convertPathString(pathMap));
-		Log.d("getContent", object.toString());
-		
-		
+			
 		return convertFromImageToJSON(bitmap);
 	}
 	
@@ -280,115 +218,5 @@ public class DoodleView extends View {
 		byte[] byteArrayImage = baos.toByteArray(); 
 		
 		return Base64.encodeToString(byteArrayImage, Base64.DEFAULT);
-	}
-	
-	/*public void saveImage() {
-		
-		String fileName = "Doodlz" + System.currentTimeMillis();
-		
-		ContentValues values = new ContentValues();
-		values.put(Images.Media.TITLE, fileName);
-		values.put(Images.Media.DATE_ADDED, System.currentTimeMillis());
-		values.put(Images.Media.MIME_TYPE, "images/jpg");
-		
-		Uri uri = getContext().getContentResolver().insert(Images.Media.EXTERNAL_CONTENT_URI, values);
-		
-		try {
-			
-			OutputStream outStream = getContext().getContentResolver().openOutputStream(uri);
-			
-			bitmap.compress(Bitmap.CompressFormat.JPEG, 100, outStream);
-			
-			outStream.flush();
-			outStream.close();
-			
-			//display toast message
-			Toast toast = Toast.makeText(getContext(), R.string.message_saved, Toast.LENGTH_SHORT);
-			toast.setGravity(Gravity.CENTER, toast.getXOffset()/2, toast.getYOffset()/2);
-			toast.show();
-			
-		} catch (FileNotFoundException e){
-			
-		} catch(IOException e) {
-			Toast toast = Toast.makeText(getContext(), R.string.message_error_saving, Toast.LENGTH_SHORT);
-			toast.setGravity(Gravity.CENTER, toast.getXOffset()/2, toast.getYOffset()/2);
-			toast.show();
-		}
-	}*/
-	
-	/*public void setBitmap(String jsonString) {
-	JSONObject json;
-	JSONObject jsonPath = null;
-	JSONObject jsonPoint = null;
-	
-	try {
-		json = new JSONObject(jsonString);
-		jsonPath = json.getJSONObject(Constant.JSON_PATH);
-		jsonPoint = json.getJSONObject(Constant.JSON_POINT);
-	} catch (JSONException e) {
-		e.printStackTrace();
-	}
-	
-	
-	pathMap = convertPathInteger(jsonPath);
-	previousPointMap = convertPointInteger(jsonPoint);
-	invalidate();
-}
-	
-	private HashMap<Integer, Path> convertPathInteger(JSONObject jsonPath) {
-		HashMap<Integer, Path> paths = new HashMap<Integer, Path>();
-		Iterator<String> iter = jsonPath.keys();
-		
-		while(iter.hasNext()) {
-			String key = iter.next();
-			Path path = null;
-			
-			try {
-				path = (Path) jsonPath.get(key);
-			} catch (JSONException e) {
-				e.printStackTrace();
-			}
-			
-			paths.put(Integer.parseInt(key), path);
-		}
-		
-		return paths;
-	}*/
-	
-	/*
-	public String getContent() {
-		JSONObject json = new JSONObject();
-		JSONObject points = new JSONObject(convertPointString(previousPointMap));
-		JSONObject paths = new JSONObject(convertPathString(pathMap));
-		
-		try {
-			json.put(Constant.JSON_BITMAP, getJSONString());
-			json.put(Constant.JSON_PATH, paths);
-			json.put(Constant.JSON_POINT, points);
-			
-		} catch (JSONException e) {
-			e.printStackTrace();
-		}
-		
-		return json.toString();
-		
-	}*/
-	
-	
-	/*
-	
-	private Map<String, Path> convertPathString(HashMap<Integer, Path> pathMap) {
-		Map<String, Path> map = new HashMap<String, Path>();
-		
-		for(Map.Entry <Integer, Path> entry : pathMap.entrySet()) {
-			Integer key = entry.getKey();
-			Path path = entry.getValue();
-			
-			map.put(String.valueOf(key), path);
-		}
-	
-		return map;
-	}*/
-	
-	
+	}	
 }
