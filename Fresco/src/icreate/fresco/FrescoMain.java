@@ -1,22 +1,23 @@
 package icreate.fresco;
 
 import java.util.ArrayList;
+
 import android.annotation.SuppressLint;
-import android.app.ActionBar;
+import android.app.AlertDialog;
 import android.app.ListActivity;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.support.v4.app.ActionBarDrawerToggle;
-import android.support.v4.widget.DrawerLayout;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ImageView;
 import android.widget.AdapterView.OnItemLongClickListener;
+import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 public class FrescoMain extends ListActivity {
 	private ArrayList<Deck> listDeck = new ArrayList<Deck>();
@@ -31,13 +32,13 @@ public class FrescoMain extends ListActivity {
 	
 	//private DrawerLayout drawerlayout;
 	//private ActionBarDrawerToggle ABDToggle;
-	MenuItem searchItem;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);;
 		database = new SqliteHelper(this);
 		listDeck = database.getDecks();
+		
 		m_adapter = new ItemAdapter(this, R.layout.list_deck, listDeck);
 		setListAdapter(m_adapter);
 		/*
@@ -155,7 +156,6 @@ public class FrescoMain extends ListActivity {
 
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.main, menu);
-		searchItem = menu.findItem(R.id.search_icon);
 		return super.onCreateOptionsMenu(menu);
 
 	}
@@ -174,8 +174,8 @@ public class FrescoMain extends ListActivity {
 			i.putExtra(Constant.POSITION_COLOR, (listDeck.size()));
 			startActivityForResult(i, 1);
 			break;
-		case R.id.search_icon:
-			searchItem.getActionView();
+		case R.id.review_icon:
+			reviewDeck();
 			break;
 		}
 		return super.onOptionsItemSelected(item);
@@ -220,4 +220,30 @@ public class FrescoMain extends ListActivity {
 		}
 
 	}
+	
+	private void reviewDeck() {
+		
+		int size = database.getNumberOfCards();
+		
+		if(size >= 4) { 
+			Intent intent = new Intent(this, MatchingGame.class);
+			startActivity(intent);
+		} else {
+			AlertDialog.Builder builder = new AlertDialog.Builder(this)
+					.setTitle("Matchmaking Card Game")
+					.setIcon(android.R.drawable.ic_dialog_alert)
+					.setMessage("Matchmaking Card Game requires the deck to have at least four cards. Please " +
+							"add more cards")
+					.setPositiveButton("Okay", new DialogInterface.OnClickListener() {
+						
+						@Override
+						public void onClick(DialogInterface dialog, int which) {
+							dialog.cancel();
+						}
+					});
+			
+			builder.create().show();
+		}
+	}
+
 }

@@ -2,8 +2,6 @@ package icreate.doodle;
 
 import java.io.ByteArrayOutputStream;
 import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
 import java.util.Map.Entry;
 
 import org.json.JSONArray;
@@ -194,33 +192,7 @@ public class DoodleView extends View {
 			
 		}
 	}
-	
-	private JSONArray getJSONFromPoints (HashMap<Integer, Point> pointMap) {
-		JSONArray array = new JSONArray();
 		
-		Log.d("getJSONFromPoints", String.valueOf(pointMap.size()));
-		
-		for(Entry<Integer, Point> pairs : pointMap.entrySet()) {
-			JSONObject object = new JSONObject();
-			
-			Integer key = (Integer) pairs.getKey();
-			Point point = pairs.getValue();
-			
-			try {
-				object.put("pointId", key);
-				object.put("x", point.x);
-				object.put("y", point.y);
-				
-				array.put(object);
-			} catch (JSONException e) {
-				e.printStackTrace();
-			}
-
-		}
-		
-		return array;
-	}
-	
 	private String convertFromImageToJSON(Bitmap bitmap) {
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();  
 		bitmap.compress(Bitmap.CompressFormat.PNG, 100, baos);   
@@ -236,9 +208,6 @@ public class DoodleView extends View {
 	public String getContent() {
 		if(isEmpty())
 			return "";
-		
-		JSONArray array = getJSONFromPoints(previousPointMap);
-		Log.d("getContent", array.toString());
 			
 		return convertFromImageToJSON(bitmap);
 	}
@@ -249,115 +218,5 @@ public class DoodleView extends View {
 		byte[] byteArrayImage = baos.toByteArray(); 
 		
 		return Base64.encodeToString(byteArrayImage, Base64.DEFAULT);
-	}
-	
-	/*public void saveImage() {
-		
-		String fileName = "Doodlz" + System.currentTimeMillis();
-		
-		ContentValues values = new ContentValues();
-		values.put(Images.Media.TITLE, fileName);
-		values.put(Images.Media.DATE_ADDED, System.currentTimeMillis());
-		values.put(Images.Media.MIME_TYPE, "images/jpg");
-		
-		Uri uri = getContext().getContentResolver().insert(Images.Media.EXTERNAL_CONTENT_URI, values);
-		
-		try {
-			
-			OutputStream outStream = getContext().getContentResolver().openOutputStream(uri);
-			
-			bitmap.compress(Bitmap.CompressFormat.JPEG, 100, outStream);
-			
-			outStream.flush();
-			outStream.close();
-			
-			//display toast message
-			Toast toast = Toast.makeText(getContext(), R.string.message_saved, Toast.LENGTH_SHORT);
-			toast.setGravity(Gravity.CENTER, toast.getXOffset()/2, toast.getYOffset()/2);
-			toast.show();
-			
-		} catch (FileNotFoundException e){
-			
-		} catch(IOException e) {
-			Toast toast = Toast.makeText(getContext(), R.string.message_error_saving, Toast.LENGTH_SHORT);
-			toast.setGravity(Gravity.CENTER, toast.getXOffset()/2, toast.getYOffset()/2);
-			toast.show();
-		}
-	}*/
-	
-	/*public void setBitmap(String jsonString) {
-	JSONObject json;
-	JSONObject jsonPath = null;
-	JSONObject jsonPoint = null;
-	
-	try {
-		json = new JSONObject(jsonString);
-		jsonPath = json.getJSONObject(Constant.JSON_PATH);
-		jsonPoint = json.getJSONObject(Constant.JSON_POINT);
-	} catch (JSONException e) {
-		e.printStackTrace();
-	}
-	
-	
-	pathMap = convertPathInteger(jsonPath);
-	previousPointMap = convertPointInteger(jsonPoint);
-	invalidate();
-}
-	
-	private HashMap<Integer, Path> convertPathInteger(JSONObject jsonPath) {
-		HashMap<Integer, Path> paths = new HashMap<Integer, Path>();
-		Iterator<String> iter = jsonPath.keys();
-		
-		while(iter.hasNext()) {
-			String key = iter.next();
-			Path path = null;
-			
-			try {
-				path = (Path) jsonPath.get(key);
-			} catch (JSONException e) {
-				e.printStackTrace();
-			}
-			
-			paths.put(Integer.parseInt(key), path);
-		}
-		
-		return paths;
-	}*/
-	
-	/*
-	public String getContent() {
-		JSONObject json = new JSONObject();
-		JSONObject points = new JSONObject(convertPointString(previousPointMap));
-		JSONObject paths = new JSONObject(convertPathString(pathMap));
-		
-		try {
-			json.put(Constant.JSON_BITMAP, getJSONString());
-			json.put(Constant.JSON_PATH, paths);
-			json.put(Constant.JSON_POINT, points);
-			
-		} catch (JSONException e) {
-			e.printStackTrace();
-		}
-		
-		return json.toString();
-		
-	}*/
-	
-	
-	/*
-	
-	private Map<String, Path> convertPathString(HashMap<Integer, Path> pathMap) {
-		Map<String, Path> map = new HashMap<String, Path>();
-		
-		for(Map.Entry <Integer, Path> entry : pathMap.entrySet()) {
-			Integer key = entry.getKey();
-			Path path = entry.getValue();
-			
-			map.put(String.valueOf(key), path);
-		}
-	
-		return map;
-	}*/
-	
-	
+	}	
 }

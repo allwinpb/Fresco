@@ -7,9 +7,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import com.sonyericsson.util.ScalingUtilities;
-import com.sonyericsson.util.ScalingUtilities.ScalingLogic;
-
 import android.app.ActionBar;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -28,6 +25,9 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
+
+import com.sonyericsson.util.ScalingUtilities;
+import com.sonyericsson.util.ScalingUtilities.ScalingLogic;
 
 public class MatchingGame extends Activity implements OnClickListener {
 	private ImageButton imageButtonFrontList[] = new ImageButton[4];//For image content in the card
@@ -71,8 +71,24 @@ public class MatchingGame extends Activity implements OnClickListener {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.game);
+		
+		Intent intent = getIntent();
+		deckID = intent.getIntExtra(Constant.DECK_ID, -1);
+		positionColor = intent.getIntExtra(Constant.POSITION_COLOR, 0);
 
 		database = FrescoMain.getDatabase();
+		
+		int numberOfCards;
+		if(deckID != -1) {
+			numberOfCards = database.getNumberOfCards(deckID);
+		} else {
+			numberOfCards = database.getNumberOfCards();
+		}
+		String toastContent = "Matchmaking Game\nNumber of Cards: " + numberOfCards;
+		Toast toast = Toast.makeText(this, toastContent , Toast.LENGTH_SHORT);
+		toast.show();
+		
+		
 		frontBarLeft[0] = (ImageView)findViewById(R.id.frontBarLeft1);
 		frontBarLeft[1] = (ImageView)findViewById(R.id.frontBarLeft2);
 		frontBarLeft[2] = (ImageView)findViewById(R.id.frontBarLeft3);
@@ -92,12 +108,23 @@ public class MatchingGame extends Activity implements OnClickListener {
 		backBarRight[1] = (ImageView)findViewById(R.id.backBarRight2);
 		backBarRight[2] = (ImageView)findViewById(R.id.backBarRight3);
 		backBarRight[3] = (ImageView)findViewById(R.id.backBarRight4);
+		
+		frontBarLeft[0].setBackgroundColor(Color.GREEN);
+		frontBarRight[0].setBackgroundColor(Color.GREEN);
+	
+		frontBarLeft[1].setBackgroundColor(Color.BLUE);
+		frontBarRight[1].setBackgroundColor(Color.BLUE);
+		
+		frontBarLeft[2].setBackgroundColor(Color.YELLOW);
+		frontBarRight[2].setBackgroundColor(Color.YELLOW);
+		
+		frontBarLeft[3].setBackgroundColor(Color.GRAY);
+		frontBarRight[3].setBackgroundColor(Color.GRAY);
 
 		showAnswer = (ImageView)findViewById(R.id.show_answer);
 		submit     = (ImageButton)findViewById(R.id.match);
 		initializingImageButtons();
 		initializingButtons();
-		shuffle();
 		match = 0;//Originally no front card is selected
 
 		mDstWidth = getResources().getDimensionPixelSize(R.dimen.game_card_size);
@@ -114,9 +141,6 @@ public class MatchingGame extends Activity implements OnClickListener {
 			order[i] = -1;
 		}
 
-		Intent intent = getIntent();
-		deckID = intent.getIntExtra(Constant.DECK_ID, -1);
-		positionColor = intent.getIntExtra(Constant.POSITION_COLOR, 0);
 		selectCards();
 	}
 
@@ -127,28 +151,28 @@ public class MatchingGame extends Activity implements OnClickListener {
 		//Front press
 		case R.id.cardFront1:
 		case R.id.cardImageFront1:
-			frontBarLeft[0].setBackgroundColor(Color.GREEN);
-			frontBarRight[0].setBackgroundColor(Color.GREEN);
+			//frontBarLeft[0].setBackgroundColor(Color.GREEN);
+			//frontBarRight[0].setBackgroundColor(Color.GREEN);
 			match = 1;
 			break;
 		case R.id.cardFront2:
 		case R.id.cardImageFront2:
-			frontBarLeft[1].setBackgroundColor(Color.BLUE);
-			frontBarRight[1].setBackgroundColor(Color.BLUE);
+			//frontBarLeft[1].setBackgroundColor(Color.BLUE);
+			//frontBarRight[1].setBackgroundColor(Color.BLUE);
 			match = 2;
 			break;
 
 		case R.id.cardFront3:
 		case R.id.cardImageFront3:
-			frontBarLeft[2].setBackgroundColor(Color.YELLOW);
-			frontBarRight[2].setBackgroundColor(Color.YELLOW);
+			//frontBarLeft[2].setBackgroundColor(Color.YELLOW);
+			//frontBarRight[2].setBackgroundColor(Color.YELLOW);
 			match = 3;
 			break;
 
 		case R.id.cardFront4:
 		case R.id.cardImageFront4:
-			frontBarLeft[3].setBackgroundColor(Color.GRAY);
-			frontBarRight[3].setBackgroundColor(Color.GRAY);
+			//frontBarLeft[3].setBackgroundColor(Color.GRAY);
+			//frontBarRight[3].setBackgroundColor(Color.GRAY);
 			match = 4;
 			break;
 
@@ -293,9 +317,16 @@ public class MatchingGame extends Activity implements OnClickListener {
 	}
 
 	private void returnBack() {
-		Intent intent = new Intent(this, CardsViewPager.class);
-		intent.putExtra(Constant.DECK_ID, deckID);
-		intent.putExtra(Constant.POSITION_COLOR, positionColor);
+		Intent intent;
+		
+		if(deckID != -1) {
+			intent = new Intent(this, CardsViewPager.class);
+			intent.putExtra(Constant.DECK_ID, deckID);
+			intent.putExtra(Constant.POSITION_COLOR, positionColor);
+		} else {
+			intent = new Intent(this, FrescoMain.class);
+		}
+		
 		startActivity(intent);
 		finish();
 	}
@@ -400,11 +431,13 @@ public class MatchingGame extends Activity implements OnClickListener {
 	private void resetSideBarColor() {
 		// TODO Auto-generated method stub
 		for(int i = 0; i < 4; i++){
-			frontBarLeft[i].setBackgroundColor(Color.WHITE);
-			frontBarRight[i].setBackgroundColor(Color.WHITE);
+			//frontBarLeft[i].setBackgroundColor(Color.WHITE);
+			//frontBarRight[i].setBackgroundColor(Color.WHITE);
 			backBarLeft[i].setBackgroundColor(Color.WHITE);
 			backBarRight[i].setBackgroundColor(Color.WHITE);
 		}
+		
+		
 	}
 
 	public void setCardFront(){
