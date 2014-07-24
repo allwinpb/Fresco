@@ -516,5 +516,15 @@ public class AddEditActivity extends FragmentActivity implements OnTabChangeList
 		super.onDestroy();
 		Log.d("AddEditActivity", "onDestroy");
 	}
-	
+	@Override
+	public void onBackPressed() {
+		// TODO Auto-generated method stub
+		Intent intent = new Intent(AddEditActivity.this, CardsViewPager.class);
+		intent.putExtra(Constant.DECK_ID, deckID);
+		intent.putExtra(Constant.INDEX, index);
+		intent.putExtra(Constant.POSITION_COLOR, positionColor);
+		startActivity(intent);
+		finish();
+		//super.onBackPressed();
+	}
 }

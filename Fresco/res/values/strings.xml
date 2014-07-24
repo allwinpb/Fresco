@@ -66,5 +66,9 @@
      <string name="next_set">Next Set</string>
      <string name="show_answer">Show Answer</string>
      <string name="arrow">Arrow</string>
+     <string name="review_deck">Review this deck</string>
+     <string name="delete_card">Delete this card</string>
+     <string name="edit_card">Edit this card</string>
+     <string name="add_card">Add a new card</string>
 
 </resources>

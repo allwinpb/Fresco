@@ -3,32 +3,30 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.example.fresco.CardsFragment" >
-	<item
+
+    <item
         android:id="@+id/add_icon"
         android:icon="@drawable/ic_action_new"
         android:showAsAction="always"
-        android:title="Add a card">
-    </item>    
-    
-	<item
-        android:id="@+id/delete_icon"
-        android:icon="@drawable/ic_action_remove"
-        android:showAsAction="always"
-        android:title="Delete this card">
+        android:title="@string/add_card">
     </item>
-    
-	<item
+    <item
         android:id="@+id/edit_icon"
         android:icon="@drawable/edit_query"
         android:showAsAction="always"
-        android:title="Edit this card">
+        android:title="@string/edit_card">
     </item>
-    
-	<item
+    <item
+        android:id="@+id/delete_icon"
+        android:icon="@drawable/ic_action_remove"
+        android:showAsAction="always"
+        android:title="@string/delete_card">
+    </item>
+    <item
         android:id="@+id/review_icon"
         android:icon="@drawable/ic_menu_view"
         android:showAsAction="always"
-        android:title="Review this deck">
+        android:title="@string/review_deck">
     </item>
 
 </menu>

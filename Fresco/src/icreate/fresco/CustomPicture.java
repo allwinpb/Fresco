@@ -143,14 +143,13 @@ public class CustomPicture {
             height /= 2;
             subSample *= 2;
         }
-
+        
         if (width == 0 || height == 0)
             throw new InvalidObjectException(null);
 
         Options options = new Options();
         options.inSampleSize = subSample;
         Bitmap subSampled = BitmapFactory.decodeStream(resolver.openInputStream(uri), null, options);
-
         Bitmap picture;
         if (!orientation.isIdentity()) {
             picture = Bitmap.createBitmap(subSampled, 0, 0, options.outWidth, options.outHeight,

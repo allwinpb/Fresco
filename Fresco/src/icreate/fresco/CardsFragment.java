@@ -372,7 +372,7 @@ public class CardsFragment extends Fragment {
 		intent.putExtra(Constant.POSITION_COLOR, ((CardsViewPager)getActivity()).getPositionColor());
 		intent.putExtra(Constant.SIDE, true);
 		startActivity(intent);
-		//getActivity().finish();
+		getActivity().finish();
 	}
 	
 	private void deleteCard(Card currentCard) {
@@ -387,8 +387,10 @@ public class CardsFragment extends Fragment {
 						database.deleteCard(cardID);
 						Intent i = new Intent(getActivity(), CardsViewPager.class);
 						i.putExtra(Constant.DECK_ID, deck.getDeckID());
+						i.putExtra(Constant.INDEX, index);
 						i.putExtra(Constant.POSITION_COLOR, ((CardsViewPager)getActivity()).getPositionColor());
 						startActivity(i);
+						getActivity().finish();
 						break;
 					case Dialog.BUTTON_NEGATIVE:
 						dialog.cancel();
@@ -419,7 +421,7 @@ public class CardsFragment extends Fragment {
 		intent.putExtra(Constant.POSITION_COLOR, ((CardsViewPager)getActivity()).getPositionColor());
 		
 		startActivity(intent);
-		//getActivity().finish();
+		getActivity().finish();
 	}
 	
 	private void reviewDeck() {

@@ -55,7 +55,7 @@
 
        <RelativeLayout
             android:layout_width="wrap_content"
-            android:layout_height="fill_parent"
+            android:layout_height="match_parent"
             android:layout_weight="1" >
 
             <ImageButton
@@ -72,14 +72,14 @@
                 android:id="@+id/cardFront1"
                 android:layout_width="@dimen/game_card_size"
                 android:background="@drawable/background"
-                android:layout_height="fill_parent"
+                android:layout_height="match_parent"
                 android:padding="@dimen/card_text_padding"
                 android:textSize="@dimen/card_content_size" />
         </RelativeLayout>
 
         <RelativeLayout
             android:layout_width="wrap_content"
-            android:layout_height="fill_parent"
+            android:layout_height="match_parent"
             android:layout_weight="1" >
 
             <ImageButton
@@ -96,7 +96,7 @@
                 android:id="@+id/cardFront2"
                 android:layout_width="@dimen/game_card_size"
                 android:background="@drawable/background"
-                android:layout_height="fill_parent" 
+                android:layout_height="match_parent" 
                 android:padding="@dimen/card_text_padding"
                 android:textSize="@dimen/card_content_size"/>
         </RelativeLayout>
@@ -109,7 +109,7 @@
             <ImageButton
                 android:id="@+id/cardImageFront3"
                 android:layout_width="@dimen/game_card_size"
-                android:layout_height="fill_parent"
+                android:layout_height="match_parent"
                 android:background="@drawable/background"
                 android:contentDescription="@string/card_front"
                 android:scaleType="center"
@@ -119,20 +119,20 @@
                 android:id="@+id/cardFront3"
                 android:layout_width="@dimen/game_card_size"
                 android:background="@drawable/background"
-                android:layout_height="fill_parent"
+                android:layout_height="match_parent"
                 android:padding="@dimen/card_text_padding"
                 android:textSize="@dimen/card_content_size" />
         </RelativeLayout>
 
         <RelativeLayout
             android:layout_width="wrap_content"
-            android:layout_height="fill_parent"
+            android:layout_height="match_parent"
             android:layout_weight="1" >
 
             <ImageButton
                 android:id="@+id/cardImageFront4"
                 android:layout_width="@dimen/game_card_size"
-                android:layout_height="fill_parent"
+                android:layout_height="match_parent"
                 android:background="@drawable/background"
                 android:contentDescription="@string/card_front"
                 android:scaleType="center"
@@ -142,7 +142,7 @@
                 android:id="@+id/cardFront4"
                 android:layout_width="@dimen/game_card_size"
                 android:background="@drawable/background"
-                android:layout_height="fill_parent"
+                android:layout_height="match_parent"
                 android:padding="@dimen/card_text_padding" 
                 android:textSize="@dimen/card_content_size"/>
         </RelativeLayout>
@@ -237,13 +237,13 @@
 
         <RelativeLayout
             android:layout_width="wrap_content"
-            android:layout_height="fill_parent"
+            android:layout_height="match_parent"
             android:layout_weight="1" >
 
             <ImageButton
                 android:id="@+id/cardImageBack1"
                 android:layout_width="@dimen/game_card_size"
-                android:layout_height="fill_parent"
+                android:layout_height="match_parent"
                 android:background="@drawable/background"
                 android:contentDescription="@string/card_back"
                 android:scaleType="center" />
@@ -252,20 +252,20 @@
                 android:id="@+id/cardBack1"
                 android:layout_width="@dimen/game_card_size"
                 android:background="@drawable/background"
-                android:layout_height="fill_parent"
+                android:layout_height="match_parent"
                 android:padding="@dimen/card_text_padding" 
                 android:textSize="@dimen/card_content_size"/>
         </RelativeLayout>
 
         <RelativeLayout
             android:layout_width="wrap_content"
-            android:layout_height="fill_parent"
+            android:layout_height="match_parent"
             android:layout_weight="1" >
 
             <ImageButton
                 android:id="@+id/cardImageBack2"
                 android:layout_width="@dimen/game_card_size"
-                android:layout_height="fill_parent"
+                android:layout_height="match_parent"
                 android:background="@drawable/background"
                 android:contentDescription="@string/card_back"
                 android:scaleType="center"/>
@@ -274,20 +274,20 @@
                 android:id="@+id/cardBack2"
                 android:layout_width="@dimen/game_card_size"
                 android:background="@drawable/background"
-                android:layout_height="fill_parent"
+                android:layout_height="match_parent"
                 android:padding="@dimen/card_text_padding"
                 android:textSize="@dimen/card_content_size" />
         </RelativeLayout>
 
         <RelativeLayout
             android:layout_width="wrap_content"
-            android:layout_height="fill_parent"
+            android:layout_height="match_parent"
             android:layout_weight="1" >
 
             <ImageButton
                 android:id="@+id/cardImageBack3"
                 android:layout_width="@dimen/game_card_size"
-                android:layout_height="fill_parent"
+                android:layout_height="match_parent"
                 android:background="@drawable/background"
                 android:contentDescription="@string/card_back"
                 android:scaleType="center"
@@ -297,7 +297,7 @@
                 android:id="@+id/cardBack3"
                 android:layout_width="@dimen/game_card_size"
                 android:background="@drawable/background"
-                android:layout_height="fill_parent" 
+                android:layout_height="match_parent" 
                 android:padding="@dimen/card_text_padding"
                 android:textSize="@dimen/card_content_size"/>
         </RelativeLayout>
@@ -310,7 +310,7 @@
             <ImageButton
                 android:id="@+id/cardImageBack4"
                 android:layout_width="@dimen/game_card_size"
-                android:layout_height="fill_parent"
+                android:layout_height="match_parent"
                 android:background="@drawable/background"
                 android:contentDescription="@string/card_back"
                 android:scaleType="center"
@@ -320,7 +320,7 @@
                 android:id="@+id/cardBack4"
                 android:layout_width="@dimen/game_card_size"
                 android:background="@drawable/background"
-                android:layout_height="fill_parent" 
+                android:layout_height="match_parent" 
                 android:padding="@dimen/card_text_padding"
                 android:textSize="@dimen/card_content_size"/>
         </RelativeLayout>

@@ -21,6 +21,7 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.View.OnLongClickListener;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -50,6 +51,7 @@ public class MatchingGame extends Activity implements OnClickListener {
 
 	private ImageView showAnswer;
 	private ImageButton submit;
+	private ImageButton reset;
 
 
 	private List<Card> cardList = new ArrayList<Card>(4);
@@ -71,13 +73,13 @@ public class MatchingGame extends Activity implements OnClickListener {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.game);
-		
+
 		Intent intent = getIntent();
 		deckID = intent.getIntExtra(Constant.DECK_ID, -1);
 		positionColor = intent.getIntExtra(Constant.POSITION_COLOR, 0);
 
 		database = FrescoMain.getDatabase();
-		
+
 		int numberOfCards;
 		if(deckID != -1) {
 			numberOfCards = database.getNumberOfCards(deckID);
@@ -87,8 +89,8 @@ public class MatchingGame extends Activity implements OnClickListener {
 		String toastContent = "Matchmaking Game\nNumber of Cards: " + numberOfCards;
 		Toast toast = Toast.makeText(this, toastContent , Toast.LENGTH_SHORT);
 		toast.show();
-		
-		
+
+
 		frontBarLeft[0] = (ImageView)findViewById(R.id.frontBarLeft1);
 		frontBarLeft[1] = (ImageView)findViewById(R.id.frontBarLeft2);
 		frontBarLeft[2] = (ImageView)findViewById(R.id.frontBarLeft3);
@@ -108,23 +110,46 @@ public class MatchingGame extends Activity implements OnClickListener {
 		backBarRight[1] = (ImageView)findViewById(R.id.backBarRight2);
 		backBarRight[2] = (ImageView)findViewById(R.id.backBarRight3);
 		backBarRight[3] = (ImageView)findViewById(R.id.backBarRight4);
-		
+
 		frontBarLeft[0].setBackgroundColor(Color.GREEN);
 		frontBarRight[0].setBackgroundColor(Color.GREEN);
-	
+
 		frontBarLeft[1].setBackgroundColor(Color.BLUE);
 		frontBarRight[1].setBackgroundColor(Color.BLUE);
-		
+
 		frontBarLeft[2].setBackgroundColor(Color.YELLOW);
 		frontBarRight[2].setBackgroundColor(Color.YELLOW);
-		
+
 		frontBarLeft[3].setBackgroundColor(Color.GRAY);
 		frontBarRight[3].setBackgroundColor(Color.GRAY);
 
 		showAnswer = (ImageView)findViewById(R.id.show_answer);
 		submit     = (ImageButton)findViewById(R.id.match);
+		reset      = (ImageButton)findViewById(R.id.reset);
 		initializingImageButtons();
 		initializingButtons();
+		submit.setOnLongClickListener(new View.OnLongClickListener() {
+
+			@Override
+			public boolean onLongClick(View v) {
+				// TODO Auto-generated method stub
+				Toast.makeText(getApplicationContext(), "Submit matching", Toast.LENGTH_SHORT).show();
+				return false;
+			}
+		});
+		
+		reset.setOnLongClickListener(new View.OnLongClickListener() {
+
+			@Override
+			public boolean onLongClick(View v) {
+				// TODO Auto-generated method stub
+				Toast.makeText(getApplicationContext(), "Get a new set", Toast.LENGTH_SHORT).show();
+				return false;
+			}
+		});
+
+
+
 		match = 0;//Originally no front card is selected
 
 		mDstWidth = getResources().getDimensionPixelSize(R.dimen.game_card_size);
@@ -142,6 +167,11 @@ public class MatchingGame extends Activity implements OnClickListener {
 		}
 
 		selectCards();
+	}
+	public void OnLongClickListener(View v){
+		switch(v.getId()){
+
+		}
 	}
 
 	@Override
@@ -318,7 +348,7 @@ public class MatchingGame extends Activity implements OnClickListener {
 
 	private void returnBack() {
 		Intent intent;
-		
+
 		if(deckID != -1) {
 			intent = new Intent(this, CardsViewPager.class);
 			intent.putExtra(Constant.DECK_ID, deckID);
@@ -326,7 +356,7 @@ public class MatchingGame extends Activity implements OnClickListener {
 		} else {
 			intent = new Intent(this, FrescoMain.class);
 		}
-		
+
 		startActivity(intent);
 		finish();
 	}
@@ -436,8 +466,6 @@ public class MatchingGame extends Activity implements OnClickListener {
 			backBarLeft[i].setBackgroundColor(Color.WHITE);
 			backBarRight[i].setBackgroundColor(Color.WHITE);
 		}
-		
-		
 	}
 
 	private void setCardFront(){
@@ -450,8 +478,18 @@ public class MatchingGame extends Activity implements OnClickListener {
 				Bitmap unscaledBitmap = convertFromJSONToImage(content);
 
 				// Part 2: Scale image
-				bmpFrontList[i] = ScalingUtilities.createScaledBitmap(unscaledBitmap, mDstWidth,
-						mDstHeight, ScalingLogic.FIT);
+				float scaleheight = 1;
+				float scalewidth = 1;
+				bmpFrontList[i] = ScalingUtilities.createScaledBitmap(unscaledBitmap, (int)(mDstWidth/scalewidth),
+						(int)(mDstHeight/scaleheight), ScalingLogic.FIT);
+				
+				if(bmpFrontList[i].getHeight() < bmpFrontList[i].getWidth()){
+					scaleheight = (float) 0.5;
+					scalewidth = (float) 1.2;
+				}
+				//scalewidth *= 1.3*mDstWidth/mDstHeight;
+				bmpFrontList[i] = ScalingUtilities.createScaledBitmap(unscaledBitmap, (int)(mDstWidth/scalewidth),
+						(int)(mDstHeight/scaleheight), ScalingLogic.FIT);
 				unscaledBitmap.recycle();
 
 			}
@@ -470,8 +508,16 @@ public class MatchingGame extends Activity implements OnClickListener {
 				Bitmap unscaledBitmap = convertFromJSONToImage(content);
 
 				// Part 2: Scale image
-				bmpBackList[i] = ScalingUtilities.createScaledBitmap(unscaledBitmap, mDstWidth,
-						mDstHeight, ScalingLogic.FIT);
+				float scaleheight = 1;
+				float scalewidth = 1;
+				bmpBackList[i] = ScalingUtilities.createScaledBitmap(unscaledBitmap, (int) (mDstWidth/scalewidth),
+						(int) (mDstHeight/scaleheight), ScalingLogic.FIT);
+				if(bmpBackList[i].getHeight() < bmpBackList[i].getWidth()){
+					scaleheight = (float) 1.2;
+					scalewidth = (float) 1.2;
+				}
+				bmpBackList[i] = ScalingUtilities.createScaledBitmap(unscaledBitmap, (int) (mDstWidth/scalewidth),
+						(int) (mDstHeight/scaleheight), ScalingLogic.FIT);
 				unscaledBitmap.recycle();
 
 			}
@@ -501,8 +547,14 @@ public class MatchingGame extends Activity implements OnClickListener {
 				Bitmap unscaledBitmap = convertFromJSONToImage(content);
 
 				// Part 2: Scale image
-				bmpBackList[i] = ScalingUtilities.createScaledBitmap(unscaledBitmap, mDstWidth,
-						mDstHeight, ScalingLogic.FIT);
+				float scale = 1;
+				bmpBackList[i] = ScalingUtilities.createScaledBitmap(unscaledBitmap, (int) (mDstWidth/scale),
+						(int) (mDstHeight/scale), ScalingLogic.FIT);
+				if(bmpBackList[i].getHeight() < bmpBackList[i].getWidth()){
+					scale = (float) 1.2;
+				}
+				bmpBackList[i] = ScalingUtilities.createScaledBitmap(unscaledBitmap, (int) (mDstWidth/scale),
+						(int) (mDstHeight/scale), ScalingLogic.FIT);
 				unscaledBitmap.recycle();
 
 			}
@@ -515,6 +567,7 @@ public class MatchingGame extends Activity implements OnClickListener {
 		for(int i = 0; i < 4; i++){
 			if(bmpBackList[i] != null){
 				imageButtonBackList[i].setImageBitmap(bmpBackList[i]);
+				//imageButtonBackList[i].
 				imageButtonBackList[i].setVisibility(View.VISIBLE);
 				buttonBackList[i].setVisibility(View.GONE);
 			}
