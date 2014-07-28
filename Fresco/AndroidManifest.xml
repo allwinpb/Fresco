@@ -5,18 +5,20 @@
     android:versionName="1.0" >
 
     <uses-sdk
-        android:minSdkVersion="16"
-        android:targetSdkVersion="16" />
+        android:minSdkVersion="11"
+        android:targetSdkVersion="12" />
 
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
     <uses-feature android:name="android.hardware.camera" />
     <uses-feature android:name="android.hardware.camera.autofocus" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
-    
+
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
     <application
         android:allowBackup="true"
-        android:icon="@drawable/fresco_logo"
+        android:icon="@drawable/fresco"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
@@ -51,8 +53,8 @@
         <activity
             android:name="icreate.fresco.MatchingGame"
             android:label="@string/app_name"
-            android:screenOrientation="portrait"
-            android:parentActivityName="icreate.fresco.CardsViewPager" >
+            android:parentActivityName="icreate.fresco.CardsViewPager"
+            android:screenOrientation="portrait" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="icreate.fresco.CardsViewPager" />

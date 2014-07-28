@@ -7,6 +7,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.hardware.Camera;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
@@ -26,6 +27,7 @@ public class FragmentCamera extends Fragment {
 	Bitmap bmp;
 	Button takePic;
 	boolean isUploaded = false;
+	Camera camera;
 	public static final int MEDIA_TYPE_IMAGE = 1;
 
 	public static FragmentCamera createFragment(String content) {
